@@ -1,0 +1,30 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb-base",
+    "prettier"
+  ],
+  "env": {
+    "mocha": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react",
+    "prettier"
+  ],
+  "globals": {
+    "window": true,
+    "document": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off"
+  }
+}
