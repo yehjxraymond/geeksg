@@ -9,7 +9,8 @@
     "start": "next start",
     "export": "next build && next export",
     "lint": "eslint . --ext .js --max-warnings 0",
-    "lint:fix": "eslint . --ext .js --fix"
+    "lint:fix": "eslint . --ext .js --fix",
+    "serve": "cd out && python -m SimpleHTTPServer 8080"
   },
   "dependencies": {
     "@mdx-js/mdx": "^0.16.6",

@@ -1,0 +1,32 @@
+import { Modal, Header, Button } from 'semantic-ui-react';
+import Blog from "../../components/layouts/Blog";
+
+
+export const meta = {
+  date: new Date("23 Dec 2018"),
+  title: 'Getting Started with EOS on Cleos (Without Running a Full Node)',
+  slug: "getting-started-with-eos-on-cleos-without-running-a-full-node",
+  summary: "EOS is one of the fastest growing blockchain around. Being one of the newer distributed ledger technology out there, it’s tutorials and guides are still pretty much WIP. After spending many hours fiddling with the code base and figuring out how to connect to test net and main net (instead of just running my own node), I figured a method that is simple but was not documented."
+};
+
+EOS is one of the fastest growing blockchain around. Being one of the newer distributed ledger technology out there, it’s tutorials and guides are still pretty much WIP. After spending many hours fiddling with the code base and figuring out how to connect to test net and main net (instead of just running my own node), I figured a method that is simple but was not documented.
+
+In this post I will not be repeating stuffs on the official documentations, you are expected to have briefly glanced it. Instead I will show how I connect to the main net (and test net) without running a full node (nodeos) on my computer using the official docker image.
+
+
+Requirements
+
+Docker
+To run the examples below, you will need to have docker installed on your machine.
+
+1. PULL THE LATEST EOS FROM DOCKERHUB
+We will first pull the latest docker image at https://hub.docker.com/r/eosio/eos/ with the following command:
+
+docker pull eosio/eos
+2. RUN THE CONTAINER
+The official tutorial will ask you to run the nodeos command for docker. That is not what we want here. Instead we only want to run keosd to manage our wallet. We will also use cleos to interact with both the wallet (keosd) and the blockchain (remote nodeos). To do so, run the following command to start only keosd
+
+docker run --name keosd -d -p 8888:8888 -t eosio/eos /bin/bash -c keosd --config-dir /
+This will start the keosd service with the default config at in the container’s root directory.
+
+export default Blog;
