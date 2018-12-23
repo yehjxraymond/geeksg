@@ -6,14 +6,13 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-            rel="stylesheet"
-          />
+          <link href="/static/styles/semantic.min.css" rel="stylesheet" />
         </Head>
         <body>
-          <Main />
-          <NextScript />
+          <div className="ui container">
+            <Main />
+            <NextScript />
+          </div>
         </body>
       </html>
     );

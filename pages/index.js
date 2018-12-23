@@ -1,4 +1,5 @@
 import { Modal, Header, Button, List, Icon } from "semantic-ui-react";
+import post from "../components/posts";
 
 const Index = () => (
   <div>
@@ -32,6 +33,7 @@ const Index = () => (
         </List.Content>
       </List.Item>
     </List>
+    {JSON.stringify(post)}
     Hello <Icon name="world" />
   </div>
 );
