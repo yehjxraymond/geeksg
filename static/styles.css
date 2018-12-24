@@ -8,6 +8,10 @@ body {
   font-family: 'Oswald', sans-serif;
 }
 
+a:hover {
+  text-decoration: none !important;
+}
+
 pre code {
   display: inline-block;
   width: 100%;
@@ -21,6 +25,10 @@ pre code {
 
 .narrow {
   max-width: 900px;
+}
+
+.text-black {
+  color: black;
 }
 
 .text-light {

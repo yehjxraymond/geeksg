@@ -9,7 +9,9 @@ const PostPreview = posts => (
   <div>
     {posts.map((p, i) => (
       <div key={i} className="mb-5">
-        <div className="h2">{p.title}</div>
+        <a href={`/blog/${p.slug}`}>
+          <div className="h2 text-black no-decoration">{p.title}</div>
+        </a>
         <div className="mb-2">{p.summary}</div>
         <div className="text-right">
           <a className="text-light" href={`/blog/${p.slug}`}>
