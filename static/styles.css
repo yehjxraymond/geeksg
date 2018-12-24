@@ -34,3 +34,7 @@ pre code {
 .text-light {
   color: #9e9797!important;
 }
+
+.hover-grey:hover {
+  color: #9e9797!important;
+}

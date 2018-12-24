@@ -2,6 +2,7 @@ import React from "react";
 import { get, slice } from "lodash";
 import Site from "../components/layouts/Site";
 import post from "../components/posts";
+import Pagination from "../components/Pagination";
 
 const POST_IN_PAGE = 5;
 
@@ -30,9 +31,13 @@ const Index = props => {
     page * POST_IN_PAGE,
     (page + 1) * POST_IN_PAGE
   );
+  const prev = page - 1 >= 0 ? `/page/${page - 1}` : undefined;
+  const next =
+    (page + 1) * POST_IN_PAGE < post.length ? `/page/${page + 1}` : undefined;
   return (
     <Site>
       <div className="container mb-5">{PostPreview(postToRender)}</div>
+      <Pagination prev={prev} next={next} />
     </Site>
   );
 };
