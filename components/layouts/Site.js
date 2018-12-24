@@ -5,6 +5,7 @@ const Site = ({ children }) => (
   <div className="container narrow">
     <Navbar />
     {children}
+    <hr className="mt-4 mb-5" />
   </div>
 );
 

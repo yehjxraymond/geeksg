@@ -1,6 +1,8 @@
 const withMDX = require("@zeit/next-mdx")();
 const withCss = require("@zeit/next-css");
 
+const PAGES = 10;
+
 module.exports = withMDX(
   withCss({
     webpack(config) {
@@ -21,8 +23,12 @@ module.exports = withMDX(
     pageExtensions: ["js", "mdx"],
     exportPathMap(defaultPathMap) {
       const pathMap = Object.assign({}, defaultPathMap);
+      const pages = {};
+      for (let i = 0; i < PAGES; i += 1) {
+        pages[`/page/${i}`] = { page: "/", query: { page: i } };
+      }
       delete pathMap["/index"];
-      return pathMap;
+      return { ...pathMap, ...pages };
     }
   })
 );

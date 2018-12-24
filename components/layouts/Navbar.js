@@ -1,5 +1,5 @@
 const Navbar = () => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top mb-4">
     <i className="far fa-bookmark huge" />
     <button
       className="navbar-toggler"
@@ -16,7 +16,7 @@ const Navbar = () => (
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item active">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="/">
             Home
           </a>
         </li>

@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
+import Site from "./Site";
 
 const Blog = ({ children }) => (
-  <div style={{ backgroundColor: "green" }}>{children}</div>
+  <Site>
+    <div className="container">{children}</div>
+  </Site>
 );
 
 export default Blog;

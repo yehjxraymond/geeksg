@@ -1,12 +1,16 @@
+import React from "react";
+import { get, slice } from "lodash";
 import Site from "../components/layouts/Site";
 import post from "../components/posts";
+
+const POST_IN_PAGE = 5;
 
 const PostPreview = posts => (
   <div>
     {posts.map((p, i) => (
       <div key={i} className="mb-5">
         <div className="h2">{p.title}</div>
-        <div className="my-3">{p.summary}</div>
+        <div className="mb-2">{p.summary}</div>
         <div className="text-right">
           <a className="text-light" href={`/blog/${p.slug}`}>
             Read More
@@ -17,13 +21,18 @@ const PostPreview = posts => (
   </div>
 );
 
-const Index = () => (
-  <Site>
-    <div className="ui text container mt-5">
-      {PostPreview(post)}
-      {JSON.stringify(post)}
-    </div>
-  </Site>
-);
+const Index = props => {
+  const page = get(props, "url.query.page", 0);
+  const postToRender = slice(
+    post,
+    page * POST_IN_PAGE,
+    (page + 1) * POST_IN_PAGE
+  );
+  return (
+    <Site>
+      <div className="container mb-5">{PostPreview(postToRender)}</div>
+    </Site>
+  );
+};
 
 export default Index;
