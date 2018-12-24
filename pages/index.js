@@ -22,7 +22,7 @@ const PostPreview = posts => (
 );
 
 const Index = props => {
-  const page = get(props, "url.query.page", 0);
+  const page = get(props, "query.page", 0);
   const postToRender = slice(
     post,
     page * POST_IN_PAGE,
@@ -34,5 +34,7 @@ const Index = props => {
     </Site>
   );
 };
+
+Index.getInitialProps = ({ query }) => ({ query });
 
 export default Index;

@@ -3,14 +3,14 @@ import Blog from "../../components/layouts/Blog";
 
 
 export const meta = {
-  date: new Date("23 Dec 2018"),
+  date: new Date("23 June 2018"),
   title: 'Getting Started with EOS on Cleos (Without Running a Full Node)',
   slug: "getting-started-with-eos-on-cleos-without-running-a-full-node",
   summary: "EOS is one of the fastest growing blockchain around. Being one of the newer distributed ledger technology out there, it’s tutorials and guides are still pretty much WIP. After spending many hours fiddling with the code base and figuring out how to connect to test net and main net (instead of just running my own node), I figured a method that is simple but was not documented."
 };
 
 
-Hello
+Getting Started with EOS on Cleos (Without Running a Full Node)
 ===
 
 EOS is one of the fastest growing blockchain around. Being one of the newer distributed ledger technology out there, it’s tutorials and guides are still pretty much WIP. After spending many hours fiddling with the code base and figuring out how to connect to test net and main net (instead of just running my own node), I figured a method that is simple but was not documented.
@@ -19,17 +19,185 @@ In this post I will not be repeating stuffs on the official documentations, you 
 
 Requirements
 
-Docker
+- Docker
+
 To run the examples below, you will need to have docker installed on your machine.
 
-1. PULL THE LATEST EOS FROM DOCKERHUB
+## 1. PULL THE LATEST EOS FROM DOCKERHUB
+
 We will first pull the latest docker image at https://hub.docker.com/r/eosio/eos/ with the following command:
 
+```bash
 docker pull eosio/eos
-2. RUN THE CONTAINER
+```
+
+## 2. RUN THE CONTAINER
+
 The official tutorial will ask you to run the nodeos command for docker. That is not what we want here. Instead we only want to run keosd to manage our wallet. We will also use cleos to interact with both the wallet (keosd) and the blockchain (remote nodeos). To do so, run the following command to start only keosd
 
+```bash
 docker run --name keosd -d -p 8888:8888 -t eosio/eos /bin/bash -c keosd --config-dir /
+```
+
 This will start the keosd service with the default config at in the container’s root directory.
+
+## 3. CONFIGURE YOUR HOST MACHINE TO USE CLEOS
+
+We will only be interacting with the cleos command line interface (cli) from the host machine though docker exec. To simplify the operation, we will want to add aliases to the host machine to avoid typing long docker commands. Also, I want to have two separate commands for cleos, with one which connects to the nodeos and ones that doesn’t. The reason for such is that you do not want to accidentally expose private keys to the remote nodeos (ran by block producers). To add in the aliases for testnet (cryptolions), run:
+
+```bash
+alias cleos='docker exec keosd /opt/eosio/bin/cleos'
+alias cleoso='docker exec keosd /opt/eosio/bin/cleos --url=http://dev.cryptolions.io:38888'
+```
+
+If you want to connect to the main net instead, run:
+
+```bash
+alias cleos='docker exec keosd /opt/eosio/bin/cleos'
+alias cleoso='docker exec keosd /opt/eosio/bin/cleos --url=http://api.eosnewyork.io'
+```
+
+As you can see here, we are connecting to EOS New York for the api service. You may choose any node providing their API endpoints to connect to. Below is a list of some of the available endpoints:
+
+- https://api.eosnewyork.io:443
+- https://api.eosdetroit.io:443
+- https://eos.greymass.com:443
+- https://api.eosmetal.io:18890
+- http://api.hkeos.com:80
+- https://eosapi.blockmatrix.network:443
+- https://fn.eossweden.se:443
+- http://api.blockgenicbp.com:8888
+- http://mainnet.eoscalgary.io:80
+- https://node1.eosphere.io
+- https://node2.eosphere.io
+- and many more...
+
+Alternatively, just look up https://www.eosdocs.io/resources/apiendpoints/
+
+## 4. START USING CLEOS
+
+You are now all set up! Remember that you have two commands for managing cleos, one that actually connects to the blockchain and one that will limit your traffic to your local machine.
+
+You can confirm that you are connected to the main net by running:
+
+```bash
+cleoso get info
+```
+
+If you see something like what I’ve got below, you are connected:
+
+```bash
+{
+  "server_version": "36a043c5",
+  "chain_id": "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+  "head_block_num": 4438476,
+  "last_irreversible_block_num": 4438145,
+  "last_irreversible_block_id": "0043b8812658c46aa7322ab30bdd180db0512f600ca64ece3960030a2996b3f3",
+  "head_block_id": "0043b9ccbfcfd640fcdd1b789aa1832056b6c9954283db72b216ad3c881b2fe6",
+  "head_block_time": "2018-07-06T08:59:27.000",
+  "head_block_producer": "eos42freedom",
+  "virtual_block_cpu_limit": 200000000,
+  "virtual_block_net_limit": 1048576000,
+  "block_cpu_limit": 199900,
+  "block_net_limit": 1048576
+}
+```
+
+To check that you are connected to the main chain, make sure your chain_id matches the one above.
+
+## 5. SOME USEFUL COMMANDS
+
+Some of the commands I find useful for cleos are found below.
+
+Look up account name from public key:
+
+```bash
+cleoso get accounts EOS6h97ffug6MCArsS3YSTDND9wt55MB9g3A4fJJETrfEGpasSRek
+{
+  "account_names": [
+    "g44dsnrqhege"
+  ]
+}
+```
+
+Look up account info:
+
+```bash
+cleoso get account g44dsnrqhege
+permissions: 
+     owner     1:    1 EOS6h97ffug6MCArsS3YSTDND9wt55MB9g3A4fJJETrfEGpasSRek
+        active     1:    1 EOS6h97ffug6MCArsS3YSTDND9wt55MB9g3A4fJJETrfEGpasSRek
+memory: 
+     quota:     208.1 KiB    used:     4.311 KiB  
+
+net bandwidth: 
+     staked:          0.4999 EOS           (total stake delegated from account to self)
+     delegated:       0.0000 EOS           (total staked delegated to account from others)
+     used:             2.099 KiB  
+     available:        261.8 KiB  
+     limit:            263.9 KiB  
+
+cpu bandwidth:
+     staked:          3.0000 EOS           (total stake delegated from account to self)
+     delegated:       0.0000 EOS           (total staked delegated to account from others)
+     used:             66.15 ms   
+     available:        243.1 ms   
+     limit:            309.3 ms   
+
+unstaking tokens:
+     time of unstake request:  2018-07-03T11:58:54 (funds will be available in 2.818 hr)
+     from net bandwidth:              2.0000 EOS
+     from cpu bandwidth:              0.0000 EOS
+     total:                           2.0000 EOS
+
+EOS balances: 
+     liquid:          545.5255 EOS
+     staked:            3.4999 EOS
+     unstaking:         2.0000 EOS
+     total:           551.0254 EOS
+
+producers:
+     argentinaeos    bitfinexeos1    cryptolions1    
+     cypherglasss    eos42freedom    eosamsterdam    
+     eosasia11111    eosauthority    eosbeijingbp    
+     eoscafeblock    eoscanadacom    eoscannonchn    
+     eosdacserver    eoseouldotio    eosflytomars    
+     eosgenblockp    eoshuobipool    eosiomeetone    
+     eosisgravity    eosliquideos    eosnewyorkio    
+     eosnodeonebp    eosriobrazil    eosstorebest    
+     eosswedenorg    eosyskoreabp    helloeoscnbp    
+     jedaaaaaaaaa    libertyblock    teamgreymass    
+```
+
+Check ram info:
+
+```bash
+cleoso get table eosio eosio rammarket
+{
+  "rows": [{
+      "supply": "10000000000.0000 RAMCORE",
+      "base": {
+        "balance": "12003331657 RAM",
+        "weight": "0.50000000000000000"
+      },
+      "quote": {
+        "balance": "5725103.6963 EOS",
+        "weight": "0.50000000000000000"
+      }
+    }
+  ],
+  "more": false
+}
+```
+
+Buy ram:
+
+```bash
+cleoso system buyram g44dsnrqhege g44dsnrqhege "10 EOS"
+```
+
+Alright, that’s all for this guide! Hope you enjoy playing around with the CLI.
+
+
 
 export default Blog;

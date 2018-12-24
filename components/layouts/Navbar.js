@@ -1,6 +1,8 @@
 const Navbar = () => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top mb-4">
-    <i className="far fa-bookmark huge" />
+    <a href="/" style={{ color: "black" }}>
+      <i className="far fa-bookmark huge" />
+    </a>
     <button
       className="navbar-toggler"
       type="button"
