@@ -38,11 +38,14 @@ const Navbar = () => (
             <a className="dropdown-item" href="/about">
               Overview
             </a>
-            <a className="dropdown-item" href="/about/work-experience">
-              Work Experience
-            </a>
             <a className="dropdown-item" href="/about/projects">
               Projects
+            </a>
+            <a className="dropdown-item" href="/about/academic">
+              Academic
+            </a>
+            <a className="dropdown-item" href="/about/work-experience">
+              Work Experience
             </a>
             <a className="dropdown-item" href="/about/speaking">
               Speaking
