@@ -2,8 +2,6 @@
   "name": "with-semantic-ui",
   "version": "1.0.0",
   "scripts": {
-    "build-semantic": "cd semantic && gulp build-css build-assets",
-    "watch-semantic": "cd semantic && yarn run build-semantic && gulp watch",
     "dev": "next",
     "build": "next build",
     "start": "next start",
@@ -21,8 +19,7 @@
     "path-match": "^1.2.4",
     "prop-types": "^15.6.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "semantic-ui-react": "^0.84.0"
+    "react-dom": "^16.0.0"
   },
   "license": "ISC",
   "devDependencies": {
@@ -33,7 +30,6 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.15.3",
-    "semantic-ui": "^2.4.2"
+    "prettier": "^1.15.3"
   }
 }
