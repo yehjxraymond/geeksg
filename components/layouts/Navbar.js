@@ -22,10 +22,35 @@ const Navbar = () => (
             Home
           </a>
         </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             About
           </a>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a className="dropdown-item" href="/about">
+              Overview
+            </a>
+            <a className="dropdown-item" href="/about/work-experience">
+              Work Experience
+            </a>
+            <a className="dropdown-item" href="/about/projects">
+              Projects
+            </a>
+            <a className="dropdown-item" href="/about/speaking">
+              Speaking
+            </a>
+            <a className="dropdown-item" href="/about/media">
+              Media
+            </a>
+          </div>
         </li>
       </ul>
     </div>

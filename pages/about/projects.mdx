@@ -1,0 +1,189 @@
+import Blog from "../../components/layouts/Blog";
+
+## Trebuchet Framework
+
+2018
+
+## OpenCerts
+
+2018
+
+## OpenAttestation
+
+2018
+
+[OpenAttestation](https://github.com/OpenCerts/open-attestation) is a meta framework for notary service on the blockchain. OpenCerts is simply OpenAttestation plus a certificate schema. It allows any entity to proof the existence of a document or a batch of documents. It makes use of smart contracts on the Ethereum blockchain to store cryptographic proofs of individual documents.
+
+The project is available as a [npm package](https://www.npmjs.com/package/@govtechsg/open-attestation).
+
+Technology: Node.js
+
+## Apex Proxy Node
+
+2018
+
+[GovTech's API Exchange (APEX)](https://govinsider.asia/digital-gov/singapore-builds-government-wide-api-platform/) is used in various internet applications to gain access to services in the intranet environment. The [Apex Proxy Node](https://github.com/GovTechSG/apex-proxy-node) allows developer to develop applications without the knowledge of the infrastructure by proxying requests through the APEX gateway.
+
+Technology: Node.js
+
+## MyCareersFuture
+
+2017
+
+[MyCareersFuture](https://www.mycareersfuture.sg/) is a job portal to match job seekers to job openings by using their skills match relevancy. At the same time, it makes use of various government support to help emplace jobseekers. 
+
+Technology: Node.js, React.js, MySQL, Nectar, Apex
+
+## Wielded
+
+2017
+
+[Wielded](http://wielded.com) is a Ethereum ERC20 token creator for the uninitiated. The platform allows anyone to launch their own ICO by creating both the token and crowdsale token contract. Accompanying the site is an [introduction course at Udemy](https://www.udemy.com/launch-ethereum-tokens-crowdsales-smart-contracts-without-coding/).
+
+Technology: Next.js, Web3.js, node.js, solidity, truffle
+
+## High Speed Intra-exchange Arbitrage Bot
+
+2017
+
+Having worked on a inter-exchange arbitrage bot, I began to wonder if cryptocurrency exchanges checks for intra-exchange arbitrage opportunities and found one that didn't. Essentially the method will involve a series of trade that changes one product to another and eventually back to itself, with resulting yield greater than 1. For example, BTC -> ETH -> XRP -> BTC. Using the Bellman-Ford algorithm, I'm able to spot these opportunities and built a bot around the theory. In practice, this bot has traded > 10 million dollars in volume and have netted myself an iPhone X for being the top trader (in volume) in December 2017.
+
+Technology: Node.js, socket.io
+
+## Inter-exchange Arbitrage Bot
+
+2017
+
+During the cryptocurrency boom, there were many exchanges which listed different pairs of product differently and occasionally, arbitrage opportunities exist between these exchanges. The application actively query various exchanges to search for profitable trades and execute them.
+
+Technology: Node.js
+
+## Cryptocurrency ATM
+
+2017
+
+The cryptocurrency ATM is a mobile app for businesses to start selling cryptocurrencies like Bitcoin and Ethereum on premise. These businesses subscribe to this service and maintain a liquidity balance with the company to run the application on premise. The application supports live transfer as well as KYC. 
+
+Technology: React.js, Expo, Express
+
+## MailPhaser
+
+2016
+
+The MailPhaser was born as a prank, but packs a serious punch. The application registers a victim email to tens of thousands of mailing list, resulting in a massive wave of emails at the beginning, followed by more emails from auto-responders that do not have double opt-ins. As many of these mailing list are low quality and tends to be resold, the victim's email may be included in more list than what they were signed up for. Essentially, the application does an reflection attack on email (and mail server), causing a DOS on said email address and mail server. Existing mail filters are incapable of stopping the deluge of emails. The application does do by harvesting massive number of mailing list forms.
+
+Technology: Node.js
+
+## Pangdemonium Support Helpdesk
+
+2016
+
+The [Support Ticket Helpdesk](http://booking.pangdemonium.com/) is a custom application made for the company to manage their support tickets. The platform receives, stores and archives all support ticket for the various show all year round. It served as a replacement for the humongous Excel sheets passed around the office that kept track of these issues. 
+
+Technology: Express.js, Heroku, mLab (Hosted MongoDb)
+
+## Document Management System (DMS)
+
+2015
+
+The DMS was built for, THT, a SME in Singapore. The home appliance repair company wanted a way to go digital and store all their repair notes on the internet, to replace the existing folders of papers. The application is currently used by the many staffs of the mentioned company and stores thousands of their document involved in their day-to-day business operations. 
+
+Technology: Drupal
+
+## QueueNinja
+
+2015
+
+Queue Ninja is a Queue Management System for restaurants and cafes to effectively manage their queues.
+
+Instead of having their beloved patrons wait in the queue, they can now sign up with their phone number to wait in line. They will receive a customised phone call when their table is ready. This gives them time to shop around or find a place to chill while waiting for their tables. This application is commercially available.
+
+Technology: Loopback, Titanium Appcelerator, Twilio, Plivo, Heroku, Mongodb
+
+## POS GTO formatter
+
+2015
+
+Shopping malls in Singapore require their tenants to report their Gross Turnover (GTO) electronically. The tenants will have to upload a file to the shopping mall’s server daily to report their sales.
+
+The project is to break down the sales report of Vend POS system and format them accordingly to the required format and upload it to the shopping mall directly.
+
+The supported shopping mall GTO format are currently Capitaland, Frasermall, Landlease, Vivo and MarinaSquare.
+
+Technology: Loopback, Heroku
+
+## Sales Report Cruncher
+
+2015
+
+With a comprehensive payout plan for employees, to motivate them, companies naturally get a complicated reward calculation procedure at the end of the month.
+
+One such company approached to design a program to calculate the sales commission, target and service fees for their staffs. This helps the company reduce the manpower needed for calculating these figures and greatly reduce errors.
+
+Technology: Loopback, Heroku
+
+## SkyCourier
+
+2015
+
+Anyone can be a taxi driver as long as they have cars. Why not couriers?
+
+Skycourier aims to allow merchants to easily get quotation for their delivery job. Upon making payment, registered drivers will be able to pick up the job. Merchants (and their customers) can then track the progress of the delivery like any courier services.
+
+The application is available online and on mobile. The system consist of a server application, a web application, an admin mobile application, a driver mobile application, and customer mobile application.
+
+Technology: Titanium Appcelerator, Loopback
+
+## Tap-a-coffee
+
+2015
+
+What’s cooler than buying a coffee on a mobile app? Buying that coffee in 3 taps (and one is for launching the app)!
+
+The mobile app (with the accompanying application server) was conceptualise while experimenting with Paypal’s adaptive payment system and pre-approved payments. The application will detect the user’s geolocation and present the nearest cafe’s selection of coffee once it launches. The user will then tap on the coffee he wants to purchase it immediately. An email or sms will be sent to the merchant about the order and the user will also receive a confirmation code to redeem the coffee at the outlet.
+
+Technology: Paypal adaptive payment, Loopback, Titanium Appcelerator
+
+## Google & Facebook Scraper
+
+2015
+
+Searching for local business contact details? Fret not, our scraper does this for you at lightning speed.
+
+The first part of the scraper takes in a keyword input and returns the list of facebook pages of the businesses using Google search. From there, the second part of the scraper goes into each of these page to return the relevant details.
+
+The project was to test Facebook’s current protection against scraping software and to attempt to bypass it.
+
+Technology: Node.js
+
+## GeckoMarket
+
+2014
+
+GeckoMarket was an attempt to revolutionise e-commerce. It aims to allow anyone to accept transaction from anyone in matter of minutes.
+
+The user can create his own product page that accepts payment (using Paypal) in a couple of clicks from the site’s main page. Once he creates the page, an account will be created where can can track the sales of his product. This idea was entered into Hackatron Asia Singapore 2014 and won the 2nd Runner-up Prize.
+
+Technology: Node.js, Express.
+
+## NTU Switchblade
+
+2013
+
+Switchblade is an utility application for Nanyang Technological University (NTU) Students.It features a timetable planning tool and campus bus tracker.
+
+The application was developed to after an experiment to reverse engineer the HTTP protocol used on NTU’s website which shows the bus timing.
+
+Technology: Titanium Appcelerator
+
+## SG Haze Rescue
+
+2013
+
+SG Haze Rescue is a community of Singaporeans sharing resources to help individuals and families to overcome this hazy period. The community was formed in response to the worst episode of haze in 2013.
+
+As there were multiple groups of people giving out masks at that point in time, the team needed a site to track the volunteers on the ground to prevent duplicated visits and ensure a wider distribution of masks. As a result, I’ve joined the team to build the site in the shortest period of time. The project soon garnered major media attention in a short span of time due to it’s scale and impact. Shortly after, the Singapore Ministry of Defence took over in the distribution of free mask to the community centres.
+
+Technology: Drupal
+
+export default Blog;
