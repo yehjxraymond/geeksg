@@ -1,0 +1,45 @@
+import { Modal, Header, Button } from 'semantic-ui-react';
+import Blog from "../../components/layouts/Blog";
+
+
+export const meta = {
+  date: new Date("14 October 2016"),
+  title: "Finding Dratini Nest w DBSCAN",
+  slug: "finding-dratini-nest-dbscan",
+  summary: "My previous post documented the method I’ve used to rank the various Pokemon Nests. For many beginners, the whole process seemed to be a little lengthy. In this post, I’ll be showing a much faster way to search for the nests amidst the noise using another clustering algorithm, DBSCAN. I’ll be using the Dratini Dataset for this process."
+};
+
+Finding Dratini Nest w DBSCAN
+===
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/10/DBSCAN-Dratini.jpg" style={{width:"50%"}}/>
+</div>
+
+My previous post documented the method I’ve used to rank the various Pokemon Nests. For many beginners, the whole process seemed to be a little lengthy. In this post, I’ll be showing a much faster way to search for the nests amidst the noise using another clustering algorithm, DBSCAN. I’ll be using the Dratini Dataset for this process.
+
+## The Results
+
+The main difference between this method and the K-mean method discussed earlier is that we can actually see the shape of the nest using DBSCAN. In this case, we can see that the light green area corresponds to the entire Pang Sua Park Connector along Woodlands and Choa Chu Kang.
+
+## The Process
+
+<div class="text-center m-4">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/Pl3ET2ZlgNc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+DBSCAN stands for Density-based spatial clustering of applications with noise. It works very well with spatial data like the Pokemon spawn data, even if it is noisy. The challenge in using the algorithm is figuring out the value for  ε (eps) and the minimum number of points.
+
+In this example, we will be using the value of 0.0045 for eps and 50 for min-points. The reason for this ‘special’ number is that it is approximately equal to 500 metres on ground. This will cause the algorithm to search for points which have more than 50 other Dratini spawns around it within 500m radius and within the time-frame of the data (approx 3-4 days).
+
+Feel free to adjust min-points to find higher (or lower_density spawn spots or adjust eps to run lesser (or more) distance.
+
+Watch the video for a full walk-through of the algorithm. Remember that longitude is on the x-axis and latitude is on the y-axis.
+
+## Conclusion
+This method is a quick and dirty method for finding the nest. Unlike using k-means where you have to adjust the number of clusters (by adjusting k), once you have settled for a value of eps and min-points, you can rinse and repeat the whole process for other dataset.
+
+## Dataset Download
+Dataset for selected Pokemon could be [found here](https://drive.google.com/file/d/0Bz6FvGZETzEwb1BBRjdnaWhxY3M/view).
+
+export default Blog;

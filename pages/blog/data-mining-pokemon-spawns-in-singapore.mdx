@@ -1,0 +1,130 @@
+import { Modal, Header, Button } from 'semantic-ui-react';
+import Blog from "../../components/layouts/Blog";
+
+
+export const meta = {
+  date: new Date("28 August 2016"),
+  title: "Data Mining Pokemon Spawns in Singapore",
+  slug: "data-mining-pokemon-spawns-in-singapore",
+  summary: "So every blog/company is jumping on the Pokemon bandwagon to “unveil Pokemon nests around Singapore”. Here’s one more, but backed with data. I’ll be revealing what data has revealed about the pattern of Pokemon spawns in Singapore in this post. In another post, I will discuss about the data collection, dataset and techniques used. I’ll try to leave technical findings and discussions to the other post and leave the juicy ‘actionable’ findings here."
+};
+
+Data Mining Pokemon Spawns in Singapore
+===
+
+So every blog/company is jumping on the Pokemon bandwagon to “unveil Pokemon nests around Singapore”. Here’s one more, but backed with data.
+
+I’ll be revealing what data has revealed about the pattern of Pokemon spawns in Singapore in this post. In another post, I will discuss about the data collection, dataset and techniques used. I’ll try to leave technical findings and discussions to the other post and leave the juicy ‘actionable’ findings here.
+
+## TLDR Version
+I’ve plot mentioned nests on [this map](https://www.google.com/maps/d/edit?mid=1FYmCwB3hnD-TJ_Pjm-TjVx5Eg_Y&ll=1.3368637661613745%2C103.7627014913005&z=12). You will find additional data on the map like count and standard deviation (in metres). 68% of the data falls within one standard deviation if that matters for you.
+
+## Legend
+For each Pokemon, I’ll be performing a clustering algorithm on it. On top of the clusters, you will be able to see the number of spawns in that cluster (color of circle) and the spread of pokemon spawns (size of circle). A small red circle show the gold pot.
+
+## Aerodactyl – 142
+Total Count: 47
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/8/aerodactyl-spawn-singapore.jpg" style={{width:"50%"}}/>
+</div>
+
+
+Out of 700k data points, only 47 is Aerodactyl. You have better chance at winning 4D than walking into an Aerodactyl. However, it seemed like the spawn location for Aerodactyl is pretty predictable.
+
+There are two major spawn nest, one at City Hall (1.292, 103.849) and another at Mapletree Business City (1.275, 103.799). From the cluster diagram you see a small red circle, showing the spawn spot but from raw data, I’ve uncovered an exact coordinate City Hall (1.29238660433637, 103.849206760772) that has spawned 17 of them!
+
+Other Notable Locations (probability of spawns here are very low):
+
+Botanic Garden (1.311, 103.815)
+Clementi (1.326, 103.778)
+Yio Chu Kang (1.395, 103.845)
+Now run to City Hall if you want a Aerodactyl for yourself!
+
+## Snorlax – 143
+Total Count: 59
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/8/snorlax-spawn-singapore.jpg" style={{width:"50%"}}/>
+</div>
+
+Having caught 4 Snorlax around my area in Jurong, I thought my area will be a hot spot, but nope. There seemed to be an even spread of Snorlax around Singapore.
+
+There is a red spot at Tampines (1.349, 103.938) with 8 Snorlax. LIKE OMFG 8 SNORLAX IN LITTLE LESS THAN 2 DAYS?!? Other than that, there are a few more spots with moderate occurrence of Snorlax. Two honourable mentions will be NEX (1.348, 103.875) and Chong Pang (1.431, 103.831).
+
+Other Notable Locations:
+
+Seng Kang (1.39, 103.903)
+Boat Quay (1.29, 103.848)
+Holland Village (1.315, 103.79)
+Ngee Ann Poly (1.336, 103.774)
+Choa Chu Kang (1.38, 103.749)
+Tampines here I come!
+
+*Coordinates on the google map are updated locations
+
+## Lapras – 131
+Total Count: 30
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/8/lapras-spawn-singapore.jpg" style={{width:"50%"}}/>
+</div>
+
+Out of the two Lapras I own, none of them were caught in the wild. Looking at the numbers you might know why. It’s one helluva exclusive creature.
+
+It seemed that the Pokemon has a fixed set of spawn spots. Most of the occurrence are on Sentosa (1.257, 103.822). The rare Pokemon can also be found at Gardens by the Bay (1.283, 103.861) and East Coast (1.306, 103.933).
+
+If you’re thinking about catching a Lapras at the long kang below your house, continue dreaming.
+
+## Dragonite – 149
+Total Count: 19
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/8/dragonite-spawn-singapore.jpg" style={{width:"50%"}}/>
+</div>
+
+Between breeding my own Dragonite and catching a wild one, I prefer the prior. A wild Dragonite may not have the best IV values and is also extremely rare. However, for those who wants a wild Dragonite, here you go!
+
+The best location to catch a Dragonite is at Esplanade area (1.298, 103.859) and (1.293, 103.843)! You can see a couple of high density, high count spots on the cluster map.
+
+Other Notable Locations:
+
+Pasir Panjang (1.273, 103.798)
+(1.396, 103.762)
+Bukit Batok (1.352, 103.769)
+
+## Porygon – 137
+Total Count: 29
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/8/porygon-spawn-singapore.jpg" style={{width:"50%"}}/>
+</div>
+
+Have you met anyone with a Porygon? Nope? That’s because it is very rare as well. However, because it is not a battling Pokemon, no one talks about it. Have you thought about how it feels? No.
+
+This blob of computer program seemed to spawning around Ang Mo Kio (1.365, 103.857), Bugis (1.303, 103.856), Marine Parade (1.305, 103.903) and Bukit Timah (1.326, 103.801). There are also occasional spawns in random location in the southern parts of Singapore.
+
+## Chansey – 113
+Total Count: 20
+
+<div class="text-center m-4">
+  <img src="/static/blog/2016/8/chansey-spawn-singapore.jpg" style={{width:"50%"}}/>
+</div>
+
+Have you seen a Chansey? Me neither.
+
+Contrary to popular beliefs, Chansey does not appear near hospital. Now stop bothering the sick people there, unless you are there to drop a lure.
+
+From the data, it seemed like there are no fixed spawn points for Chansey. There are two points of interest that may potentially be spawn points, but the results are very inconclusive.
+
+Points of Interest:
+
+Promenade (1.294, 103.860)
+Sentosa (1.256, 103.820)
+
+## Afterthoughts
+While these findings are backed by data, using past data to extrapolate future spawn location may not be the best idea. As a result, I do not recommend going to mentioned place just because it was marked as a potential spot. Well, unless its a Aerodactyl or a Lapras…
+
+I’ll be working on nests of more common Pokemon like Pikachu, Growlithe, etc on a future post. Let me know if you have particular interests in any Pokemon.
+
+export default Blog;
