@@ -4,12 +4,12 @@ import Blog from "../../components/layouts/Blog";
 
 export const meta = {
   date: new Date("27 December 2018"),
-  title: "A Middleground for Usable Blockchain Solution - Authoritative Relays",
+  title: "A Middleground for Usable Blockchain Solution - Authoritative Fallback Relays",
   slug: "usability-middleground-blockchain-solutions",
   summary: "Right after the release of the 2nd Generation Pokemon in Pokemon Go, I’ve got my scanners working and collecting Pokemon spawn data. Over the last 24 hours (minus a few hours of downtime), I’ve collected 182,898 individual spawn data for Gen II Pokemon. As I begin working on the data, here is a quick glimpse of how rare different Pokemon are."
 };
 
-A Usability Middleground for Blockchain Solutions - Authoritative Relays
+A Usability Middleground for Blockchain Solutions - Authoritative Fallback Relays
 ===
 
 Interoperablity is a problem which keeps presenting itself when designing a blockchain solution. To solve the problem of interoperable blockchain, often more blockchains are created, leading to standards and products proliferation. Of which, hardly any are usable for the regular user on the street. 
@@ -50,7 +50,56 @@ How then do you design your solution to delight your users who interacts with us
 
 ## Mimicking Existing "Solutions"
 
-Processes/Protocol/Data Schema/Artifacts
+Mimicking existing interface, data schema or artifacts is one way we can introduce familiarity to our user. When designing a solution, we need to take a approach where users using your product will be worse off, not even in scenarios where they have to interact with users of other products. In this case, it will be in your interest, as a product owner, to have a fallback mechanism to more familiar processes or artifacts. 
+
+Falling back to existing non-blockchain solution does not mean creating another suite of 'general relay blockchain to solve all integration problem'. Instead, these relays need to be hyperspecific and tightly coupled with the use case and must ingest or output real on-the-ground artifacts. In addition, the entity running the relay must be identifiable and be held legally accountable to their duties.
+
+### Successful Model - Crypto Exchanges
+
+Think of how a centralised, fiat-crypto exchange work. There is an agreement that if I withdraw `x` SGD (proceed from selling my BTC) from the exchange, I will receive `x - y` SGD in my bank account - where `y` is the processing fee.
+
+#### Authoritative
+
+This model will fail if the relay is not `authoritative`. 
+
+If the exchange is ran by some teenagers, not registered as a company (local or oversea), or not held legally accountable to deposited funds, no users will trust the product/service.
+
+#### Fallback
+
+This model will fail if the relay does not `fallback` to artifacts that is currently used in the real world.
+
+If the exchange was to present me SGD-Token instead of SGD I can withdraw from my bank, it will not work. It does not matter if there is a legal framework here that legally bind you to swap the token for real cash elsewhere.
+
+#### Relay
+
+This model will fail if the `relay` is not hyperspecific. 
+
+If the exchange do not have a BTC/SGD pair, it will not work. If the exchange does not support sending 100k to a specifc bank in Singapore, it will not work. If the exchange is not connected to the BTC network or the bank I'm a customer of (directly or indirectly), it will not work. 
+
+Essentially, the fiat-crypto exchange is a `Authoritative Fallback Relay` which worked! Yep I coined that term up, bear with me. 
+
+## Applying Authoritative Fallback Relay
+
+Let's see how we can use this relay for some of the products out there!
+
+### DID - Case of a driving license
+
+Imagine for a moment that in a very advanced nation where the traffic department is issuing and verifying driving licenses as verifable claims to their citizens. All is well within that nation, no one has to bring around additional driving license card in their wallet. In fact, the traffic department no longer print and issue physical cards.
+
+The problem arise when citizens of this country would like to drive in another nation where the traffic police, and the bouncer at the bar, expects physical driving licenses. They know nothing about blockchain, decentralised IDs or verifiable claims.
+
+### DID
+
+
+
+
+
+
+
+
+
+
+
 
 ### The case of OpenCerts
 End user does not care if you are using blockchain.
@@ -61,5 +110,10 @@ Authoritative --- environment
 preserving the high degree of decentralisation, o
 
 What if we can trade off decentralisation for usability? 
+
+
+
+
+In exchange for carrying out its duty as a authoritative fallback relay, the exchange is rewarded the processing fee (`y + BTC to SGD margins`) for the withdrawal of my cryptocurrency. 
 
 export default Blog;
