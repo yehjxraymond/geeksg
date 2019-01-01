@@ -23,6 +23,13 @@ pre code {
   background: rgba(68,68,68,0.1);
 }
 
+blockquote {
+  background: white;
+  padding: 40px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .huge {
   font-size: 3rem;
 }

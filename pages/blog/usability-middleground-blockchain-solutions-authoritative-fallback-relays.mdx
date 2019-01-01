@@ -1,0 +1,169 @@
+
+
+import Blog from "../../components/layouts/Blog";
+
+export const meta = {
+  date: new Date("27 December 2018"),
+  title: "A Middleground for Usable Blockchain Solution - Authoritative Fallback Relays",
+  slug: "usability-middleground-blockchain-solutions-authoritative-fallback-relays",
+  summary: "Right after the release of the 2nd Generation Pokemon in Pokemon Go, I’ve got my scanners working and collecting Pokemon spawn data. Over the last 24 hours (minus a few hours of downtime), I’ve collected 182,898 individual spawn data for Gen II Pokemon. As I begin working on the data, here is a quick glimpse of how rare different Pokemon are."
+};
+
+A Usability Middleground for Blockchain Solutions - Authoritative Fallback Relays
+===
+
+Interoperability is a problem which keeps presenting itself when designing a blockchain solution. To solve the problem of an interoperable blockchain, often more blockchains are created, leading to standards and products proliferation. Of which, hardly any are usable for the regular user on the street. 
+
+## Usability
+
+> Usability is part of the broader term “user experience” and refers to the ease of access and/or use of a product or website. A design is not usable or unusable per se; its features, together with the context of the user (what the user wants to do with it and the user’s environment), determine its level of usability.
+
+A product's usability cannot be measured without the context of the user. In the case of blockchain solutions, the consumer could be other machines or programs as well! As a result, a blockchain product will have a different degree of usability to:
+
+- a human user
+- another program using the same standards & interface
+- another program not using the same standards & interface
+
+Interestingly enough, when I look at existing products, they are hardly designed for human users or other machines that do not use the same standards & interface. 
+
+But first, what's usability?
+
+### Usability for Human Users
+
+Designing a product for humans is tricky. Existing products tend to assume that their users have a wallet, have the ability to manage their private keys, have basic knowledge of how cryptography works, etc. Through my experience with real users, even a file with unfamiliar file extension could drive users crazy. Try getting regular users to manage an excessively long and cryptic string of characters - something we call private keys? 
+
+How do we then introduce layers of abstraction to shield the user from the complexity of blockchain? Just like how the browser helps a grandma navigate the internet without knowing how TCP/IP, routing, or even HTML work. 
+
+### Usability for Systems Not Using the Same Standards or Interface
+
+Surely one can argue that we can surely solve the problem through standardisation - by getting everyone to use the same product/interface/protocol/data schema! Right?
+
+<div className="text-center m-4">
+  <img src="https://imgs.xkcd.com/comics/standards.png" style={{width:"50%"}}/>
+</div>
+
+No.
+
+We need to have the humility to admit that there is always an edge case that your product team has not considered, and it will be near impossible to design an all-encompassing product. There will be another similar product that does better than yours in a slightly different context or environment that you've designed your product in. There is bound to be a more competitive product. 
+
+How then do you design your solution to delight your users who interact with users of a competing products? 
+
+## Mimicking Existing "Solutions"
+
+Mimicking existing interface, data schema or artefacts is one way we can introduce familiarity to our user. When designing a solution, we need to take an approach where users using your product will be worse off, not even in scenarios where they have to interact with users of other products. In this case, it will be in your interest, as a product owner, to have a fallback mechanism to more familiar processes or artefacts. 
+
+Falling back to an existing non-blockchain solution does not mean creating another suite of 'general relay blockchain to solve all integration problem'. Instead, these relays need to be hyperspecific and tightly coupled with the use case and must ingest or output real on-the-ground artefacts. In addition, the entity running the relay must be identifiable and be held legally accountable for their duties.
+
+### Successful Model - Crypto Exchanges
+
+Think of how a centralised, fiat-crypto exchange work. There is an agreement that if I withdraw `x` SGD (proceed from selling my BTC) from the exchange, I will receive `x - y` SGD in my bank account - where `y` is the processing fee.
+
+#### Authoritative
+
+This model will fail if the relay is not `authoritative`. 
+
+If the exchange is run by some teenagers, not registered as a company (local or overseas), or not held legally accountable to deposited funds, no users will trust the product/service.
+
+#### Fallback
+
+This model will fail if the relay does not `fallback` to artefacts that are currently used in the real world.
+
+If the exchange was to present me SGD-Token instead of SGD I can withdraw from my bank, it will not work. It does not matter if there is a legal framework here that legally binds you to swap the token for real cash elsewhere.
+
+#### Relay
+
+This model will fail if the `relay` is not hyperspecific. 
+
+If the exchange does not have a BTC/SGD pair, it will not work. If the exchange does not support sending 100k to a specific bank in Singapore, it will not work. If the exchange is not connected to the BTC network or the bank I'm a customer of (directly or indirectly), it will not work. 
+
+Essentially, the fiat-crypto exchange is an `Authoritative Fallback Relay` which worked! Yep, I coined that term up, bear with me. 
+
+## Applying Authoritative Fallback Relay (AFR)
+
+Let's see how we can use Authoritative Fallback Relay (AFR) in a use case close to my work at OpenCerts, verifiable claims.
+
+### Verifable Claims
+
+Verifiable claims issued to decentralised IDs is a great idea - if everyone is using the same version of it. With dozens of competing standards and technologies out there, it is hard to settle on one implementation of verifiable claims. 
+
+Imagine for a moment that you are an education institute, there are dozens of choices out there for issuing your education credentials on the blockchain. Examples are OpenCerts, Blockcerts, Open Certificate, etc. Committing to one means excluding yourself from others. 
+
+At this point, analysis paralysis has probably got to you.
+
+Not just that, you will be introducing a whole new workflow and data format to your students and the human resource executives out there.
+
+How many of them know what to do with a .json/.opencert file? 
+
+Spoiler: Not many. 
+
+Having an authoritative fallback relay at this point will probably help you in your decision making. Suppose that one of the implementations can:
+
+- generate signed .pdf document on the fly (signed by a consortium or individual institute)
+- be printed by authorised printing companies 
+- be converted to other claim formats on the fly 
+
+How will that help you in your decision making? Firstly you overcome decision paralysis by knowing that you do not have to be stuck with one implementation allows you and your users to switch to other credentials format easily. Secondly, your users can still interact and fallback to more familiar artefacts such as pdf documents or physical certificates when interacting with the uninitiated. 
+
+Let me take this further and imagine how AFRs can be implemented to serve the 3 purposes above.
+
+#### AFR #1 - Fallback to PDFs
+
+Goal: Converting JSON certificate file (by OpenCerts & blockcerts) to PDFs
+
+For this implementation, we can use [Adobe's automatic PDF digital signature validation](https://helpx.adobe.com/acrobat/using/validating-digital-signatures.html). We can create a simple serverless function that:
+
+- validates the certificate's integrity according to the validation method
+- checks that the certificate's issuer identity is a member of a consortium 
+- generates and signs a templated PDF with the certificate data 
+
+With this function, recipients of the .opencerts (for OpenCerts) and .json (for Blockcerts) can convert their credentials to more familiar PDF document when needed for:
+
+- uploading scanned certificates in job portal
+- sending to oversea institutes for further education applications
+- applying for jobs in companies that are not familiar with more secured credentials format
+
+#### AFR #2 - Fallback to Printed certificates
+
+Goal: Converting JSON certificate file (by OpenCerts & blockcerts) to printed certificates
+
+One example is for several institutes to share a printing service which one can receive his printed certificate with his certificate file. This printing service could even be an online service which you can upload the document, make payment for the printing and the certificate will be sent to your address! 
+
+The process will be similar to the first AFR, except that the user will receive a physical certificate at the end.
+
+Do note that it is important for the printer to be authoritative. The traditional way of achieving this is the use of:
+
+- high-grade certificate paper
+- holographic or hard to replicate seals
+- signature of important people
+
+Notice how ridiculous validation of physical certificates sounds? Let's move on.
+
+#### AFR #3 - Fallback to Other Claim Formats
+
+Goal: Converting JSON certificate file (by OpenCerts & blockcerts) to other (blockchain) claim format
+
+Suppose that your students are now interacting with schools using uPort's verifiable claim. You can have a serverless function that does the necessary validation of uploaded certificate in existing formats and [generate an uPort attestation](https://github.com/uport-project/uport-credentials/blob/develop/docs/guides/index.md#attesting-information-about-your-users) on-the-fly and push this attestation to the requestor!
+
+## Your turn
+
+Now that we see how AFRs can be implemented to make your product more usable to regular users, perhaps it's your turn now to try bring the 'blockchain' out of your blockchain product?
+
+## On Abrupt Changes
+
+Of course one can argue that the use of these fallbacks will encourage the use of legacy document formats and discourage people from upgrading to better formats.
+
+My personal opinion is that upgrading from a legacy software/document format is a progressive process, we need to allow time for existing systems and processes to be upgraded and people to be educated. Switching abruptly from one to another will result in strong dissent from people who are resistant to change.
+
+In contrast, we can win over the hearts of would-be-opposition with familiar processes and artefacts. Followed by the introduction of small changes along the way - towards better processes - it can result in better adoption rate for new technologies. 
+
+## Join Me
+
+Are you excited about:
+
+- blockchain yarrr!
+- decentralised IDs and verifiable claims
+- building citizen-centric (and hence usable) products
+
+My team at GovTech works on those, drop me a message at [raymond_yeh@tech.gov.sg](mailto:raymond_yeh@tech.gov.sg) if you are interested to be part of it!
+
+export default Blog;
