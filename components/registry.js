@@ -13,3 +13,6 @@ export {
 export {
   meta as STEP_BY_STEP_POKEMON_CLUSTERING
 } from "../pages/blog/step-by-step-pokemon-clustering.mdx";
+export {
+  meta as USABILITY_MIDDLEGROUND_AUTHORITATIVE_FALLBACK_RELAY
+} from "../pages/blog/usability-middleground-blockchain-solutions-authoritative-fallback-relays.mdx";

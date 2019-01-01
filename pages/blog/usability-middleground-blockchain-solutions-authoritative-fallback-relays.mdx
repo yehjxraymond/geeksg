@@ -6,13 +6,11 @@ export const meta = {
   date: new Date("27 December 2018"),
   title: "A Middleground for Usable Blockchain Solution - Authoritative Fallback Relays",
   slug: "usability-middleground-blockchain-solutions-authoritative-fallback-relays",
-  summary: "Right after the release of the 2nd Generation Pokemon in Pokemon Go, I’ve got my scanners working and collecting Pokemon spawn data. Over the last 24 hours (minus a few hours of downtime), I’ve collected 182,898 individual spawn data for Gen II Pokemon. As I begin working on the data, here is a quick glimpse of how rare different Pokemon are."
+  summary: "A product's usability cannot be measured without the context of the user. In the case of blockchain solutions, the consumer could be other machines or programs as well! As a result, a blockchain product will have a different degree of usability to a human user, another program using the same standards and interface, and another program not using the same standards and interface"
 };
 
 A Usability Middleground for Blockchain Solutions - Authoritative Fallback Relays
 ===
-
-Interoperability is a problem which keeps presenting itself when designing a blockchain solution. To solve the problem of an interoperable blockchain, often more blockchains are created, leading to standards and products proliferation. Of which, hardly any are usable for the regular user on the street. 
 
 ## Usability
 
@@ -24,13 +22,13 @@ A product's usability cannot be measured without the context of the user. In the
 - another program using the same standards & interface
 - another program not using the same standards & interface
 
-Interestingly enough, when I look at existing products, they are hardly designed for human users or other machines that do not use the same standards & interface. 
-
-But first, what's usability?
+When I look at existing products, many are hardly designed for human users or other machines that do not use the same standards & interface. There is often an expectation that the product will naturally work when everyone is using it and everyone should adopt the new methodology or process.
 
 ### Usability for Human Users
 
-Designing a product for humans is tricky. Existing products tend to assume that their users have a wallet, have the ability to manage their private keys, have basic knowledge of how cryptography works, etc. Through my experience with real users, even a file with unfamiliar file extension could drive users crazy. Try getting regular users to manage an excessively long and cryptic string of characters - something we call private keys? 
+Designing a product for humans is tricky. Existing products tend to assume that their users have a wallet, have the ability to manage their private keys, have basic knowledge of how cryptography works, etc. Through my experience with real users, even a file with unfamiliar file extension could drive users crazy. How do you get regular users to manage an excessively long and cryptic string of characters - something we simply understand as private keys? 
+
+Expecting everyone to miraculously understand the underlying technology and implement the new workflow immediately impedes usability for regular human user. There are bound to be early adopters, the majority and the laggards during product adoption. 
 
 How do we then introduce layers of abstraction to shield the user from the complexity of blockchain? Just like how the browser helps a grandma navigate the internet without knowing how TCP/IP, routing, or even HTML work. 
 
@@ -50,7 +48,7 @@ How then do you design your solution to delight your users who interact with use
 
 ## Mimicking Existing "Solutions"
 
-Mimicking existing interface, data schema or artefacts is one way we can introduce familiarity to our user. When designing a solution, we need to take an approach where users using your product will be worse off, not even in scenarios where they have to interact with users of other products. In this case, it will be in your interest, as a product owner, to have a fallback mechanism to more familiar processes or artefacts. 
+Mimicking existing interface, data schema or artefacts is one way we can introduce familiarity to our user. When designing a solution, we need to take an approach where users using your product will not be worse off, not even in scenarios where they have to interact with users of other products. In this case, it will be in your interest, as a product owner, to have a fallback mechanism to more familiar processes or artefacts. 
 
 Falling back to an existing non-blockchain solution does not mean creating another suite of 'general relay blockchain to solve all integration problem'. Instead, these relays need to be hyperspecific and tightly coupled with the use case and must ingest or output real on-the-ground artefacts. In addition, the entity running the relay must be identifiable and be held legally accountable for their duties.
 
@@ -80,7 +78,7 @@ Essentially, the fiat-crypto exchange is an `Authoritative Fallback Relay` which
 
 ## Applying Authoritative Fallback Relay (AFR)
 
-Let's see how we can use Authoritative Fallback Relay (AFR) in a use case close to my work at OpenCerts, verifiable claims.
+Let's see how we can use Authoritative Fallback Relay (AFR) in a use case close to my work at OpenCerts, on verifiable claims.
 
 ### Verifable Claims
 
@@ -120,13 +118,12 @@ With this function, recipients of the .opencerts (for OpenCerts) and .json (for 
 
 - uploading scanned certificates in job portal
 - sending to oversea institutes for further education applications
-- applying for jobs in companies that are not familiar with more secured credentials format
 
 #### AFR #2 - Fallback to Printed certificates
 
 Goal: Converting JSON certificate file (by OpenCerts & blockcerts) to printed certificates
 
-One example is for several institutes to share a printing service which one can receive his printed certificate with his certificate file. This printing service could even be an online service which you can upload the document, make payment for the printing and the certificate will be sent to your address! 
+One example is for several institutes to share a printing service which one can receive his printed certificate with his certificate file. This could even be an online service which you can upload the document, make payment and the certificate will be on its way to you! 
 
 The process will be similar to the first AFR, except that the user will receive a physical certificate at the end.
 
@@ -136,7 +133,7 @@ Do note that it is important for the printer to be authoritative. The traditiona
 - holographic or hard to replicate seals
 - signature of important people
 
-Notice how ridiculous validation of physical certificates sounds? Let's move on.
+Notice how ridiculous validation of physical certificates sounds? Let's not harp on it at this point shall we? 
 
 #### AFR #3 - Fallback to Other Claim Formats
 
