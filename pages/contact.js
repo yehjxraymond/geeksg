@@ -4,7 +4,7 @@ import Site from "../components/layouts/Site";
 const Contact = () => (
   <Site>
     <h1>Contact Me</h1>
-    <form name="contact" method="POST" data-netlify="true">
+    <form name="contact" netlify>
       <div className="form-group">
         <label>Name:</label>
         <input type="text" name="name" className="form-control" />
