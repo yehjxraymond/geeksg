@@ -6,7 +6,7 @@ export const meta = {
   date: new Date("27 December 2018"),
   title: "A Middleground for Usable Blockchain Solution - Authoritative Fallback Relays",
   slug: "usability-middleground-blockchain-solutions-authoritative-fallback-relays",
-  summary: "A product's usability cannot be measured without the context of the user. In the case of blockchain solutions, the consumer could be other machines or programs as well! As a result, a blockchain product will have a different degree of usability to a human user, another program using the same standards and interface, and another program not using the same standards and interface"
+  summary: "Existing products often assume everyone to understand how blockchain works and that there will only be one standardised process. However, this assumption does not hold true and will only alienate the product from regular users and existing fully-functioning systems and processes. Let's take a look at how and why we should design for human users and other systems, followed by how we can build more usable products using Authoritative Fallback Relays (AFRs)."
 };
 
 A Usability Middleground for Blockchain Solutions - Authoritative Fallback Relays
@@ -22,7 +22,9 @@ A product's usability cannot be measured without the context of the user. In the
 - another program using the same standards & interface
 - another program not using the same standards & interface
 
-When I look at existing products, many are hardly designed for human users or other machines that do not use the same standards & interface. There is often an expectation that the product will naturally work when everyone is using it and everyone should adopt the new methodology or process.
+Existing products often assume everyone to understand how blockchain works and that there will only be one standardised process. However, this assumption does not hold true and will only alienate the product from regular users and existing fully-functioning systems and processes. 
+
+Let's take a look at how and why we should design for human users and other systems, followed by how we can build more usable products using Authoritative Fallback Relays (AFRs).
 
 ### Usability for Human Users
 
@@ -46,13 +48,13 @@ We need to have the humility to admit that there is always an edge case that you
 
 How then do you design your solution to delight your users who interact with users of a competing products? 
 
-## Mimicking Existing "Solutions"
+## Authoritative Fallback Relay - Mimicking Existing "Solutions"
 
 Mimicking existing interface, data schema or artefacts is one way we can introduce familiarity to our user. When designing a solution, we need to take an approach where users using your product will not be worse off, not even in scenarios where they have to interact with users of other products. In this case, it will be in your interest, as a product owner, to have a fallback mechanism to more familiar processes or artefacts. 
 
-Falling back to an existing non-blockchain solution does not mean creating another suite of 'general relay blockchain to solve all integration problem'. Instead, these relays need to be hyperspecific and tightly coupled with the use case and must ingest or output real on-the-ground artefacts. In addition, the entity running the relay must be identifiable and be held legally accountable for their duties.
+Falling back to an existing non-blockchain solution does not mean creating another suite of 'general relay blockchain to solve all integration problem'. Instead, these relays need to be hyperlocalised and tightly coupled with the use case and must ingest or output real on-the-ground artefacts. In addition, the entity running the relay must be identifiable and be held legally accountable for their duties.
 
-### Successful Model - Crypto Exchanges
+### Example of AFR - Crypto Exchanges
 
 Think of how a centralised, fiat-crypto exchange work. There is an agreement that if I withdraw `x` SGD (proceed from selling my BTC) from the exchange, I will receive `x - y` SGD in my bank account - where `y` is the processing fee.
 
@@ -70,15 +72,15 @@ If the exchange was to present me SGD-Token instead of SGD I can withdraw from m
 
 #### Relay
 
-This model will fail if the `relay` is not hyperspecific. 
+This model will fail if the `relay` is not hyperlocalised. 
 
-If the exchange does not have a BTC/SGD pair, it will not work. If the exchange does not support sending 100k to a specific bank in Singapore, it will not work. If the exchange is not connected to the BTC network or the bank I'm a customer of (directly or indirectly), it will not work. 
+If the exchange does not have a BTC/SGD pair, it will not work. If the exchange does not support sending a specific amount of money to a specific bank in Singapore, it will not work. If the exchange is not connected to the BTC network or the bank I'm a customer of (directly or indirectly), it will not work. 
 
 Essentially, the fiat-crypto exchange is an `Authoritative Fallback Relay` which worked! Yep, I coined that term up, bear with me. 
 
 ## Applying Authoritative Fallback Relay (AFR)
 
-Let's see how we can use Authoritative Fallback Relay (AFR) in a use case close to my work at OpenCerts, on verifiable claims.
+Now that we have seen an example of an AFR, let's see how we can use it in a use case like verifiable claims.
 
 ### Verifable Claims
 
