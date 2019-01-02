@@ -7,6 +7,7 @@ const Contact = () => (
   <Site>
     <h1>Contact Me</h1>
     <form name="contact" method="POST" {...netlify}>
+      <input type="hidden" name="form-name" value="contact" />
       <div className="form-group">
         <label>Name:</label>
         <input type="text" name="name" className="form-control" />
