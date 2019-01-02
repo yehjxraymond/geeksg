@@ -7,6 +7,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title key="title">Rambles of Raymond Yeh | GEEK.SG</title>
           <link
             href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald"
             rel="stylesheet"

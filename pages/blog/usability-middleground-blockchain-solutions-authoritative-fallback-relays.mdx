@@ -4,7 +4,7 @@ import Blog from "../../components/layouts/Blog";
 
 export const meta = {
   date: new Date("27 December 2018"),
-  title: "A Middleground for Usable Blockchain Solution - Authoritative Fallback Relays",
+  title: "A Usability Middleground for Blockchain Solutions - Authoritative Fallback Relays",
   slug: "usability-middleground-blockchain-solutions-authoritative-fallback-relays",
   summary: "Existing products often assume everyone to understand how blockchain works and that there will only be one standardised process. However, this assumption does not hold true and will only alienate the product from regular users and existing fully-functioning systems and processes. Let's take a look at how and why we should design for human users and other systems, followed by how we can build more usable products using Authoritative Fallback Relays (AFRs)."
 };
@@ -165,4 +165,4 @@ Are you excited about:
 
 My team at GovTech works on those, drop me a message at [raymond_yeh@tech.gov.sg](mailto:raymond_yeh@tech.gov.sg) if you are interested to be part of it!
 
-export default Blog;
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
