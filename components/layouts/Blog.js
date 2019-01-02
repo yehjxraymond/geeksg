@@ -5,11 +5,13 @@ import Site from "./Site";
 const Blog = ({ children, meta }) => (
   <Site>
     <Head>
-      {meta.title ? (
+      {meta && meta.title ? (
         <title key="title">{`${meta.title} | GEEK.SG`}</title>
       ) : null}
-      {meta.summary ? <meta name="description" content={meta.summary} /> : null}
-      {meta.slug ? (
+      {meta && meta.summary ? (
+        <meta name="description" content={meta.summary} />
+      ) : null}
+      {meta && meta.slug ? (
         <link rel="canonical" href={`https://geek.sg/blog/${meta.slug}/`} />
       ) : null}
     </Head>
