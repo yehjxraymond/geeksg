@@ -1,12 +1,12 @@
 import React from "react";
 import Site from "../components/layouts/Site";
 
-const netlify = { netlify: "" };
+const netlify = { "data-netlify": "true" };
 
 const Contact = () => (
   <Site>
     <h1>Contact Me</h1>
-    <form name="contact" {...netlify}>
+    <form name="contact" method="POST" {...netlify}>
       <div className="form-group">
         <label>Name:</label>
         <input type="text" name="name" className="form-control" />
