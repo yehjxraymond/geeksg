@@ -16,3 +16,6 @@ export {
 export {
   meta as USABILITY_MIDDLEGROUND_AUTHORITATIVE_FALLBACK_RELAY
 } from "../pages/blog/usability-middleground-blockchain-solutions-authoritative-fallback-relays.mdx";
+export {
+  meta as LOAD_TEST_TREBUCHET_FRAMEWORK
+} from "../pages/blog/load-test-private-ethereum-network-trebuchet-framework.mdx";
