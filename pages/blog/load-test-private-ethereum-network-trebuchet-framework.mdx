@@ -1,0 +1,90 @@
+import Blog from "../../components/layouts/Blog";
+import Image from "../../components/snippets/Image";
+import {Youtube} from "../../components/snippets/Video";
+
+export const meta = {
+  date: new Date("3 January 2019"),
+  title: "Load Test Private Ethereum Network with Trebuchet Framework",
+  slug: "load-test-private-ethereum-network-trebuchet-framework",
+  summary: "TL;DR: I couldn't find a load test tool that load test a private ethereum network. I wrote one so that you don't have to. It's called Trebuchet Framework. It toss any load at any service, and generates a pretty report."
+};
+
+Load Test Private Ethereum Network with Trebuchet Framework
+===
+
+<Image
+  src="/static/blog/2019/1/trebuchet.png"
+  alt="Load test any service with Trebuchet Framework"
+  width="50"
+  href="https://github.com/Trebuchet-Framework/Trebuchet"
+/>
+
+## TL;DR
+
+I couldn't find a load test tool that load test a private ethereum network. I wrote one so that you don't have to. It's called <a href="https://github.com/Trebuchet-Framework/Trebuchet">Trebuchet Framework</a>. It toss any load at any service, and generates a pretty report.
+
+## Measuring Scalability
+
+> "Our blockchain is not scalable," said no blockchain developer ever.
+
+How do we know when a blockchain is scalable or suitable for a business use case? You need: 
+
+- the types of applications running on or using the blockchain
+- the number and types of users using the applications
+- a way to measure if the blockchain infrastructure supports that load
+
+As a developer, you build the types of applications running on or using the blockchain. As the business owner, you can estimate the number and types of users using the applications. But what about the tool to measure if the blockchain infrastructure supports that load? 
+
+## The Hunt for a Way to Measure
+
+While tinkering with a private Ethereum network, a question came to my mind: "How do we know if the infrastructure supports all the transactions made by our user?". It will be quite embarrassing if an application is served to a population of over 5 million people to realise it cannot serve more than 50 people at any one time. 
+
+If we used the Ethereum network, we know the transactions per seconds is [probably in the range of 25 tx/s](https://ethereum.stackexchange.com/questions/49484/how-many-transactions-per-second-can-ethereum-currently-handle-what-changes-wil). What if like many other enterprises, we decide to run the applications on Ethereum POA Network or Quorum? How do we know if the network will perform?
+
+Of course, we would run a load test on the network!
+
+The only question is how? 
+
+So I dug around and found... nothing.
+
+There were abundant resources, tools and documentation on how to load test web applications using HTTP/s. Yet, when it comes to finding one that allows you to sign an ethereum transaction with a private key, manage nonce state, or make a smart contract call, there were none. 
+
+Realising the importance for such tools, I've decided to build and open-source one. That's how Trebuchet Framework came about. 
+
+## Extendable Load Test Framework
+
+The framework is named Trebuchet because you can use it to fling any load. Unlike a gatling gun that requires specific bullet or artillery that requires a specific round, a trebuchet throws anything you load it with - [even dead animals](https://en.wikipedia.org/wiki/History_of_biological_warfare). 
+
+Not only will the tool be built for load testing Ethereum network, but it should also be able to load test any blockchains or any custom network protocols (think IOT). 
+
+As such the focus is on creating a load test engine that is protocol agnostic and can be extended for any protocol and use case. 
+
+The framework will also make use of the concept of [virtual users (VUs)](https://support.loadimpact.com/3.0/test-configuration/what-are-virtual-users-vus/). 
+
+We know it is unrealistic to have users on blockchain just transferring ethers right? Users have to interact with smart contracts or might even deploy smart contracts themselves! The use of VUs allows load tester to model actual user behaviours on the network, thus generating a more realistic report.
+
+## Try it for Yourself!
+
+I've written a <a href="https://github.com/Trebuchet-Framework/Trebuchet-Box-Ethereum">sample load test using the framework for Ethereum</a> for running on a local ganache node. You may follow the instructions on the github page to try the framework out for yourself or watch the video below to see a sample of a run and the test report:
+
+<Youtube url="tMq32N2aeww"/>
+
+Ps. The implementation uses an ether faucet (also in trebuchet!) to disburse initial ethers to new virtual users. 
+
+## Further Work
+
+Of course, the work is not all done for Trebuchet. There are a few stretch goals for Trebuchet:
+- HTTP/s virtual users
+- A standard benchmark test for different blockchains
+- Distributed load testing
+- Load test as a service
+
+More immediate goals can be found in the [project backlog](https://github.com/Trebuchet-Framework/Trebuchet/projects/1).
+
+## Join Me
+
+If you used or would like to use Trebuchet Framework in your project, [let me know](/contact)! Knowing that Trebuchet Framework helped you motivates me.
+
+If you are intending to extend Trebuchet Framework as an OSS, feel free to make create an issue (for discussion) and then pull request to the repository.
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
