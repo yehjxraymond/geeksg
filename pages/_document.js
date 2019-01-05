@@ -9,6 +9,18 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title key="title">Rambles of Raymond Yeh | GEEK.SG</title>
           <link
+            rel="icon"
+            type="image/png"
+            href="/static/images/favicon/32x32.png"
+            sizes="32x32"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/static/images/favicon/16x16.png"
+            sizes="16x16"
+          />
+          <link
             href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald"
             rel="stylesheet"
           />
