@@ -1,4 +1,6 @@
 import Blog from "../../components/layouts/Blog";
+import Image from "../../components/snippets/Image";
+import {Youtube} from "../../components/snippets/Video";
 
 export const meta = {
   date: new Date("3 January 2019"),
@@ -9,6 +11,13 @@ export const meta = {
 
 Load Test Private Ethereum Network with Trebuchet Framework
 ===
+
+<Image
+  src="/static/blog/2019/1/trebuchet.png"
+  alt="Load test any service with Trebuchet Framework"
+  width="50"
+  href="google.com"
+/>
 
 ## TL;DR
 
@@ -24,7 +33,7 @@ How do we know when a blockchain is scalable or suitable for a business use case
 - the number and types of users using the applications
 - a way to measure if the blockchain infrastructure supports that load
 
-As a developer, you have an idea of the types of applications running on or using the blockchain. As the business owner, you can estimate the number and types of users using the applications. But what about the tool to measure if the blockchain infrastructure supports that load? 
+As a developer, you build the types of applications running on or using the blockchain. As the business owner, you can estimate the number and types of users using the applications. But what about the tool to measure if the blockchain infrastructure supports that load? 
 
 ## The Hunt for a Way to Measure
 
@@ -40,13 +49,7 @@ So I dug around and found... nothing.
 
 There were abundant resources, tools and documentation on how to load test web applications using HTTP/s. Yet, when it comes to finding one that allows you to sign an ethereum transaction with a private key, manage nonce state, or make a smart contract call, there were none. 
 
-## Crossing the Chasm
-
 Realising the importance for such tools, I've decided to build and open-source one. That's how Trebuchet Framework came about. 
-
-<div class="text-center m-4">
-  <img src="/static/blog/2019/1/trebuchet.png" style={{width:"50%"}}/>
-</div>
 
 ## Extendable Load Test Framework
 
@@ -62,9 +65,9 @@ We know it is unrealistic to have users on blockchain just transferring ethers r
 
 ## Try it for Yourself!
 
-I've written a sample load test using the framework for running on a local ganache node. You may follow the instructions on the github page to try the framework out for yourself or watch the video below:
+I've written a sample load test using the framework for running on a local ganache node. You may follow the instructions on the github page to try the framework out for yourself or watch the video below to see a sample of a run and the test report:
 
-<-------- VIDEO HERE -------->
+<Youtube url="tMq32N2aeww"/>
 
 Ps. The implementation uses an ether faucet (also in trebuchet!) to disburse initial ethers to new virtual users. 
 
