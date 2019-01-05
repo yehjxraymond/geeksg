@@ -1,7 +1,18 @@
 const withMDX = require("@zeit/next-mdx")();
 const withCss = require("@zeit/next-css");
+const fs = require("fs");
+const sitemap = require("sitemap");
 
 const PAGES = 10;
+
+const generateSitemap = paths => {
+  const sm = sitemap.createSitemap({
+    hostname: "https://geek.sg",
+    cacheTime: 60000
+  });
+  Object.keys(paths).forEach(path => sm.add({ url: path }));
+  fs.writeFileSync("./static/sitemap.xml", sm.toString());
+};
 
 module.exports = withMDX(
   withCss({
@@ -28,7 +39,9 @@ module.exports = withMDX(
         pages[`/page/${i}`] = { page: "/", query: { page: i } };
       }
       delete pathMap["/index"];
-      return { ...pathMap, ...pages };
+      const paths = { ...pathMap, ...pages };
+      generateSitemap(paths);
+      return paths;
     }
   })
 );
