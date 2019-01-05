@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "post-export": "cp ./_redirects ./out/_redirects",
-    "export": "next build && next export && post-export",
+    "export": "next build && next export && npm run post-export",
     "lint": "eslint . --ext .js --max-warnings 0",
     "lint:fix": "eslint . --ext .js --fix",
     "serve": "cd out && python -m SimpleHTTPServer 8080"
