@@ -19,7 +19,8 @@
     "path-match": "^1.2.4",
     "prop-types": "^15.6.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "sitemap": "^2.1.0"
   },
   "license": "ISC",
   "devDependencies": {
