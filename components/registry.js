@@ -19,3 +19,6 @@ export {
 export {
   meta as LOAD_TEST_TREBUCHET_FRAMEWORK
 } from "../pages/blog/load-test-private-ethereum-network-trebuchet-framework.mdx";
+export {
+  meta as THIRD_PARTY_SCAMS_MONEY_LAUNDERING
+} from "../pages/blog/third-party-scams-money-laundering-journey-dark-side.mdx";
