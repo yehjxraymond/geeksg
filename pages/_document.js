@@ -7,7 +7,9 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title key="title">Rambles of Raymond Yeh | GEEK.SG</title>
+          <title key="title">
+            Rambles of a Software Engineer | Raymond Yeh | GEEK.SG
+          </title>
           <link
             rel="icon"
             type="image/png"

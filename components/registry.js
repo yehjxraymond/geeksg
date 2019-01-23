@@ -1,4 +1,7 @@
 export {
+  meta as SNAPSHOT_ETHEREUM_ACCOUNTS_BALANCE
+} from "../pages/blog/snapshot-ethereum-accounts-balance-under-minute.mdx";
+export {
   meta as EOS
 } from "../pages/blog/getting-started-with-eos-on-cleos-without-running-a-full-node.mdx";
 export {

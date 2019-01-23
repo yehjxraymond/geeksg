@@ -1,0 +1,106 @@
+import Blog from "../../components/layouts/Blog";
+import Image from "../../components/snippets/Image";
+
+export const meta = {
+  date: new Date("21 January 2019"),
+  title: "Snapshot of Ethereum Accounts Balance in Under a Minute",
+  slug: "snapshot-ethereum-accounts-balance-under-minute",
+  summary: "57 seconds. That's the time taken to compute the balance of all the accounts on the Ethereum network. The output is a table populated with the addresses, final ether balance, total incoming and outgoing ethers, the total number of incoming and outgoing transactions and the last transacted block. All of these is done without a fully synced node or maintaining a huge database of transactions."
+};
+
+Snapshot of Ethereum Accounts Balance in Under a Minute
+===
+
+57 seconds. That's the time taken to compute the balance of all the accounts on the Ethereum network. The output is a table populated with the addresses, final ether balance, total incoming and outgoing ethers, the total number of incoming and outgoing transactions and the last transacted block. All of these is done without a fully synced node or maintaining a huge database of transactions. 
+
+I was at Google Singapore office yesterday for training on [Google Cloud Platform Fundamentals: Big Data & Machine Learning](https://www.coursera.org/learn/gcp-big-data-ml-fundamentals). During the training, I was introduced to a huge range of products in the GCP suite designed for big data. Throughout the training, my instructor [Eefy Lin](https://www.linkedin.com/in/eefy-lin-22a68a65/) has repeatedly boasted about how fast and robust is BigTable and BigQuery. It's hard to believe that a table could have millions of columns and billions of rows, and process queries of that size in a few minutes. Naturally, I thought the best way to be convinced is to prove it to myself. 
+
+<Image
+  width="50"
+  src="/static/blog/2019/1/ethereum-transaction-dataset.png"
+  alt="Ethereum transaction dataset on Google BigQuery as public dataset"
+  caption="Ethereum transaction dataset on Google BigQuery as public dataset"
+/>
+
+I started looking for the public dataset on BigQuery to play with. When browsing the dataset available on BigQuery, I chanced upon the Ethereum Blockchain Dataset (data synced by Google Cloud, with a Parity node) and thought why not this?
+
+## Putting on the Black Hat
+
+I knew instantly what I needed to query first. If I'm a black-hat looking at breaking contracts for profit, I will definitely look for ones that are valuable but yet do not hold much balance. Preferably, below 700 ethers so that it is not already on [Etherscan's top 10,000 accounts](https://etherscan.io/accounts/400?) - to ensure that fewer black-hats are looking at them. But first, we need to know the balance of each account...
+
+## Snapshot of the balance of all accounts
+
+Turns out, creating a snapshot of all balances on the Ethereum blockchain is not hard! The public dataset has a database of all transactions. That means summing up all the incoming and outgoing value transfer will get you the final balance on the accounts. 
+
+<Image
+  width="50"
+  src="/static/blog/2019/1/query-balance-summary.png"
+  alt="Results from the balance query"
+  caption="Results from the balance query"
+/>
+
+With fumbling around SQL queries, I managed to put together one that computes the following fields which will come in useful for analysis later: 
+
+- Final Account Balance (final_balance)
+- Sum of Incoming Ethers (total_incoming)
+- Sum of Outgoing Ethers (total_outgoing)
+- Count of Incoming Transactions (num_incoming_tx)
+- Count of Outgoing Transactions (num_outgoing_tx)
+- Block Number of Last Transaction (last_transaction_block)
+
+If you would like to run the query yourself for updated results, you can copy the query below: 
+
+```sql
+SELECT
+  A.to_address AS address,
+  IFNULL(A.incoming,
+    0) - IFNULL(B.outgoing,
+    0) AS final_balance,
+  A.incoming AS total_incoming,
+  B.outgoing AS total_outgoing,
+  A.num_incoming_tx,
+  B.num_outgoing_tx,
+  B.last_transaction_block
+FROM (
+  SELECT
+    SUM(value)/1e18 AS incoming,
+    to_address,
+    COUNT(*) AS num_incoming_tx
+  FROM
+    `bigquery-public-data.ethereum_blockchain.transactions`
+  GROUP BY
+    to_address) AS A
+FULL OUTER JOIN (
+  SELECT
+    SUM(value)/1e18 AS outgoing,
+    from_address,
+    MAX( block_number ) AS last_transaction_block,
+    COUNT(*) AS num_outgoing_tx
+  FROM
+    `bigquery-public-data.ethereum_blockchain.transactions`
+  GROUP BY
+    from_address) AS B
+ON
+  A.to_address = B.from_address
+```
+
+## Drawbacks on the above method
+
+Looking at the data, I found some anomaly with the results. There were some rows with negative final balance!
+
+Probing further, and comparing the transactions with those on etherscan, the error was due to a few factors: 
+- fees calculation were wonky and inconsistent with Etherscan's
+- failed transactions cannot be distinguished
+- "internal transactions" for contract execution were not accounted for
+
+## Footnote
+
+While the data is far from perfect, it was sufficient for me to have a good understanding of the balances of all the accounts and have it all in a single trusty database that I can perform a join on.
+
+If you were looking to conduct an airdrop, you can definitely use this method to obtain the proportion of the total number of ethers one own on the blockchain. To top it up, you can even exclude accounts that are smart contracts by removing those accounts found in the `contracts` table.
+
+## Till next time
+
+Obtaining a table of all the balances pave way for me to figure out the top-value contracts in subsequent queries, but we'll leave that for another post!
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
