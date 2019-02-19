@@ -25,3 +25,7 @@ export {
 export {
   meta as THIRD_PARTY_SCAMS_MONEY_LAUNDERING
 } from "../pages/blog/third-party-scams-money-laundering-journey-dark-side.mdx";
+export {
+  meta as SMART_CONTRACT_FOR_HIRING
+} from "../pages/blog/smart-contract-for-hiring.mdx";
+
