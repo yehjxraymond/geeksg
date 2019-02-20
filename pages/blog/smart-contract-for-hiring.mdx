@@ -1,0 +1,93 @@
+import Blog from "../../components/layouts/Blog";
+import Image from "../../components/snippets/Image";
+
+export const meta = {
+  date: new Date("20 February 2019"),
+  title: "Smart Contract for Hiring",
+  slug: "smart-contract-for-hiring",
+  summary: "What’s a better way to hire a smart contract developer than to write a smart contract to do it? That’s what my team thought when we decided to add hiring to the lengthy list of problems that smart contracts promised to solve. We developed a technical hiring smart contract."
+};
+
+Smart Contract for Hiring
+===
+
+What’s a better way to hire a smart contract developer than to write a smart contract to do it? That’s what my team thought when we decided to add hiring to the lengthy list of problems that smart contracts promised to solve.
+
+So we remodeled Ethernaut into a <a href="https://ethernaut.gdshive.io/">coding challenge platform</a> with its leaderboard.
+
+> “You got a problem? Let me blockchain that for you”
+> \- Every Blockchain Experts Ever
+
+## Standing on shoulders of giants
+
+<Image
+  width="50"
+  src="/static/blog/2019/2/govtech-ethernaut-solidity-coding-challenge.png"
+  alt="GovTech's Solidity Coding Challenge"
+  caption="GovTech's Solidity Coding Challenge"
+  href="https://ethernaut.gdshive.io"
+/>
+
+Knowing this is a side-project to our work at <a href="https://opencerts.io/">OpenCerts</a>, we didn’t really want to reinvent the wheel as much as possible and make use of resources that are already available. My eyes fell on forking <a href="https://ethernaut.zeppelin.solutions/">Ethernaut</a> as the base for the coding challenge platform. 
+
+As an Ethereum developer, I enjoyed solving all the challenges on the Ethernaut platform and enjoyed interacting with the game through the browser’s console and Metamask.
+
+To employ it as a technical recruiting tool, we needed to extend it to track progress and contact information of participants.
+
+## Upgrading Ethernaut base
+
+As we would like the candidate to be able to read and write the latest solidity code (v0.5.x) and interact with the platform using the latest APIs, we needed to upgrade the web3 version. Turns out, that led us down a rabbit hole and resulted in a massive rewrite of the original code for both front-end and deployment scripts. 
+
+At the same time, we noticed that there weren’t any linting on either the solidity or Javascript code, so we added eslint and solium.
+
+Now we are done with the boring parts, let’s begin with the fun stuff - adding the leaderboard.
+
+## ERC-20 to the Rescue
+
+<Image
+  width="50"
+  src="/static/blog/2019/2/leaderboard-with-erc20.png"
+  alt="Leaderboard using Etherscan"
+  caption="Leaderboard using Etherscan"
+  href="https://ethernaut.gdshive.io"
+/>
+
+As mentioned, we want to reuse as many existing resources as possible for the coding challenge platform. Etherscan turns out to be the best tool for us to track the score and ranking of individual players. The ERC-20 token page shows us exactly what we wanted as a <a href="https://ropsten.etherscan.io/token/0xd8e6b23df676e557e5acceb0bef13eeeb5933ef2#balances">leaderboard</a>.
+
+To implement the leaderboard, it is as easy as creating a new token for our challenge and letting Etherscan handle the rest. 
+
+For the token, we made use of the <a href="https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC20/ERC20Mintable.sol">ERC20Mintable</a> contract from <a href="https://github.com/OpenZeppelin/openzeppelin-solidity">OpenZepplin</a> project and disabled token transfer to prevent players from having more points than there are for each level.
+
+We then implemented the <a href="https://github.com/GovTechSG/SolidityCodingChallenge/blob/master/contracts/ScoreTracker.sol">ScoreTracker</a> contract to distribute the tokens to a player who has completed individual levels, taking care not to dispense token multiple times for the same level.
+
+After adding the ScoreTracker to the original <a href="https://github.com/GovTechSG/SolidityCodingChallenge/blob/master/contracts/Ethernaut.sol">Ethernaut</a> contract we have the entire challenge engine ready! It’s just missing some levels.
+
+## Who are we hiring?
+
+“Who are we hiring?”. That’s the main question we asked when designing the levels. 
+
+We know we didn’t want to restrict our talent pool to just developers who live and breathe solidity. We wanted to extend our reach to developers who are strong in their craft but may not have sufficient experience with dealing with solidity code. 
+
+That means not starting with a <a href="https://ethernaut.zeppelin.solutions/level/0x7640adb7aa5f07ea42483ad3f30b0280d4e595f0">crazy challenge</a> that requires you to write in bytecodes.
+
+With that in mind, my colleague designed a Pokémon trainer level that requires players to write a contract that can distinguish and capture Pokémon. The level will test the ability of the player to write a simple smart contract that can interact with other smart contract and store state. As simple as that!
+
+However, the level didn’t see the light of day as we were cautioned against using trademarked materials. So, Pokémon trainer level turned into <a href="https://ethernaut.gdshive.io/level/0xB99b3786E6C23EA8A04Ae8b5Cf3575770B8e03bB">StampCollector</a> level. Yawn...
+
+<Image
+  width="50"
+  src="https://media1.tenor.com/images/84c4e8c1a24b84bece745d2dcd2a5aa8/tenor.gif?itemid=5942386"
+  alt="Pikachu is Disappointed"
+  caption="Pikachu is Disappointed"
+  cite="https://tenor.com/search/pikachu-gifs"
+/>
+
+After the first level, we wanted to work on something simpler for developers new to solidity. My colleague suggested a FizzBuzz level since it's what developers are familiar with and simple enough. We soon realised we were wrong. String is a hard nut to crack in Solidity as it turns out... 
+
+<a href="https://ethernaut.gdshive.io/level/0x223aBE664FeAe137330A92C086F854b479D06B58">FizzBuzz</a> became the toughest challenge we have and we had to find other candidates to be the entry-level challenges. 
+
+## Take a Shot
+
+If you are a smart contract developer looking for a challenge, <a href="https://ethernaut.gdshive.io/">take a shot at the challenge</a> and tell me what do you think. If you are looking to join me in my team, drop me a note on my contact page! If you are also looking for Blockchain developers, feel free to <a href="https://github.com/GovTechSG/SolidityCodingChallenge">fork our SolidityCodingChallenge repository</a>!
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
