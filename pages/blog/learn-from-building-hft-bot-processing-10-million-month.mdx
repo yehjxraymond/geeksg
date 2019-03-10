@@ -1,0 +1,111 @@
+import Blog from "../../components/layouts/Blog";
+import Reference from "../../components/snippets/Reference";
+import Image from "../../components/snippets/Image";
+
+export const meta = {
+  date: new Date("10 March 2019"),
+  title: "What I learn from building a HFT bot processing >$10 million a month. ",
+  slug: "learn-from-building-hft-bot-processing-10-million-month",
+  summary: "December 2017. That was the month I built a High-Frequency Trading (HFT) bot for arbitrage trading. Through building the application, I realised that there are limited literature on HFT and quantitative trading. There were even fewer personal recounts. I've learnt many lessons by building a program that deals with real money and has made many costly mistakes, some of which obliterated huge parts of my profits. Since I've paid my tuition dues, I might as well share my lessons with the ones who would like to embark on the pilgrimage. "
+};
+
+What I learn from building a HFT bot trading >$10 million a month. 
+===
+
+December 2017. That was the month I built a High-Frequency Trading (HFT) bot for arbitrage trading. Through building the application, I realised that there are limited literature on HFT and quantitative trading. There were even fewer personal recounts. I've learnt many lessons by building a program that deals with real money and has made many costly mistakes, some of which obliterated huge parts of my profits. Since I've paid my tuition dues, I might as well share my lessons with the ones who would like to embark on the pilgrimage. 
+
+<Image
+  width="50"
+  src="/static/blog/2019/3/hft-transaction-volume.png"
+  alt="My bot's transaction volume, if only that was my profits..."
+  caption="My bot's transaction volume, if only that was my profits..."
+/>
+
+## How it began
+
+The cryptocurrency space is an interesting one. Unlike traditional markets where electronic trading is only available to big players with access to real-time price information, low latency compute and high-speed network, the crypto space is highly decentralised, with price information and API access to multiple marketplaces readily available. 
+
+The very nature that the markets are decentralised and there are numerous assets with a varying degree of liquidity means a large potential for arbitrage. Price discovery happens not just in one exchange but across multiple exchanges across the world. This means market makers, big and small ones, are needed everywhere to propagate price information for the different assets. Prior to building a bot, I've tried to perform arbitrage manually across a few exchanges and have some minor success with them. That led me to wonder if I can do the same at a much bigger scale for more profits. 
+
+That is exactly what I did. And through the process, I've learnt a great deal that online resources do not teach. Nothing makes me learn better than actually making losing trades. Below are the lessons I've paid my dues on, so that you don't have to.
+
+## Know your Alpha
+
+> "Alpha" (the Greek letter α) is a term used in investing to describe a strategy's ability to beat the market, or it's "edge." Alpha is thus also often referred to as “excess return” or “abnormal rate of return”
+
+> <Reference
+  text="from Investopedia"
+  src="https://www.investopedia.com/terms/a/alpha.asp"
+/> 
+
+In an efficient market, there is no way to systematically earn returns exceeding the market as a whole. In other words, alpha is zero. This elusive alpha is what many quants chase after but only the chosen few have seen it. 
+
+The good news is the market is inefficient in the short term. Alpha exists. The problem is finding and identifying it. 
+
+The alpha of my trading strategy is arbitrage. I'm able to propagate price information much faster within one specific exchange through arbitrage, before other traders or even the exchange itself. I call it intra-exchange arbitrage. To have an idea of the implementation you can look up <a href="https://www.globalsoftwaresupport.com/forex-arbitrage-bellman-ford/">bellman-ford negative cycle algorithm</a>. 
+
+Knowing the goose that lays the golden egg would be the most important. Most (crypto) trading bots claimed to be able to generate profit consistently backed with elaborated backtest reports yet they still fail when implemented. That's because they do not have the alpha. There will not be a way to generate returns consistently exceeding the market!
+
+## Know your Alpha (and when it's dead)
+
+Knowing your alpha does not only mean finding and identifying it. It also means tracking and knowing when it no longer exists. 
+
+Alpha means <a href="https://www.gurufocus.com/news/743686/can-investors-beat-an-efficient-market">money on the table</a>. If there is money on the table, it won't be for long. Efficient market theory tells us that Alpha should be zero in the long term. Knowing when it is zero will save you from many bad trades. 
+
+<Image
+  width="50"
+  src="/static/blog/2019/3/quoine-top-trader.png"
+  alt="Top Trader (by volume) - Beaten at my game"
+  caption="Top Trader (by volume) - Beaten at my game"
+/>
+
+In my case, profits from arbitrage started to dwindle after a month or more into the game. My initial suspicion was that there was a bigger player in the game chasing after the same alpha, with faster compute, lower latency and more complex model. The suspicion  was confirmed when the exchange announced the top trader (by volume) for that month. <a href="https://www.linkedin.com/in/charles-caverne-a2562a14/">Charles Caverne</a>, a quant from Squarepoint Capital seemed to be that player. 
+
+> If the Alpha is dead, move on.
+
+My initial response was to optimise on the computation, network latency, and execution model. However, once the milk is out of the bottle, there is no way of getting it back in. It seemed like more players started to trade with similar strategies, or the exchange performs an arbitrage settlement after every trade (and kept the profits). Many of my trade executed by the execution model started slipping and netting losses although the alpha model is showing profits. 
+
+## Model your risk
+
+After identifying your alpha (and probably tested it), you might think you can exploit the hell out of it and possibly retire by the end of the year? That was what I thought until some of my trades were showing >50% losses. 
+
+In my case, the bulk of the losses were attributed to not understanding the order book's depth sufficiently before executing a trade. My initial execution model did not have any information on the order book's depth and only relied on the ask/bid price to compute trade volume. Turns out, without enough "money on the table", I was burnt by the slippage in the thin order book. I owe it to arrogance. 
+
+It is unlikely that there was no risk involved in your trading strategy. If you think otherwise, you've probably missed it, look harder.
+
+## Don't be greedy
+
+> You see $100 on the table. What do you do? Do you take it all?
+
+The thing about trading is that you are not the only player in the market. That means you cannot act as if you were the only one who saw the money on the table. The trick is not to be the one reaching out to the table to be burnt when there is no more money left. 
+
+In my story, I started out taking the full profit off the book. Whenever I've calculated the exact amount of profit, after taking account of the order book depth), I execute a trade to wipe the entire profit off from the market. That was a bad idea. 
+
+More often than not, the market would have moved by the time my order was executed. My profits were usually lesser than what was calculated before the price slipped. While this mistake did not cost me as much as being the idiot who did not look into the order book, it dampened my profitability on each trade. 
+
+Upon realising this, I've decided to take only a proportion of the profits with any one trade. I found the sweet spot to be around the range of 50% for maximum yield. 
+
+## All models are wrong, but some are useful
+
+<Image
+  width="50"
+  src="/static/blog/2019/3/alpha-model-quantitative-trading.png"
+  alt="Alpha Model in Quantitative Trading"
+  caption="Alpha Model in Quantitative Trading"
+/>
+
+Alpha, as it turns out, is only part of the entire trading bot model. Itself does not generate profitable trades. 
+
+My earliest strategy relied only on the Alpha model for manual trade execution. I assumed there was no risk involved in arbitrage and that transactional cost can be calculated later. The entire program was a mess. It was hard to pinpoint the source of errors whenever a bad trade is executed (heck I didn't even know that was possible). 
+
+Breaking the program down into sizable chuck into their functional components corresponding to different part of the Alpha model in quantitative trading allowed the code to be more readable and testable. Bugs can later be traced back to their sources much faster. 
+
+As you can see, the lessons learnt above can be built into the model. I could have accounted for the order book depth in the execution mode and the slippage into the risk model!
+
+## Stay hungry, Stay foolish
+
+Ultimately, at the end of the journey - after my alpha died - I had fun, a story to tell, and lessons to share. It was fun while it lasted. 
+
+The experience with HFT sparked my curiosity to learn more about HFTs and quantitative trading. I chanced upon opportunities to take a peek into the highly elusive and cryptic field of study and have myself enrolled in <a href="https://wqu.org/programs/mscfe">WorldQuant University's Masters in Financial Engineering</a>. Being only in my second module, I can see how challenging it is to be a decent quant. If you have an interest in this area and is up for some challenge, feel free to join me!
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
