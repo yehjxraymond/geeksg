@@ -2,6 +2,7 @@ body {
   background-color: rgb(250, 250, 250);
   -webkit-font-smoothing: antialiased;
   font-family: 'Open Sans', sans-serif;
+  white-space: pre-wrap;
 }
 
 @media (min-width: 576px) {
