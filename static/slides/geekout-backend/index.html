@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>reveal.js – The HTML Presentation Framework</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/static/reveal/css/reset.css" />
+    <link rel="stylesheet" href="/static/reveal/css/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="/static/reveal/css/theme/black.css"
+      id="theme"
+    />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="/static/reveal/lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "/static/reveal/css/print/pdf.css"
+        : "/static/reveal/css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h4>Developing</h4>
+          <h2>Backend Applications</h2>
+          <p>
+            <small>by <a href="https://geek.sg">Raymond Yeh</a></small>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h1>APIs</h1>
+            <h2>What are they?</h2>
+          </section>
+
+          <section>
+            <h1>GET</h1>
+            <img src="./img/get.png" />
+          </section>
+
+          <section>
+            <h1>POST</h1>
+            <img src="./img/post.png" />
+          </section>
+
+          <section>
+            <h1>PUT</h1>
+            <img src="./img/put.png" />
+          </section>
+
+          <section>
+            <h1>DELETE</h1>
+            <img src="./img/delete.png" />
+          </section>
+
+          <section>
+            <h1>Summary</h1>
+            <img src="./img/api-summary.png" />
+            <small
+              ><a
+                href="https://www.restapitutorial.com/lessons/httpmethods.html"
+                >https://www.restapitutorial.com/lessons/httpmethods.html</a
+              ></small
+            >
+          </section>
+
+          <section>
+            <h3>Observe with Inspect</h3>
+            <img src="./img/inspect.png" />
+          </section>
+
+          <section>
+            <h3>Demo with Postman</h3>
+            <img src="./img/postman.png" />
+            <small
+              ><a href="https://www.getpostman.com"
+                >https://www.getpostman.com</a
+              ></small
+            >
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Developing your own APIs</h1>
+          </section>
+
+          <section>
+            <h3>Pre-requisites</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git"
+                  >Git</a
+                >
+              </li>
+              <li><a href="https://nodejs.org/en/download/">Node.js</a></li>
+              <li>
+                <a href="https://code.visualstudio.com/download"
+                  >MS Visual Studio (Optional)</a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Project Initialisation</h2>
+            <pre><code class="bash" data-trim>
+              mkdir rocks-backend
+              cd rocks-backend
+              npm init
+              npm i fastify
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Hello World</h2>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+const fastify = require("fastify")({ logger: true });
+
+fastify.get("/", async (_req, res) => {
+  res.send("Hello World!");
+});
+
+fastify.listen(3000, (err, address) => {
+  if (err) throw err;
+  fastify.log.info(`server listening on ${address}`);
+});              
+            </code></pre>
+            <small><a href="https://fastify.io/">https://fastify.io/</a></small>
+          </section>
+
+          <section>
+            <h2>Running the application</h2>
+            <pre><code class="bash" data-trim>
+                  node index.js
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Returning rocks data</h2>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+// Hardcode some rocks
+const rocks = [
+  { name: "Pegmatite", weight: 2.5 },
+  { name: "Andesite", weight: 1.6 },
+  { name: "Basalt", weight: 3.14 },
+  { name: "Obsidian", weight: 8 },
+  { name: "Diorite", weight: 0.12 }
+];
+
+// List all rocks
+fastify.get("/rock", async (_req, res) => {
+  res.send(rocks);
+});             
+                </code></pre>
+          </section>
+
+          <section>
+            <h2>Querying for rocks</h2>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+// Query a rock
+fastify.get("/rock/:id", async ({ params }, res) => {
+  res.send(rocks[params.id]);
+});        
+              </code></pre>
+          </section>
+
+          <section class="fragments">
+            <h2>Creating new rocks</h2>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+// Create a rock
+fastify.post("/rock", ({ body }, res) => {
+  rocks.push(body);
+  res.send(rocks.length - 1);
+});    
+              </code></pre>
+            <small class="fragment">Notice any problems?</small>
+          </section>
+
+          <section>
+            <h2>Calling external APIs</h2>
+            <pre><code class="bash" data-trim>
+npm i axios
+            </code></pre>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+const axios = require("axios");
+//...
+// Create a rock
+fastify.post("/rock", async ({ body }, res) => {
+  const randomJoke = await axios({
+    method: "get",
+    headers: {
+      "Accept": "application/json"
+    },
+    url: "https://icanhazdadjoke.com/"
+  });
+  rocks.push({ ...body, engraving: randomJoke.data.joke });
+  res.send(rocks.length - 1);
+});
+            </code></pre>
+            <small>
+              <a href="https://github.com/axios/axios"
+                >https://github.com/axios/axios</a
+              >,
+              <a href="https://icanhazdadjoke.com/api"
+                >https://icanhazdadjoke.com/api</a
+              >
+            </small>
+          </section>
+
+          <section>
+            <h2>Persisting data (1/2)</h2>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+const loki = require("lokijs");
+//...
+let db;
+let rockDb;
+
+const rocksCollectionName = "rocks";
+
+// Initialise rockDb
+const databaseInitialize = () => {
+  rockDb = db.getCollection(rocksCollectionName);
+  if (rockDb === null) {
+    rockDb = db.addCollection(rocksCollectionName);
+  }
+};
+
+// Create a new loki db
+db = new loki("data.json", {
+  autoload: true,
+  autoloadCallback: databaseInitialize,
+  autosave: true,
+  autosaveInterval: 4000
+});
+            </code></pre>
+            <small><a href="http://lokijs.org/">http://lokijs.org/</a></small>
+          </section>
+          <section>
+            <h2>Persisting data (2/2)</h2>
+            <p>index.js</p>
+            <pre><code class="js" data-trim data-line-numbers>
+// List all rocks
+fastify.get("/rock", async (_req, res) => {
+  const rocks = rockDb.find();
+  res.send(rocks);
+});
+
+// Query a rock
+fastify.get("/rock/:id", async ({ params }, res) => {
+  const rock = rockDb.get(i);
+  res.send(rock);
+});
+
+// Create a rock
+fastify.post("/rock", async ({ body }, res) => {
+  const randomJoke = await axios({
+    method: "get",
+    headers: {
+      Accept: "application/json"
+    },
+    url: "https://icanhazdadjoke.com/"
+  });
+  const rock = { ...body, engraving: randomJoke.data.joke };
+  const insertedRock = rockDb.insert(rock);
+  res.send(insertedRock);
+});
+              </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Sharing your API</h1>
+          </section>
+
+          <section>
+            <h2>LAN Network</h2>
+            <p>
+              Find your local IP address and access it from another device on
+              the same network.
+            </p>
+            <pre><code class="bash" data-trim data-line-numbers>
+ifconfig
+          </code></pre>
+          </section>
+
+          <section>
+            <h2>ngrok</h2>
+            <img src="./img/ngrok.png" />
+            <pre><code class="bash" data-trim data-line-numbers>
+./ngrok http 3000
+            </code></pre>
+            <small><a href="https://ngrok.com/">https://ngrok.com/</a></small>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Enter the Frameworks</h2>
+            <img src="./img/framework.png" />
+            <p>
+              <small
+                ><a href="https://toggl.com/programming-princess/"
+                  >https://toggl.com/programming-princess/</a
+                ></small
+              >
+            </p>
+          </section>
+          <section>
+            <h2>Pick your poison</h2>
+            <img
+              src="https://cdn-images-1.medium.com/max/800/1*yW34BLeoeWa_qBgoUn6-VA.jpeg"
+            />
+            <p>
+              <small
+                ><a
+                  href="https://medium.freecodecamp.org/10-node-js-frameworks-worth-checking-out-express-loopback-hapi-and-beyond-7b537b590f89"
+                  >https://medium.freecodecamp.org/10-node-js-frameworks-worth-checking-out-express-loopback-hapi-and-beyond-7b537b590f89</a
+                ></small
+              >
+            </p>
+          </section>
+          <section>
+            <h2>Loopback.io (v3)</h2>
+            <pre><code class="bash" data-trim>
+npm install -g loopback-cli
+mkdir rocks-loopback
+cd rocks-loopback
+lb
+            </code></pre>
+            <p>
+              <small
+                ><a href="https://loopback.io/doc/en/lb3/"
+                  >https://loopback.io/doc/en/lb3/</a
+                ></small
+              >
+            </p>
+          </section>
+
+          <section>
+            <h2>Generate Model</h2>
+            <img src="./img/lb-model.png" />
+          </section>
+
+          <section>
+            <h2>Add Model Properties</h2>
+            <img src="./img/lb-model-properties.png" />
+          </section>
+
+          <section>
+            <h2>API Explorer</h2>
+            <pre><code class="bash" data-trim>
+node .
+            </code></pre>
+            <img src="./img/explorer.png" />
+          </section>
+
+          <section>
+            <h2>Application Logic</h2>
+            <p>common/models/rock.js</p>
+            <pre><code class="js" data-trim>
+"use strict";
+const axios = require("axios");
+
+const getJoke = async () => {
+    const randomJoke = await axios({
+        method: "get",
+        headers: {
+          Accept: "application/json"
+        },
+        url: "https://icanhazdadjoke.com/"
+      });
+    return randomJoke.data.joke 
+}
+
+module.exports = function(Rock) {
+  Rock.observe("before save", async (ctx, next) => {
+    
+    if (ctx.instance) {
+      if(!ctx.instance.engraving) {
+        ctx.instance.engraving = await getJoke();
+      }
+    } else {
+        if(ctx.data.engraving){
+            ctx.data.engraving = await getJoke();
+        }
+    }
+    next();
+  });
+};
+                  
+              </code></pre>
+            <small
+              ><a
+                href="https://loopback.io/doc/en/lb3/Adding-application-logic.html"
+                >https://loopback.io/doc/en/lb3/Adding-application-logic.html</a
+              ></small
+            >
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>What's Next?</h2>
+          </section>
+
+          <section>
+            <h2>Testing</h2>
+            <ul>
+              <li>Unit Testing</li>
+              <li>Integration Testing</li>
+              <li>Regression Testing</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Deployment</h2>
+            <ul>
+              <li>Database / Object Storage</li>
+              <li>Docker</li>
+              <li>Kubenetes / Terraform / Nomad</li>
+              <li>AWS / GCP</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Continuous Integration</h2>
+            <ul>
+              <li>Github / Gitlab</li>
+              <li>Travis / Circle</li>
+              <li>Sonarqube</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h1>End</h1>
+        </section>
+      </div>
+    </div>
+
+    <script src="/static/reveal/js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        transition: "slide", // none/fade/slide/convex/concave/zoom
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          {
+            src: "/static/reveal/plugin/markdown/marked.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            }
+          },
+          {
+            src: "/static/reveal/plugin/markdown/markdown.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            }
+          },
+          { src: "/static/reveal/plugin/highlight/highlight.js", async: true },
+          { src: "/static/reveal/plugin/search/search.js", async: true },
+          { src: "/static/reveal/plugin/zoom-js/zoom.js", async: true },
+          { src: "/static/reveal/plugin/notes/notes.js", async: true }
+        ]
+      });
+    </script>
+  </body>
+</html>
