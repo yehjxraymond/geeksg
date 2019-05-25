@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>reveal.js – The HTML Presentation Framework</title>
+    <title>Developing Backend Application with Javascript</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/static/reveal/css/reset.css" />
@@ -395,7 +395,7 @@ const getJoke = async () => {
 }
 
 module.exports = function(Rock) {
-  Rock.observe("before save", async (ctx, next) => {
+  Rock.observe("before save", async (ctx) => {
     
     if (ctx.instance) {
       if(!ctx.instance.engraving) {
@@ -406,7 +406,6 @@ module.exports = function(Rock) {
             ctx.data.engraving = await getJoke();
         }
     }
-    next();
   });
 };
                   
@@ -456,6 +455,10 @@ module.exports = function(Rock) {
 
         <section>
           <h1>End</h1>
+          <ul>
+            <li>https://github.com/yehjxraymond/rocks-backend</li>
+            <li>https://github.com/yehjxraymond/rocks-loopback</li>
+          </ul>
         </section>
       </div>
     </div>
