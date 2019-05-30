@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Developing Frontend Application with Javascript</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/static/reveal/css/reset.css" />
+    <link rel="stylesheet" href="/static/reveal/css/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="/static/reveal/css/theme/black.css"
+      id="theme"
+    />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="/static/reveal/lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "/static/reveal/css/print/pdf.css"
+        : "/static/reveal/css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h4>Developing</h4>
+          <h2>Frontend Applications</h2>
+          <p>
+            <small>by <a href="https://geek.sg">Raymond Yeh</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Frontend Frameworks</h2>
+          <img
+            src="https://rubygarage.s3.amazonaws.com/uploads/article_image/file/812/js-frameworks.jpg"
+          />
+        </section>
+
+        <section>
+          <section>
+            <h1>Developing your React App</h1>
+          </section>
+
+          <section>
+            <h2>Final Product</h2>
+            <img src="./img/final.png" />
+          </section>
+
+          <section>
+            <h3>Pre-requisites</h3>
+            <ul>
+              <li>
+                <a
+                  href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git"
+                  >Git</a
+                >
+              </li>
+              <li>
+                <a href="https://code.visualstudio.com/download"
+                  >MS Visual Studio (Optional)</a
+                >
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Next.js</h2>
+            <small
+              ><a href="https://github.com/zeit/next.js"
+                >https://github.com/zeit/next.js</a
+              ></small
+            >
+          </section>
+
+          <section>
+            <h2>Project Initialisation</h2>
+            <pre><code class="bash" data-trim>
+              mkdir rocks-nextjs
+              cd rocks-backend
+              npm init
+              npm i next react react-dom axios formik
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Hello World</h2>
+            <small>package.json</small>
+            <pre><code class="json" data-trim>
+{
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+}
+            </code></pre>
+            <small>pages/index.js</small>
+            <pre><code class="jsx" data-trim>
+const Page = () => {
+  return <div>Welcome to Next.js!</div>
+}
+
+export default Page
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Adding Bootstrap</h2>
+            <small>pages/_document.js</small>
+            <pre><code class="jsx" data-trim>
+// https://nextjs.org/docs/#custom-document
+import Document, { Html, Head, Main, NextScript } from &quot;next/document&quot;;
+
+class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
+  }
+
+  render() {
+    return (
+      &lt;Html&gt;
+        &lt;Head&gt;
+          &lt;link
+            rel=&quot;stylesheet&quot;
+            href=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&quot;
+            integrity=&quot;sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T&quot;
+            crossOrigin=&quot;anonymous&quot;
+          /&gt;
+          &lt;script
+            src=&quot;https://code.jquery.com/jquery-3.3.1.slim.min.js&quot;
+            integrity=&quot;sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo&quot;
+            crossOrigin=&quot;anonymous&quot;
+          /&gt;
+          &lt;script
+            src=&quot;https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js&quot;
+            integrity=&quot;sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1&quot;
+            crossOrigin=&quot;anonymous&quot;
+          /&gt;
+          &lt;script
+            src=&quot;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js&quot;
+            integrity=&quot;sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM&quot;
+            crossOrigin=&quot;anonymous&quot;
+          /&gt;
+        &lt;/Head&gt;
+        &lt;body&gt;
+          &lt;Main /&gt;
+          &lt;NextScript /&gt;
+        &lt;/body&gt;
+      &lt;/Html&gt;
+    );
+  }
+}
+
+export default MyDocument;
+                </code></pre>
+            <small
+              ><a href="https://github.com/zeit/next.js/#custom-document"
+                >https://github.com/zeit/next.js/#custom-document</a
+              ></small
+            >
+          </section>
+
+          <section>
+            <h2>Rendering from static data</h2>
+            <small>pages/index.js</small>
+            <pre><code class="jsx" data-trim>
+const rocks = [
+  {
+    name: "Andesite",
+    image:
+      "https://mineralseducationcoalition.org/wp-content/uploads/andesite_366069737.jpg",
+    weight: 13.5,
+    engraving: "I'm made of Andesite",
+    location: {
+      lat: 1.336876,
+      lng: 103.710109
+    }
+  },
+  {
+    name: "Diorite",
+    weight: 0.15,
+    image:
+      "https://images-na.ssl-images-amazon.com/images/I/81TVw5AlEkL._SX425_.jpg",
+    engraving: "I'm made of Diorite",
+    location: {
+      lat: 1.330276,
+      lng: 103.752822
+    }
+  },
+  {
+    name: "Obsidian",
+    weight: 3.25,
+    image:
+      "https://images-na.ssl-images-amazon.com/images/I/61Fk1UKrbcL._SX425_.jpg",
+    engraving: "I'm made of Obsidian",
+    location: {
+      lat: 1.385251,
+      lng: 103.849702
+    }
+  }
+];
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Rendering from static data</h2>
+            <small>pages/index.js</small>
+            <pre><code class="jsx" data-trim>
+const Page = () => {
+  const renderedRocks = rocks.map((r, i) => (
+    <div key={i} className="col-4">
+      {r.image && <img src={r.image} style={{ width: "100%" }} />}
+      <div className="h3">{r.name}</div>
+      <div>Weight: {r.weight}</div>
+      {r.engraving && <div>Engraving: {r.engraving}</div>}
+      {r.location && <div>Lat: {r.location.lat}</div>}
+      {r.location && <div>Lng: {r.location.lng}</div>}
+    </div>
+  ));
+  return (
+    <div className="container">
+      <div className="row">{renderedRocks}</div>
+    </div>
+  );
+}
+
+export default Page;
+
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Creating new rocks</h2>
+            <small>pages/create.js</small>
+            <pre><code class="jsx" data-trim>
+import React, { Component } from &quot;react&quot;;
+
+class Page extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: &quot;&quot;,
+      weight: &quot;&quot;,
+      engraving: &quot;&quot;,
+      lat: &quot;&quot;,
+      lng: &quot;&quot;
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit() {
+    const { name, weight, engraving, lat, lng } = this.state;
+    alert(
+      JSON.stringify({
+        name,
+        weight,
+        engraving,
+        lat,
+        lng
+      })
+    );
+  }
+
+  render() {
+    const { name, weight, engraving, lat, lng } = this.state;
+    return (
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;form onSubmit={this.handleSubmit}&gt;
+          &lt;div&gt;
+            &lt;input
+              type=&quot;text&quot;
+              value={name}
+              onChange={e =&gt; {
+                this.setState({ name: e.target.value });
+              }}
+              placeholder=&quot;name&quot;
+            /&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;input
+              type=&quot;text&quot;
+              value={weight}
+              onChange={e =&gt; {
+                this.setState({ weight: e.target.value });
+              }}
+              placeholder=&quot;weight&quot;
+            /&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;input
+              type=&quot;text&quot;
+              value={engraving}
+              onChange={e =&gt; {
+                this.setState({ engraving: e.target.value });
+              }}
+              placeholder=&quot;engraving&quot;
+            /&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;input
+              type=&quot;text&quot;
+              value={lat}
+              onChange={e =&gt; {
+                this.setState({ lat: e.target.value });
+              }}
+              placeholder=&quot;latitude&quot;
+            /&gt;
+            &lt;div /&gt;
+            &lt;input
+              type=&quot;text&quot;
+              value={lng}
+              onChange={e =&gt; {
+                this.setState({ lng: e.target.value });
+              }}
+              placeholder=&quot;longitude&quot;
+            /&gt;
+          &lt;/div&gt;
+          &lt;button onClick={this.handleSubmit}&gt;Submit&lt;/button&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default Page;
+            </code></pre>
+            <small
+              ><a href="https://reactjs.org/docs/forms.html"
+                >https://reactjs.org/docs/forms.html</a
+              ></small
+            >
+          </section>
+          <section>
+            <h2>Better forms with Formik</h2>
+            <small>pages/create.js</small>
+            <pre><code class="jsx" data-trim>
+import React, { Component } from &quot;react&quot;;
+import { Formik, Form, Field, ErrorMessage } from &quot;formik&quot;;
+
+const validateForm = ({ name, weight, lat, lng }) =&gt; {
+  const errors = {};
+  if (!name) errors.name = &quot;Required&quot;;
+  if (!weight) errors.weight = &quot;Required&quot;;
+  if (Number(weight) === NaN) errors.weight = &quot;Weight must be a number&quot;;
+  if (lat &amp;&amp; !(Number(lat) &lt; 90 &amp;&amp; Number(lat) &gt; -90))
+    errors.lat = &quot;Latitude must be a number between -90 to 90&quot;;
+  if (lng &amp;&amp; !(Number(lng) &lt; 180 &amp;&amp; Number(lng) &gt; -180))
+    errors.lng = &quot;Latitude must be a number between -180 to 180&quot;;
+  if ((lat &amp;&amp; !lng) || (!lat &amp;&amp; lng)) {
+    errors.lat = &quot;Both latitutde and longitude must be present or absent&quot;;
+    errors.lng = &quot;Both latitutde and longitude must be present or absent&quot;;
+  }
+  return errors;
+};
+
+class Page extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(val) {
+    alert(JSON.stringify(val));
+  }
+
+  render() {
+    return (
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;Formik
+          onSubmit={this.handleSubmit}
+          validate={validateForm}
+          initialValues={{
+            name: &quot;&quot;,
+            weight: &quot;&quot;,
+            image: &quot;&quot;,
+            engraving: &quot;&quot;,
+            lat: &quot;&quot;,
+            lng: &quot;&quot;
+          }}
+        &gt;
+          {({ values, handleSubmit, handleChange }) =&gt; (
+            &lt;Form&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;name&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;name&quot; placeholder=&quot;Name&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;weight&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;weight&quot; placeholder=&quot;Weight&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;image&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;image&quot; placeholder=&quot;Image&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;engraving&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;engraving&quot; placeholder=&quot;Engraving&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;lat&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;lat&quot; placeholder=&quot;Latitude&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;lng&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;lng&quot; placeholder=&quot;Longitude&quot; /&gt;
+              &lt;/div&gt;
+              &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+            &lt;/Form&gt;
+          )}
+        &lt;/Formik&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default Page;
+            </code></pre>
+            <small
+              ><a href="https://jaredpalmer.com/formik/docs/overview"
+                >https://jaredpalmer.com/formik/docs/overview</a
+              ></small
+            >
+          </section>
+
+          <section>
+            <h2>Fetching data from server</h2>
+            <small>pages/index.js</small>
+            <pre><code class="jsx" data-trim>
+import React, { Component } from &quot;react&quot;;
+import Axios from &quot;axios&quot;;
+import Router from &quot;next/router&quot;;
+
+class Page extends Component {
+  constructor(props) {
+    super(props);
+    this.loadRocks = this.loadRocks.bind(this);
+    this.state = {
+      rocks: []
+    };
+  }
+
+  componentDidMount() {
+    this.loadRocks();
+  }
+
+  loadRocks() {
+    Axios.get(&quot;http://localhost:8080/api/rocks&quot;)
+      .then(res =&gt; res.data)
+      .then(rocks =&gt; this.setState({ rocks }));
+  }
+
+  render() {
+    const { rocks } = this.state;
+    const renderedRocks = rocks.map((r, i) =&gt; (
+      &lt;div
+        key={i}
+        className=&quot;col-4&quot;
+        onClick={() =&gt; Router.push(`/edit?id=${r.id}`)}
+      &gt;
+        {r.image &amp;&amp; &lt;img src={r.image} style={{ width: &quot;100%&quot; }} /&gt;}
+        &lt;div className=&quot;h3&quot;&gt;{r.name}&lt;/div&gt;
+        &lt;div&gt;Weight: {r.weight}&lt;/div&gt;
+        {r.engraving &amp;&amp; &lt;div&gt;Engraving: {r.engraving}&lt;/div&gt;}
+        {r.location &amp;&amp; &lt;div&gt;Lat: {r.location.lat}&lt;/div&gt;}
+        {r.location &amp;&amp; &lt;div&gt;Lng: {r.location.lng}&lt;/div&gt;}
+      &lt;/div&gt;
+    ));
+    return (
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;div className=&quot;row&quot;&gt;{renderedRocks}&lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default Page;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Refactoring form for editing and creating rocks</h2>
+            <small>src/components/RockEditForm.js</small>
+            <pre><code class="jsx" data-trim>
+    import { Formik, Form, Field, ErrorMessage } from &quot;formik&quot;;
+    
+    const validateForm = ({ name, weight, lat, lng }) =&gt; {
+      const errors = {};
+      if (!name) errors.name = &quot;Required&quot;;
+      if (!weight) errors.weight = &quot;Required&quot;;
+      if (Number(weight) === NaN) errors.weight = &quot;Weight must be a number&quot;;
+      if (lat &amp;&amp; !(Number(lat) &lt; 90 &amp;&amp; Number(lat) &gt; -90))
+        errors.lat = &quot;Latitude must be a number between -90 to 90&quot;;
+      if (lng &amp;&amp; !(Number(lng) &lt; 180 &amp;&amp; Number(lng) &gt; -180))
+        errors.lng = &quot;Latitude must be a number between -180 to 180&quot;;
+      if ((lat &amp;&amp; !lng) || (!lat &amp;&amp; lng)) {
+        errors.lat = &quot;Both latitutde and longitude must be present or absent&quot;;
+        errors.lng = &quot;Both latitutde and longitude must be present or absent&quot;;
+      }
+      return errors;
+    };
+    
+    const RockEditForm = ({ handleSubmit, initialValues, handleDelete }) =&gt; {
+      return (
+        &lt;Formik
+          onSubmit={handleSubmit}
+          validate={validateForm}
+          initialValues={initialValues}
+        &gt;
+          {() =&gt; (
+            &lt;Form&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;name&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;name&quot; placeholder=&quot;Name&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;weight&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;weight&quot; placeholder=&quot;Weight&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;image&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;image&quot; placeholder=&quot;Image&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;engraving&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;engraving&quot; placeholder=&quot;Engraving&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;lat&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;lat&quot; placeholder=&quot;Latitude&quot; /&gt;
+              &lt;/div&gt;
+              &lt;div&gt;
+                &lt;ErrorMessage name=&quot;lng&quot; /&gt;
+                &lt;Field type=&quot;text&quot; name=&quot;lng&quot; placeholder=&quot;Longitude&quot; /&gt;
+              &lt;/div&gt;
+              &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+              {handleDelete &amp;&amp; (
+                &lt;button onClick={() =&gt; handleDelete()}&gt;Delete&lt;/button&gt;
+              )}
+            &lt;/Form&gt;
+          )}
+        &lt;/Formik&gt;
+      );
+    };
+    
+    export default RockEditForm;
+                </code></pre>
+          </section>
+
+          <section>
+            <h2>Posting data to the server</h2>
+            <small>pages/create.js</small>
+            <pre><code class="jsx" data-trim>
+    import React, { Component } from &quot;react&quot;;
+    import Axios from &quot;axios&quot;;
+    import Router from &quot;next/router&quot;;
+    import RockEditForm from &quot;../src/components/RockEditForm&quot;;
+    
+    class Page extends Component {
+      constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+    
+      handleSubmit(val) {
+        const { name, weight, image, engraving, lat, lng } = val;
+    
+        const rock = {
+          name
+        };
+        rock.weight = Number(weight);
+        if (image) rock.image = image;
+        if (engraving) rock.engraving = engraving;
+        if (lat &amp;&amp; lng) rock.location = { lat: Number(lat), lng: Number(lng) };
+    
+        // Post new rock and redirect to home on success
+        Axios.post(&quot;http://localhost:8080/api/rocks/&quot;, rock).then(() =&gt;
+          Router.push(&quot;/&quot;)
+        );
+      }
+    
+      render() {
+        return (
+          &lt;div className=&quot;container&quot;&gt;
+            &lt;RockEditForm
+              initialValues={{
+                name: &quot;&quot;,
+                weight: &quot;&quot;,
+                image: &quot;&quot;,
+                engraving: &quot;&quot;,
+                lat: &quot;&quot;,
+                lng: &quot;&quot;
+              }}
+              handleSubmit={this.handleSubmit}
+            /&gt;
+          &lt;/div&gt;
+        );
+      }
+    }
+    
+    export default Page;
+                    </code></pre>
+          </section>
+
+          <section>
+            <h2>Putting/deleting data from the server</h2>
+            <small>pages/edit.js</small>
+            <pre><code class="jsx" data-trim>
+import React, { Component } from &quot;react&quot;;
+import Axios from &quot;axios&quot;;
+import Router from &quot;next/router&quot;;
+import RockEditForm from &quot;../src/components/RockEditForm&quot;;
+
+class Page extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.state = { prevRock: null };
+  }
+
+  static getInitialProps({ query }) {
+    return { id: query.id };
+  }
+
+  componentDidMount() {
+    Axios.get(`http://localhost:8080/api/rocks/${this.props.id}`)
+      .then(res =&gt; res.data)
+      .then(rock =&gt; {
+        this.setState({ prevRock: rock });
+      });
+  }
+
+  handleDelete() {
+    Axios.delete(`http://localhost:8080/api/rocks/${this.props.id}`).then(() =&gt;
+      Router.push(&quot;/&quot;)
+    );
+  }
+
+  handleSubmit(val) {
+    const { name, weight, image, engraving, lat, lng } = val;
+
+    const rock = {
+      name
+    };
+    rock.weight = Number(weight);
+    if (image) rock.image = image;
+    if (engraving) rock.engraving = engraving;
+    if (lat &amp;&amp; lng) rock.location = { lat: Number(lat), lng: Number(lng) };
+
+    // Edit rock and redirect to home on success
+    Axios.put(`http://localhost:8080/api/rocks/${this.props.id}`, rock).then(
+      () =&gt; Router.push(&quot;/&quot;)
+    );
+  }
+
+  render() {
+    const { name, weight, image, engraving, location: { lat, lng } = {} } =
+      this.state.prevRock || {};
+    const rock = this.state.prevRock;
+    return rock ? (
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;RockEditForm
+          initialValues={{
+            name,
+            weight,
+            image,
+            engraving,
+            lat,
+            lng
+          }}
+          handleSubmit={this.handleSubmit}
+          handleDelete={this.handleDelete}
+        /&gt;
+      &lt;/div&gt;
+    ) : (
+      &quot;Loading&quot;
+    );
+  }
+}
+
+export default Page;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Sprinking some fairy dust...</h2>
+            <small>src/components/NavBar.js</small>
+            <pre><code class="jsx" data-trim>
+const linkStyle = { textDecoration: &quot;none&quot;, color: &quot;#2c3e50&quot; };
+
+// To be added in _document.js
+const NavBar = () =&gt; {
+  return (
+    &lt;div style={{ background: &quot;#ecf0f1&quot;, padding: 10, marginBottom: 40 }}&gt;
+      &lt;div className=&quot;container d-flex justify-content-between align-items-center&quot;&gt;
+        &lt;div&gt;
+          &lt;a href=&quot;/&quot; style={linkStyle}&gt;
+            &lt;img
+              style={{ maxWidth: 80 }}
+              src=&quot;https://cdn.pixabay.com/photo/2014/12/22/00/01/rock-576615_960_720.png&quot;
+            /&gt;{&quot; &quot;}
+            ROCKS.SG
+          &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;a href=&quot;/create&quot; style={linkStyle}&gt;
+            Create Rock
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default NavBar;
+            </code></pre>
+          </section>
+          <section>
+            <h2>More fairy dust...</h2>
+            <ul>
+              <li>
+                <a
+                  href="https://github.com/yehjxraymond/rocks-frontend/blob/master/pages/index.js"
+                  >https://github.com/yehjxraymond/rocks-frontend/blob/master/pages/index.js</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/yehjxraymond/rocks-frontend/blob/master/src/components/RockEditForm.js"
+                  >https://github.com/yehjxraymond/rocks-frontend/blob/master/src/components/RockEditForm.js</a
+                >
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h1>End</h1>
+          <ul>
+            <li>https://github.com/yehjxraymond/rocks-frontend/</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="/static/reveal/js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        transition: "slide", // none/fade/slide/convex/concave/zoom
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          {
+            src: "/static/reveal/plugin/markdown/marked.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            }
+          },
+          {
+            src: "/static/reveal/plugin/markdown/markdown.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            }
+          },
+          { src: "/static/reveal/plugin/highlight/highlight.js", async: true },
+          { src: "/static/reveal/plugin/search/search.js", async: true },
+          { src: "/static/reveal/plugin/zoom-js/zoom.js", async: true },
+          { src: "/static/reveal/plugin/notes/notes.js", async: true }
+        ]
+      });
+    </script>
+  </body>
+</html>
