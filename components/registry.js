@@ -1,4 +1,7 @@
 export {
+  meta as DEAR_RECRUITERS
+} from "../pages/blog/dear-recruiters.js";
+export {
   meta as REFLECTING_TWO_YEARS_INVESTMENT
 } from "../pages/blog/reflecting-two-years-investing.mdx";
 export {
