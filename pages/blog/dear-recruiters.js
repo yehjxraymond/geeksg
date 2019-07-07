@@ -165,6 +165,13 @@ const Content = () => {
         that's why everyone owns a part of the project that resonates with them
         and that they can best contribute to.
       </p>
+      {isRecruiter && (
+        <p>
+          You may access my CliftonStrengths report{" "}
+          <a href="/static/docs/raymond-clifton-strengths-34.pdf">here</a> to
+          know how my profile can fit your organisation.
+        </p>
+      )}
       <h2>5. {withPerspective("You", "We")} are radically open-minded</h2>
       <p>
         {withPerspective("You", "We")} don't really need{" "}
@@ -247,6 +254,12 @@ const Content = () => {
           </p>
           <p>
             <a href="/contact">Contact me</a> if you fit the profile.
+          </p>
+          <p>
+            <small>
+              P.s. Showing us your most kickass work or side project will
+              probably get us more excited than a thousand pages resume.
+            </small>
           </p>
         </div>
       )}
