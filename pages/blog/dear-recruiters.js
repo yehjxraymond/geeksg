@@ -6,7 +6,7 @@ export const meta = {
   title: "Dear Recruiters",
   slug: "dear-recruiters",
   summary:
-    "I&apos;ve received numerous job invitations but realised most of these jobs do not meet my expectations. Rather than reviewing each one manually, I&apos;m automating the process by writing this so I can focus my attention to those jobs that I can give my 101% efforts to without wasting a trip down your office."
+    "I've received numerous job invitations but realised most of these jobs do not meet my expectations. Rather than reviewing each one manually, I'm automating the process by writing this so I can focus my attention to those jobs that I can give my 101% efforts to without wasting a trip down your office."
 };
 
 const Content = () => {
