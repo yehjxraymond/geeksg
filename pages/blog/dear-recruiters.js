@@ -13,7 +13,10 @@ export const meta = {
 
 const Content = () => {
   const [isRecruiter, setRecruiter] = useState(true);
-  const togglePerspective = () => setRecruiter(!isRecruiter);
+  const togglePerspective = () => {
+    setRecruiter(!isRecruiter);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const withPerspective = (toRecruiter, toJobSeeker) =>
     isRecruiter ? toRecruiter : toJobSeeker;
   return (
