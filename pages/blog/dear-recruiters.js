@@ -29,8 +29,8 @@ const Content = () => {
         {withPerspective("me", "you")}.
       </p>
       <p>
-        {withPerspective("I&apos;ve", "You&apos;ve probably")} received numerous
-        job invitations but that realised most of these jobs do not meet
+        {withPerspective("I've", "You&apos;ve probably")} received numerous job
+        invitations but that realised most of these jobs do not meet
         {withPerspective(" my", " your")} expectations. Rather than
         {withPerspective(
           " reviewing each one manually",
@@ -89,10 +89,10 @@ const Content = () => {
         {withPerspective("you", "us")} &apos;build an
         AI/Blockchain/Chatbot&apos;
         {withPerspective(", we are probably misaligned", "")}.{" "}
-        {withPerspective("I&apos;m", "We&apos;re")} interested in solving
-        problems, not just building products. {withPerspective("I", "We")}{" "}
-        believe that the best solution to a problem is more than just a tech
-        product, it is usually a cocktail of{" "}
+        {withPerspective("I&apos;m", "We're")} interested in solving problems,
+        not just building products. {withPerspective("I", "We")} believe that
+        the best solution to a problem is more than just a tech product, it is
+        usually a cocktail of{" "}
         <a href="https://www.groupmap.com/map-templates/pest-analysis/">
           political, environmental, societal and technological
         </a>{" "}
@@ -262,7 +262,7 @@ const Content = () => {
       )}
       <p>
         {withPerspective(
-          "If you were an experienced developer, wouldn&apos;t you expect the same? Now, read this as a job invitation:",
+          "If you were an experienced developer, wouldn't you expect the same? Now, read this as a job invitation:",
           "If you were my recruiter, I would expect the same as well. Now read this as a open letter to recruiters:"
         )}
       </p>
