@@ -1,6 +1,4 @@
-export {
-  meta as DEAR_RECRUITERS
-} from "../pages/blog/dear-recruiters.js";
+export { meta as DEAR_RECRUITERS } from "../pages/blog/dear-recruiters";
 export {
   meta as REFLECTING_TWO_YEARS_INVESTMENT
 } from "../pages/blog/reflecting-two-years-investing.mdx";
@@ -37,4 +35,3 @@ export {
 export {
   meta as SMART_CONTRACT_FOR_HIRING
 } from "../pages/blog/smart-contract-for-hiring.mdx";
-

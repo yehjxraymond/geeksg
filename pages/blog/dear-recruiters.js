@@ -6,10 +6,8 @@ export const meta = {
   title: "Dear Recruiters",
   slug: "dear-recruiters",
   summary:
-    "I've received numerous job invitations but realised most of these jobs do not meet my expectations. Rather than reviewing each one manually, I'm automating the process by writing this so I can focus my attention to those jobs that I can give my 101% efforts to without wasting a trip down your office."
+    "I&apos;ve received numerous job invitations but realised most of these jobs do not meet my expectations. Rather than reviewing each one manually, I&apos;m automating the process by writing this so I can focus my attention to those jobs that I can give my 101% efforts to without wasting a trip down your office."
 };
-
-// {withPerspective()}
 
 const Content = () => {
   const [isRecruiter, setRecruiter] = useState(true);
@@ -26,19 +24,19 @@ const Content = () => {
         {withPerspective("Recruiters/Future Employers", "Future Colleagues")}
       </h1>
       <p>
-        I'm writing this post to help you find out if{" "}
+        I&apos;m writing this post to help you find out if{" "}
         {withPerspective("your job", "a role in my team")} is right for{" "}
         {withPerspective("me", "you")}.
       </p>
       <p>
-        {withPerspective("I've", "You've probably")} received numerous job
-        invitations but that realised most of these jobs do not meet
+        {withPerspective("I&apos;ve", "You&apos;ve probably")} received numerous
+        job invitations but that realised most of these jobs do not meet
         {withPerspective(" my", " your")} expectations. Rather than
         {withPerspective(
           " reviewing each one manually",
           " inviting you in for a chat to tell you more about my team"
         )}
-        , I'm automating the process by writing this so{" "}
+        , I&apos;m automating the process by writing this so{" "}
         {withPerspective("I", "you")} can focus {withPerspective("my", "your")}{" "}
         attention to the jobs that {withPerspective("I", "you")} can give{" "}
         {withPerspective("my", "your")} 101% efforts, without wasting a trip
@@ -73,7 +71,7 @@ const Content = () => {
         <li>combat identity fraud through my work on verifiable claims</li>
         <li>
           automate document processing and facilitating electronic asset
-          transfer for Singapore's multi-billion dollar trade industry
+          transfer for Singapore&apos;s multi-billion dollar trade industry
         </li>
         <li>
           and, protect the privacy of foreign workers through user-controlled
@@ -88,12 +86,13 @@ const Content = () => {
       <p>
         {withPerspective("If you are asking ", "We do not ask ")}
         how {withPerspective("I", "you")} can help{" "}
-        {withPerspective("you", "us")} "build an AI/Blockchain/Chatbot"
+        {withPerspective("you", "us")} &apos;build an
+        AI/Blockchain/Chatbot&apos;
         {withPerspective(", we are probably misaligned", "")}.{" "}
-        {withPerspective("I'm", "We're")} interested in solving problems, not
-        just building products. {withPerspective("I", "We")} believe that the
-        best solution to a problem is more than just a tech product, it is
-        usually a cocktail of{" "}
+        {withPerspective("I&apos;m", "We&apos;re")} interested in solving
+        problems, not just building products. {withPerspective("I", "We")}{" "}
+        believe that the best solution to a problem is more than just a tech
+        product, it is usually a cocktail of{" "}
         <a href="https://www.groupmap.com/map-templates/pest-analysis/">
           political, environmental, societal and technological
         </a>{" "}
@@ -101,13 +100,14 @@ const Content = () => {
       </p>
       <p>
         My team primarily deals with blockchain technology. However, we do not
-        aim to "dispense" the technology as the panacea to all problems. We have
-        the autonomy to decide on how we engage businesses or problem owners to
-        design a solution for their problem. Often, we find synergy in our
-        expertise in the technology and our partner's expertise in their problem
-        space. Aside from building the product, our work as partners involves
-        user studies, industry outreach &amp; partnership and policy changes.
-        All of which are essential to ensuring the success of the solution.
+        aim to &apos;dispense&apos; the technology as the panacea to all
+        problems. We have the autonomy to decide on how we engage businesses or
+        problem owners to design a solution for their problem. Often, we find
+        synergy in our expertise in the technology and our partner&apos;s
+        expertise in their problem space. Aside from building the product, our
+        work as partners involves user studies, industry outreach &amp;
+        partnership and policy changes. All of which are essential to ensuring
+        the success of the solution.
       </p>
       <h2>3. {withPerspective("You", "We")} are not afraid to fail</h2>
       <p>
@@ -164,17 +164,17 @@ const Content = () => {
           ""
         )}
         In my team, we respect that people likes to work of different things.
-        That's why everyone owns a part of the project that resonates with them
-        and that they can best contribute to.
+        That&apos;s why everyone owns a part of the project that resonates with
+        them and that they can best contribute to.
       </p>
 
       <h2>5. {withPerspective("You", "We")} are radically open-minded</h2>
       <p>
-        {withPerspective("You", "We")} don't need {withPerspective("me", "you")}{" "}
-        if {withPerspective("you", "we")} think that{" "}
-        {withPerspective("you", "we")}'ve got it all figured out and all{" "}
-        {withPerspective("I", "you")} need is to do is to toe the line. I would
-        like to think that experts in {withPerspective("your", "my")}{" "}
+        {withPerspective("You", "We")} don&apos;t need{" "}
+        {withPerspective("me", "you")} if {withPerspective("you", "we")} think
+        that {withPerspective("you", "we")}&apos;ve got it all figured out and
+        all {withPerspective("I", "you")} need is to do is to toe the line. I
+        would like to think that experts in {withPerspective("your", "my")}{" "}
         organisation have been hired so that they can tell{" "}
         {withPerspective("you", "me")} what to do. Not the other way around.{" "}
         {withPerspective("To do that, your organisation needs to", "We")}{" "}
@@ -202,7 +202,8 @@ const Content = () => {
         to compensation. Of course, {withPerspective("I", "you")} will be
         reasonable to consider the entire package consisting of working
         arrangements, learning &amp; growth opportunities, and additional
-        benefits. It's an added bonus {withPerspective("if your ", "that the ")}
+        benefits. It&apos;s an added bonus{" "}
+        {withPerspective("if your ", "that the ")}
         organisation focuses on making the pie bigger, rather than on how to
         slice it so that {withPerspective("myself", "you")} or someone else gets
         the bigger piece.
@@ -215,7 +216,7 @@ const Content = () => {
       </p>
       <h2>Finally...</h2>
       <p>
-        Now that I've laid out{" "}
+        Now that I&apos;ve laid out{" "}
         {withPerspective("these expectations", "what you can expect")}
         {withPerspective(
           <>
@@ -261,7 +262,7 @@ const Content = () => {
       )}
       <p>
         {withPerspective(
-          "If you were an experienced developer, wouldn't you expect the same? Now, read this as a job invitation:",
+          "If you were an experienced developer, wouldn&apos;t you expect the same? Now, read this as a job invitation:",
           "If you were my recruiter, I would expect the same as well. Now read this as a open letter to recruiters:"
         )}
       </p>
@@ -286,31 +287,32 @@ const Content = () => {
         <p className="my-2">
           This article was written to help recruiters understand that developers
           are neither nameless or faceless. Every decent developer has
-          expectations. So stop approaching us with messages that goes like "Hi,
-          another headhunter here. I have a position for X. Good budget.". You
-          will not find decent developer that way.
+          expectations. So stop approaching us with messages that goes like
+          &apos;Hi, another headhunter here. I have a position for X. Good
+          budget.&apos;. You will not find decent developer that way.
         </p>
         <p className="my-2">
           The above accounts are based on my personal experience in my
           workplace. Is that environment for everyone? No.
         </p>
         <p className="my-2">
-          In writing this article, I have referenced many work of Ray Dalio's
-          Principles and Tom Rath's StrengthFinder. I highly recommend these two
-          books for managers.
+          In writing this article, I have referenced many work of Ray
+          Dalio&apos;s Principles and Tom Rath&apos;s StrengthFinder. I highly
+          recommend these two books for managers.
         </p>
         <p className="my-2">
           Yes, you may approach me for job offers if you meet the above
           expectations. I never close doors on opportunities.
         </p>
         <p className="my-2">
-          Yes, I'm hiring for my team. We are working on super cool blockchain
-          projects related to data privacy, provenance and tokenisation (for
-          asset transfer).
+          Yes, I&apos;m hiring for my team. We are working on super cool
+          blockchain projects related to data privacy, provenance and
+          tokenisation (for asset transfer).
         </p>
       </small>
     </div>
   );
 };
 
-export default () => <Blog meta={meta}>{Content()}</Blog>;
+const Page = () => <Blog meta={meta}>{Content()}</Blog>;
+export default Page;
