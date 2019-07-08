@@ -29,7 +29,7 @@ const Content = () => {
       </p>
       <p>
         {withPerspective("I've", "You've probably")} received numerous job
-        invitations but realised most of these jobs do not meet
+        invitations but that realised most of these jobs do not meet
         {withPerspective(" my", " your")} expectations. Rather than
         {withPerspective(
           " reviewing each one manually",
@@ -37,9 +37,9 @@ const Content = () => {
         )}
         , I'm automating the process by writing this so{" "}
         {withPerspective("I", "you")} can focus {withPerspective("my", "your")}{" "}
-        attention to those jobs that {withPerspective("I", "you")} can give{" "}
-        {withPerspective("my", "your")} 101% efforts to without wasting a trip
-        down {withPerspective("your", "our")} office.
+        attention to the jobs that {withPerspective("I", "you")} can give{" "}
+        {withPerspective("my", "your")} 101% efforts, without wasting a trip
+        down to {withPerspective("your", "our")} office.
       </p>
       <p>
         {withPerspective("I", "You")} have high expectations for{" "}
@@ -70,7 +70,7 @@ const Content = () => {
         <li>combat identity fraud through my work on verifiable claims</li>
         <li>
           automate document processing and facilitating electronic asset
-          transfer for Singapore's billion dollar trade industry
+          transfer for Singapore's multi-billion dollar trade industry
         </li>
         <li>
           and, protect the privacy of foreign workers through user-controlled
@@ -99,13 +99,12 @@ const Content = () => {
       <p>
         My team primarily deals with blockchain technology. However, we do not
         aim to "dispense" the technology as the panacea to all problems. We have
-        the autonomy to decide on how we engage business or problem owners to
+        the autonomy to decide on how we engage businesses or problem owners to
         design a solution for their problem. Often, we find synergy in our
         expertise in the technology and our partner's expertise in their problem
-        space. Apart from building the product, part of our work as partners
-        involves user study, industry outreach &amp; partnership and policy
-        changes. All of which are essential to ensuring the success of the
-        solution.
+        space. Aside from building the product, our work as partners involves
+        user studies, industry outreach &amp; partnership and policy changes.
+        All of which are essential to ensuring the success of the solution.
       </p>
       <h2>3. {withPerspective("You", "We")} are not afraid to fail</h2>
       <p>
@@ -126,13 +125,13 @@ const Content = () => {
       </p>
       <p>
         {withPerspective(
-          "My current role involves nagivating",
+          "My current role involves navigating",
           "My team navigates"
         )}{" "}
-        uncertain and rough terrains. Working at the bleeding edge involves
+        uncertain and rough terrain. Working at the bleeding edge involves
         conducting tons of tech spikes and experiments, charging ahead to build
         a solution with nothing but an abstract concept, and in the process,
-        break things. We do not allow perfect to become the enermy of good.{" "}
+        break things. We do not allow perfect to become the enemy of good.{" "}
         {withPerspective("My", "Our")} guiding principle is to not make the same
         mistake twice - to fail better and fall forward each time.
       </p>
@@ -158,29 +157,23 @@ const Content = () => {
         The diversity in my team allow us to play to our strengths. Each of us
         is good at different things.{" "}
         {withPerspective(
-          "I shine at breaking down complex problems into smaller digestable pieces, and I can put my team on track to help them focus on what to work on next. ",
+          "I shine at breaking down complex problems into smaller digestible pieces, and I can put my team on track to help them focus on what to work on next. ",
           ""
         )}
-        In my team, we respect that people likes to work of different things,
-        that's why everyone owns a part of the project that resonates with them
+        In my team, we respect that people likes to work of different things.
+        That's why everyone owns a part of the project that resonates with them
         and that they can best contribute to.
       </p>
-      {isRecruiter && (
-        <p>
-          You may access my CliftonStrengths report{" "}
-          <a href="/static/docs/raymond-clifton-strengths-34.pdf">here</a> to
-          know how my profile can fit your organisation.
-        </p>
-      )}
+
       <h2>5. {withPerspective("You", "We")} are radically open-minded</h2>
       <p>
-        {withPerspective("You", "We")} don't really need{" "}
-        {withPerspective("me", "you")} if {withPerspective("you", "we")} think
-        that {withPerspective("you", "we")}'ve got it all figured and all{" "}
-        {withPerspective("I", "you")} need is to toe the line. I would like to
-        think that people in {withPerspective("your", "my")} organisation have
-        been hired so that they can tell {withPerspective("you", "me")} what to
-        do. Not the other way around.{" "}
+        {withPerspective("You", "We")} don't need {withPerspective("me", "you")}{" "}
+        if {withPerspective("you", "we")} think that{" "}
+        {withPerspective("you", "we")}'ve got it all figured out and all{" "}
+        {withPerspective("I", "you")} need is to do is to toe the line. I would
+        like to think that experts in {withPerspective("your", "my")}{" "}
+        organisation have been hired so that they can tell{" "}
+        {withPerspective("you", "me")} what to do. Not the other way around.{" "}
         {withPerspective("To do that, your organisation needs to", "We")}{" "}
         recognise that{" "}
         <a href="https://www.inc.com/carmine-gallo/a-self-made-billionaire-reveals-the-1-mental-hurdl.html">
@@ -190,13 +183,13 @@ const Content = () => {
         .
       </p>
       <p>
-        Working with big problems means that we cannot possibly know all the
+        Working with complex problems means that we cannot possibly know all the
         information beforehand and we cannot allow the uncertainty to cripple
         our decision making capabilities. My team is empowered to make decisions
-        with available information to allow us to continuously deliver. We are
-        encouraged to bring in more information and perspectives to the problem
-        to make sure that we are working in the right direction and if not,
-        steer the development as necessary.
+        with the latest available information, allowing us to continuously
+        deliver. We are encouraged to bring in more information and perspectives
+        to the problem to make sure that we are working in the right direction
+        and if it is not, steer the development as necessary.
       </p>
       <h2>6. {withPerspective("You", "We")} compensate fairly</h2>
       <p>
