@@ -29,7 +29,7 @@ const Content = () => {
         {withPerspective("me", "you")}.
       </p>
       <p>
-        {withPerspective("I've", "You&apos;ve probably")} received numerous job
+        {withPerspective("I've", "You've probably")} received numerous job
         invitations but that realised most of these jobs do not meet
         {withPerspective(" my", " your")} expectations. Rather than
         {withPerspective(
