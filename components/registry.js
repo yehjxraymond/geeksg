@@ -1,4 +1,7 @@
 export {
+  meta as QUADRATIC_VOTING_GROUP_CONSENSUS
+} from "../pages/blog/quadratic-voting-group-consensus.mdx";
+export {
   meta as COMPARISON_OPTIMISATION_TECHNIQUES
 } from "../pages/blog/comparison-portfolio-optimization-technique-monte-carlo-slsqp-bayesian.mdx";
 export { meta as DEAR_RECRUITERS } from "../pages/blog/dear-recruiters";
