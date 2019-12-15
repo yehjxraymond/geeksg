@@ -16,22 +16,22 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-mdx": "^1.2.0",
     "lodash": "^4.17.15",
-    "next": "latest",
+    "next": "^9.1.5",
     "path-match": "^1.2.4",
     "prop-types": "^15.6.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "sitemap": "^2.1.0"
   },
   "license": "ISC",
   "devDependencies": {
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-react": "^7.14.2",
-    "prettier": "^1.18.2"
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "prettier": "^1.19.1"
   }
 }
