@@ -80,7 +80,7 @@ a:hover {
 
 pre code {
   display: inline-block;
-  width: 100%;
+  min-width: 100%;
   padding: 20px;
   background: rgba(68,68,68,0.1);
 }
