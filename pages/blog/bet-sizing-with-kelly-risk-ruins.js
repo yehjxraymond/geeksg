@@ -152,29 +152,7 @@ const Content = () => {
         alt="Bet sizing with Kelly"
         hidden={true}
       />
-      <div className="d-sm-flex justify-content-between">
-        <Wheel
-          bet={bet}
-          addValue={addValue}
-          payout={payout1}
-          label="Wheel 1"
-          img="/static/blog/2019/12/bet-sizing/wheel1.png"
-        />
-        <Wheel
-          bet={bet}
-          addValue={addValue}
-          payout={payout2}
-          label="Wheel 2"
-          img="/static/blog/2019/12/bet-sizing/wheel2.png"
-        />
-        <Wheel
-          bet={bet}
-          addValue={addValue}
-          payout={payout3}
-          label="Wheel 3"
-          img="/static/blog/2019/12/bet-sizing/wheel3.png"
-        />
-      </div>
+      
       <div>
         <div className="row m-2">
           <div className="col bg-dark text-white">Games Left:</div>
@@ -247,6 +225,30 @@ const Content = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="d-sm-flex justify-content-between">
+        <Wheel
+          bet={bet}
+          addValue={addValue}
+          payout={payout1}
+          label="Wheel 1"
+          img="/static/blog/2019/12/bet-sizing/wheel1.png"
+        />
+        <Wheel
+          bet={bet}
+          addValue={addValue}
+          payout={payout2}
+          label="Wheel 2"
+          img="/static/blog/2019/12/bet-sizing/wheel2.png"
+        />
+        <Wheel
+          bet={bet}
+          addValue={addValue}
+          payout={payout3}
+          label="Wheel 3"
+          img="/static/blog/2019/12/bet-sizing/wheel3.png"
+        />
       </div>
 
       <h2>Playing like a pro</h2>
