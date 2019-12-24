@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Blog from "../../components/layouts/Blog";
 import Image from "../../components/snippets/Image";
 
@@ -46,7 +46,11 @@ const Wheel = ({ bet, addValue, payout, label, img }) => {
           ))}
         </div>
       </div>
-      <button onClick={spin} className="btn btn-block btn-dark">
+      <button
+        onClick={spin}
+        className="btn btn-block btn-dark"
+        style={{ touchAction: "manipulation" }}
+      >
         Spin
       </button>
     </div>
@@ -58,6 +62,12 @@ const Content = () => {
   const [bet, setBet] = useState(INITIAL_BET);
   const [noGames, setNoGames] = useState(INITIAL_NO_GAMES);
   const [history, setHistory] = useState([]);
+  const [width, setWidth] = useState(null);
+  if (process.browser) {
+    useEffect(() => setWidth(document.children[0].clientWidth), [
+      document.children[0].clientWidth
+    ]);
+  }
   const resetGame = () => {
     setValue(INITIAL_VALUE);
     setBet(INITIAL_BET);
@@ -66,6 +76,10 @@ const Content = () => {
   };
   const addValue = diff => {
     if (noGames > 0) {
+      if (width <= 600)
+        alert(
+          `Payout: ${bet + diff}; Balance: ${diff >= 0 ? `+${diff}` : diff}`
+        );
       setHistory([diff, ...history]);
       setValue(value + diff);
       setNoGames(noGames - 1);
@@ -138,7 +152,7 @@ const Content = () => {
         alt="Bet sizing with Kelly"
         hidden={true}
       />
-      <div className="d-flex justify-content-between">
+      <div className="d-sm-flex justify-content-between">
         <Wheel
           bet={bet}
           addValue={addValue}
@@ -183,8 +197,11 @@ const Content = () => {
         <div className="row m-2">
           <div className="col bg-dark text-white">History:</div>
           <div className="col" style={{ fontWeight: "bold" }}>
-            {history.map(diff => (
-              <div className="bg-dark text-white d-inline-block p-1 m-1">
+            {history.map((diff, i) => (
+              <div
+                className="bg-dark text-white d-inline-block p-1 m-1"
+                key={i}
+              >
                 {diff > 0 ? `+${diff}` : diff}
               </div>
             ))}
@@ -192,7 +209,7 @@ const Content = () => {
         </div>
         <div className="row m-2">
           <div className="col bg-dark text-white">Bet:</div>
-          <div className="col">
+          <div className="col pt-2">
             <input
               type="number"
               value={bet}
