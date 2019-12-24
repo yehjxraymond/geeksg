@@ -22,9 +22,10 @@ export const Image = ({
   cite,
   citeSrc,
   href,
-  alt
+  alt,
+  hidden
 }) => (
-  <div className="text-center m-4">
+  <div className="text-center m-4" style={hidden && { display: "none" }}>
     <div>
       {href ? (
         <a href={href}>

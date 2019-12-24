@@ -1,3 +1,4 @@
+export { meta as BET_SIZING_RISK_RUINS } from "../pages/blog/bet-sizing-with-kelly-risk-ruins.js";
 export { meta as E2E_ENCRYPTION_QUADRATIC_VOTING } from "../pages/blog/end-to-end-encrypted-quadratic-voting-app.mdx";
 export { meta as QUADRATIC_VOTING_GROUP_CONSENSUS } from "../pages/blog/quadratic-voting-group-consensus.mdx";
 export { meta as COMPARISON_OPTIMISATION_TECHNIQUES } from "../pages/blog/comparison-portfolio-optimization-technique-monte-carlo-slsqp-bayesian.mdx";

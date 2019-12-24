@@ -3,7 +3,7 @@ import Blog from "../../components/layouts/Blog";
 
 export const meta = {
   date: new Date("07 July 2019"),
-  title: "Dear Recruiters",
+  title: "Dear Recruiters (Interactive Post)",
   slug: "dear-recruiters",
   summary:
     "I've received numerous job invitations but realised most of these jobs do not meet my expectations. Rather than reviewing each one manually, I'm automating the process by writing this so I can focus my attention to those jobs that I can give my 101% efforts to without wasting a trip down your office."
