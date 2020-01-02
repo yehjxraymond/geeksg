@@ -1,3 +1,4 @@
+export { meta as NEW_YEAR_RESOLUTION_2020_OKR } from "../pages/blog/new-year-resultion-2020-okr.mdx";
 export { meta as BET_SIZING_RISK_RUINS } from "../pages/blog/bet-sizing-with-kelly-risk-ruins.js";
 export { meta as E2E_ENCRYPTION_QUADRATIC_VOTING } from "../pages/blog/end-to-end-encrypted-quadratic-voting-app.mdx";
 export { meta as QUADRATIC_VOTING_GROUP_CONSENSUS } from "../pages/blog/quadratic-voting-group-consensus.mdx";
