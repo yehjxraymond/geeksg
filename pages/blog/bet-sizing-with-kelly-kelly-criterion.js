@@ -525,11 +525,17 @@ const Content = () => {
       <h2>Kelly Criterion</h2>
       <p>The formula is simple:</p>
       <div className="text-center">
-        <img src="/static/blog/2020/1/5/kelly-simplified.svg" />
+        <img
+          src="/static/blog/2020/1/5/kelly-simplified.svg"
+          style={{ maxWidth: "100%" }}
+        />
       </div>
       <p>or</p>
       <div className="text-center">
-        <img src="/static/blog/2020/1/5/kelly-criterion-formula.svg" />
+        <img
+          src="/static/blog/2020/1/5/kelly-criterion-formula.svg"
+          style={{ maxWidth: "100%" }}
+        />
       </div>
       <p>where:</p>
       <ul>
