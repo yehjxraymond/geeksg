@@ -346,11 +346,12 @@ const Game = () => {
     <div>
       <h2>The Game</h2>
       <div className="row m-4">
-        <img
-          style={{ margin: "auto" }}
-          src="/static/blog/2019/12/bet-sizing/wheel2.png"
-          className="w-50"
-        />
+        <div className="text-center">
+          <img
+            src="/static/blog/2019/12/bet-sizing/wheel2.png"
+            className="w-50"
+          />
+        </div>
       </div>
       <div className="row">
         <div className="col-md">
