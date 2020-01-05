@@ -27,7 +27,7 @@ const SimulationResultStatistics = ({ simulationResults }) => {
   return (
     <>
       <h5>Final Balances</h5>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between flex-column flex-md-row">
         <div className="d-flex border flex-fill">
           <div className="p-2 bg-dark text-white">Max:</div>
           <div className="p-2">${max(finalBalances).toLocaleString()}</div>
