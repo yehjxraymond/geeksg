@@ -4,7 +4,7 @@ import Image from "../../components/snippets/Image";
 
 export const meta = {
   date: new Date("24 December 2019"),
-  title: "Bet Sizing with Kelly - Risk of Ruins (Interactive Post)",
+  title: "Bet Sizing with Kelly - Risk of Ruins (Part 1/2)",
   slug: "bet-sizing-with-kelly-risk-ruins",
   summary:
     "Let's play roulette. There are 3 wheels of different payouts. Some wheels are riskier than others. You have a starting balance of $100 and may play 20 games. In each game, you may choose the size of your bet. Your goal is to have the most amount of money at the end of 20 games. How well do you think you will do?"
@@ -125,7 +125,7 @@ const Content = () => {
 
   return (
     <div>
-      <h1>Bet Sizing with Kelly - Risk of Ruins (Interactive Post)</h1>
+      <h1>Betting with Kelly - Risk of Ruins (Interactive Post)</h1>
       <p>
         Let's play roulette. There are 3 wheels of different payouts. Some
         wheels are riskier than others. You have a starting balance of $100 and
@@ -152,7 +152,7 @@ const Content = () => {
         alt="Bet sizing with Kelly"
         hidden={true}
       />
-      
+
       <div>
         <div className="row m-2">
           <div className="col bg-dark text-white">Games Left:</div>
@@ -410,8 +410,11 @@ const Content = () => {
 
       <p>
         Bet sizing (or risk management) strategy also exists for games with risk
-        of ruins. Stay tuned for the next interactive blog post where we remove
-        wheels without 0 payouts and learn about Kelly Criterion!
+        of ruins. Read the{" "}
+        <a href="/blog/bet-sizing-with-kelly-kelly-criterion">
+          next interactive blog post where we remove wheels without 0 payouts
+          and learn about Kelly Criterion!
+        </a>
       </p>
 
       <p>
