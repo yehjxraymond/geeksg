@@ -1,0 +1,102 @@
+
+import Blog from "../../components/layouts/Blog";
+import Image from "../../components/snippets/Image";
+
+export const meta = {
+  date: new Date("02 Janurary 2020"),
+  title: "2020 in Sprints",
+  slug: "2020-sprints",
+  summary: "2020 Sprints:"
+};
+
+2020 in Sprints
+===
+
+###  Week 3 (15th Jan - 22th Jan) - Information gathering for internet marketing
+
+Was inspired by Norvin to get started again to look at internet marketing. Has been long since I've read up on it and will require intensive deep dive into the various different aspects of it. Will likely have to reach out to people who are doing it and learn from them. 
+
+- Reach out to someone who has done affliate marketing before to learn from them
+- Read up deep on affiliate marketing
+- Information gathering for products, keywords and competition
+
+---
+
+## Week 2 (8th Jan - 15th Jan) - Deep dive into mobile security in preparation of Android hacking course
+
+- Read up on iOS hacking
+- Practice hacking by exploring the internals of a few apps on iOS
+
+### Done
+
+- Hacked an iOS mobile game by changing the game file in Document directory
+- Hacked an SG government app by circumventing encryption mechanism
+- Filed a vulnerability report (yay) to the appropriate department on the findings and suggestions
+
+### Retrospective
+
+Pleasant surpries at the practicals. It was super empowering to cheat on the mobile game, showing how easy it is to manipulate client side information. Met several hurdle when trying to hack other games due to encrypted save files. Attempts at other apps were also unsuccessful due to inexperience in reverse engineering other frameworks such as .NET. Also, I did not manage to find an application that is written in ObjC/Swift that uses the default crypto libraries to practice on hooking and swizzling methods. 
+
+Best part of the week was when I've managed to hack into a mobile app by one of the SG governemnt agency and successfully executed a POC attack. With that, I've also picked up on how to write vulnerability reports!
+
+### Resources
+
+#### Overview
+
+[Mobile Security Testing Guide](https://mobile-security.gitbook.io/mobile-security-testing-guide/)
+[Reversing iOS Apps - A practical approach](https://s3.amazonaws.com/s3.synack.com/T2_reversingIOSApps.pdf)
+
+#### Environment Setup
+
+https://spaceraccoon.dev/from-checkra1n-to-frida-ios-app-pentesting-quickstart-on-ios-13
+
+#### Frameworks
+
+[Introspy](https://github.com/iSECPartners/Introspy-iOS)
+[mobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF)
+[passionfruit](https://github.com/chaitin/passionfruit)
+
+#### Frida
+
+https://frida.re/docs/frida-trace/
+
+#### Frida Scripts
+
+https://x64.sh/mobile/security/2019/06/01/Frida-and-Objection/
+https://github.com/iddoeldor/frida-snippets#describe-class-members
+https://awakened1712.github.io/hacking/hacking-frida/
+https://github.com/interference-security/frida-scripts/tree/master/iOS
+https://github.com/0xdea/frida-scripts/blob/master/raptor_frida_ios_trace.js
+https://codeshare.frida.re/@oleavr/who-does-it-call/
+https://grepharder.github.io/blog/0x04_calling_ios_native_functions_from_python_using_frida_and_rpc.html
+https://resources.infosecinstitute.com/ios-application-security-part-47-inspecting-apps-with-frida/
+
+#### Reverse engineering
+
+[dnSpy for .NET](https://github.com/0xd4d/dnSpy)
+[shuji for Javascript](https://www.npmjs.com/package/shuji)
+
+#### Cryptography
+
+[CyberChef](https://gchq.github.io/CyberChef/)
+
+
+---
+
+## Week 1 (1st Jan - 8th Jan) - Get ready for the year
+
+- Set new year resolution
+- Beginning of year financial analysis
+
+### Done
+
+- Blog post on Bet Sizing with Kelly
+- Blog post on New Year Resolution
+
+### Retrospective
+
+Good effort in starting the year right with a resolution that is achievable. However, more work needs to be done on the social aspects of my life. 
+
+---
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
