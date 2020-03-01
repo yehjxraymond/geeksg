@@ -174,7 +174,6 @@ export const nextMonth = ({
     if (topUp) {
       let availableTopUpBudget = getFrs(year) - cpf.sa;
       const actualAmount = Math.min(availableTopUpBudget, topUp);
-      console.log(availableTopUpBudget, actualAmount);
       cpf.sa += actualAmount;
       availableTopUpBudget -= actualAmount;
     }
