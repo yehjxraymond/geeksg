@@ -1,9 +1,6 @@
 {
   "name": "with-semantic-ui",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=10.18.1"
-  },
   "scripts": {
     "dev": "next",
     "build": "next build",
