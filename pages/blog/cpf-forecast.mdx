@@ -1,0 +1,16 @@
+import Blog from "../../components/layouts/Blog";
+import {CpfCalculator} from "../../components/interactive/cpf"
+
+export const meta = {
+  date: new Date("14 October 2016"),
+  title: "CPF Forecast",
+  slug: "cpf-forecast",
+  summary: ""
+};
+
+CPF Forecast
+===
+
+<CpfCalculator />
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;

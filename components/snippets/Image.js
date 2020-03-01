@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 
 const Caption = caption => <div className="h6 my-2">{caption}</div>;

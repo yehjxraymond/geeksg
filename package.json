@@ -5,6 +5,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
     "post-export": "cp ./_redirects ./out/_redirects",
     "export": "next build && next export && npm run post-export",
     "lint": "eslint . --ext .js --max-warnings 0",
@@ -21,6 +22,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "recharts": "^2.0.0-beta.1",
     "simple-statistics": "^7.0.7",
     "sitemap": "^2.1.0",
     "victory": "^34.0.0"
@@ -34,6 +36,20 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
+    "jest": "^25.1.0",
     "prettier": "^1.19.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      "@babel/preset-react"
+    ]
   }
 }
