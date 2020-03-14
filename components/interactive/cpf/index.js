@@ -12,6 +12,7 @@ import {
 // Inaccuracies:
 // CPF AGE by month
 // CPF limit by wage ceiling
+// CPF top up maximum cap
 // Accrued interest is missing for months past in current year
 
 const CPF_CONTRIBUTION_CEILING = 102000;
@@ -42,8 +43,7 @@ export const getFrs = year => {
   }
 };
 
-export const salaryContribution = (salary, age = 0) => {
-  const eligibleSalary = Math.min(6000, salary);
+export const uncappedSalaryContribution = (eligibleSalary, age) => {
   switch (true) {
     case age <= 35:
       return {
@@ -88,6 +88,11 @@ export const salaryContribution = (salary, age = 0) => {
         ma: 0.105 * eligibleSalary
       };
   }
+};
+
+export const salaryContribution = (salary, age = 0) => {
+  const eligibleSalary = Math.min(6000, salary);
+  return uncappedSalaryContribution(eligibleSalary, age);
 };
 
 export const calculateAccruedInterest = (cpf, age = 0) => {
@@ -204,11 +209,11 @@ export const nextMonth = ({
   }
 
   // Credit additional wages in december
-  if (month == bonusCreditMonth) {
+  if (month === bonusCreditMonth) {
     const bonus = bonusByMonths * salary;
     const bonusCeiling = Math.max(CPF_CONTRIBUTION_CEILING - 12 * salary, 0);
     const contributionByBonus = Math.min(bonus, bonusCeiling);
-    const bonusContribution = salaryContribution(
+    const bonusContribution = uncappedSalaryContribution(
       contributionByBonus,
       currentAge
     );
@@ -449,84 +454,166 @@ const CpfSummary = ({ computedResult }) => {
   );
 };
 
+export const frsColor = (sum, frs) => {
+  switch (true) {
+    case sum >= 1.5 * frs:
+      return "rgba(130, 202, 157, 0.9)";
+    case sum >= frs:
+      return "rgba(130, 202, 157, 0.5)";
+    case sum >= 0.5 * frs:
+      return "rgba(130, 202, 157, 0.3)";
+    default:
+      return "rgba(130, 202, 157, 0)";
+  }
+};
+
 export const CpfTable = ({ computedResult }) => {
   if (!computedResult) return null;
+  const brsAge = computedResult.find(
+    val => val.oa + val.sa >= val.currentFrs * 0.5
+  );
+  const frsAge = computedResult.find(val => val.oa + val.sa >= val.currentFrs);
+  const ersAge = computedResult.find(
+    val => val.oa + val.sa >= val.currentFrs * 1.5
+  );
   return (
-    <div className="d-none d-md-block">
+    <>
       <div className="row my-4">
         <div className="col text-center">
-          <h3>Balance By Year Ends:</h3>
-          <small>*Background is green when OA + SA exceeds FRS</small>
+          <h3>Key OA + SA Milestones:</h3>
         </div>
       </div>
-      <table className="text-center">
-        <thead>
-          <tr style={{ backgroundColor: "rgba(136, 132, 216, 0.5)" }}>
-            <th className="py-2">Age</th>
-            <th className="py-2">Salary</th>
-            <th className="py-2">OA</th>
-            <th className="py-2">SA</th>
-            <th className="py-2">MA</th>
-            <th className="py-2">Total</th>
-            <th className="py-2">
-              Interest{" "}
+      <div className="row text-center">
+        <div className="col-md-4">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.4)" }}
+          >
+            <h5>
+              Achieved BRS{" "}
               <InfoTooltip>
-                Number shown has already been credited into the individual
-                accounts
+                Based on estimated 0.5 * FRS inflated at 3% per year.
               </InfoTooltip>
-            </th>
-            <th className="py-2">
-              FRS{" "}
+            </h5>
+          </div>
+          <div
+            className="p-3"
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.3)" }}
+          >
+            <h4>{brsAge ? brsAge.age : "NIL"}</h4>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.6)" }}
+          >
+            <h5>
+              Achieved FRS{" "}
               <InfoTooltip>
-                Estimated based on 3% increment per year
+                Based on estimated FRS inflated at 3% per year.
               </InfoTooltip>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {computedResult.map((cpf, index) => (
-            <tr
-              key={index}
-              style={{
-                backgroundColor:
-                  cpf.oa + cpf.sa >= cpf.currentFrs
-                    ? "rgba(130, 202, 157, 0.5)"
-                    : "rgba(255, 198, 88, 0.5)"
-              }}
-            >
-              <td>{cpf.age}</td>
-              <td>{formatNumber(cpf.salary)}</td>
-              <td>{formatNumber(cpf.oa)}</td>
-              <td>{formatNumber(cpf.sa)}</td>
-              <td>{formatNumber(cpf.ma)}</td>
-              <td>{formatNumber(cpf.total)}</td>
-              <td>
-                {computedResult[index + 1]
-                  ? formatNumber(
-                      computedResult[index + 1].creditedInterest.oa +
-                        computedResult[index + 1].creditedInterest.sa +
-                        computedResult[index + 1].creditedInterest.ma
-                    )
-                  : "-NIL-"}
-              </td>
-              <td>{formatNumber(cpf.currentFrs)}</td>
+            </h5>
+          </div>
+          <div
+            className="p-3"
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.5)" }}
+          >
+            <h4>{frsAge ? frsAge.age : "NIL"}</h4>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(130, 202, 157, 1)" }}
+          >
+            <h5>
+              Achieved ERS{" "}
+              <InfoTooltip>
+                Based on estimated 1.5 * FRS inflated at 3% per year.
+              </InfoTooltip>
+            </h5>
+          </div>
+          <div
+            className="p-3"
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.9)" }}
+          >
+            <h4>{ersAge ? ersAge.age : "NIL"}</h4>
+          </div>
+        </div>
+      </div>
+      <div className="d-none d-md-block">
+        <div className="row my-4">
+          <div className="col text-center">
+            <h3>Balances At Year Ends:</h3>
+          </div>
+        </div>
+        <table className="text-center">
+          <thead>
+            <tr className="bg-dark text-white">
+              <th className="py-2">Age</th>
+              <th className="py-2">Salary</th>
+              <th className="py-2">OA</th>
+              <th className="py-2">SA</th>
+              <th className="py-2">MA</th>
+              <th className="py-2">Total</th>
+              <th className="py-2">
+                Interest{" "}
+                <InfoTooltip>
+                  Number shown has already been credited into the individual
+                  accounts
+                </InfoTooltip>
+              </th>
+              <th className="py-2">
+                FRS{" "}
+                <InfoTooltip>
+                  Estimated based on 3% increment per year
+                </InfoTooltip>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {computedResult.map((cpf, index) => (
+              <tr
+                key={index}
+                style={{
+                  backgroundColor: frsColor(cpf.oa + cpf.sa, cpf.currentFrs)
+                }}
+              >
+                <td>{cpf.age}</td>
+                <td>{formatNumber(cpf.salary)}</td>
+                <td>{formatNumber(cpf.oa)}</td>
+                <td>{formatNumber(cpf.sa)}</td>
+                <td>{formatNumber(cpf.ma)}</td>
+                <td>{formatNumber(cpf.total)}</td>
+                <td>
+                  {computedResult[index + 1]
+                    ? formatNumber(
+                        computedResult[index + 1].creditedInterest.oa +
+                          computedResult[index + 1].creditedInterest.sa +
+                          computedResult[index + 1].creditedInterest.ma
+                      )
+                    : "-NIL-"}
+                </td>
+                <td>{formatNumber(cpf.currentFrs)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
 export const CpfCalculator = () => {
-  const [birthYear, setBirthYear] = useState("1990");
+  const [birthYear, setBirthYear] = useState("1994");
   const [stopWorkAge, setStopWorkAge] = useState("50");
-  const [salary, setSalary] = useState("3000");
-  const [oa, setOa] = useState("0");
-  const [ma, setMa] = useState("0");
-  const [sa, setSa] = useState("0");
+  const [salary, setSalary] = useState("3500");
+  const [oa, setOa] = useState("38000");
+  const [ma, setMa] = useState("10000");
+  const [sa, setSa] = useState("10000");
   const [salaryInflationPerYear, setSalaryInflationPerYear] = useState("0");
-  const [bonusByMonths, setBonusByMonths] = useState("0");
+  const [bonusByMonths, setBonusByMonths] = useState("2");
 
   const [topUp, setTopUp] = useState("0");
   const [transfer, setTransfer] = useState("0");
@@ -551,7 +638,6 @@ export const CpfCalculator = () => {
     })
       .filter(item => item.month == 0)
       .map(cpf => ({ ...cpf, total: cpf.oa + cpf.ma + cpf.ra + cpf.sa }));
-    console.log(result);
     setComputedResult(result);
   };
 
@@ -616,7 +702,7 @@ export const CpfCalculator = () => {
       </div>
 
       <div>
-        <div>CPA Transfer from OA to SA in Jan</div>
+        <div>CPF Transfer from OA to SA in Jan</div>
         <div>
           <input
             onChange={e => setTransfer(e.target.value)}
