@@ -1,76 +1,87 @@
 body {
   background-color: rgb(250, 250, 250);
   -webkit-font-smoothing: antialiased;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   white-space: pre-wrap;
 }
 
 @media (min-width: 576px) {
   .w-sm-100 {
-    width: 100%!important;
+    width: 100% !important;
   }
   .w-sm-75 {
-    width: 75%!important;
+    width: 75% !important;
   }
   .w-sm-50 {
-    width: 50%!important;
+    width: 50% !important;
   }
   .w-sm-25 {
-    width: 25%!important;
+    width: 25% !important;
   }
 }
 
-
 @media (min-width: 768px) {
   .w-md-100 {
-    width: 100%!important;
+    width: 100% !important;
   }
   .w-md-75 {
-    width: 75%!important;
+    width: 75% !important;
   }
   .w-md-50 {
-    width: 50%!important;
+    width: 50% !important;
   }
   .w-md-25 {
-    width: 25%!important;
+    width: 25% !important;
   }
 }
 
 @media (min-width: 992px) {
   .w-lg-100 {
-    width: 100%!important;
+    width: 100% !important;
   }
   .w-lg-75 {
-    width: 75%!important;
+    width: 75% !important;
   }
   .w-lg-50 {
-    width: 50%!important;
+    width: 50% !important;
   }
   .w-lg-25 {
-    width: 25%!important;
+    width: 25% !important;
   }
 }
 
 @media (min-width: 1200px) {
   .w-xl-100 {
-    width: 100%!important;
+    width: 100% !important;
   }
   .w-xl-75 {
-    width: 75%!important;
+    width: 75% !important;
   }
   .w-xl-50 {
-    width: 50%!important;
+    width: 50% !important;
   }
   .w-xl-25 {
-    width: 25%!important;
+    width: 25% !important;
   }
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oswald', sans-serif;
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Oswald", sans-serif;
 }
 
-.h2, h2 {
+.h2,
+h2 {
   margin-top: 2rem;
 }
 
@@ -82,7 +93,7 @@ pre code {
   display: inline-block;
   min-width: 100%;
   padding: 20px;
-  background: rgba(68,68,68,0.1);
+  background: rgba(68, 68, 68, 0.1);
 }
 
 blockquote {
@@ -105,14 +116,22 @@ blockquote {
 }
 
 .text-light {
-  color: #9e9797!important;
+  color: #9e9797 !important;
 }
 
 .hover-grey:hover {
-  color: #9e9797!important;
+  color: #9e9797 !important;
 }
 
 table {
   width: 100%;
   margin: 20px 0 20px 0;
+}
+
+.no-outline-focus:focus {
+  outline: none;
+}
+
+.pointer {
+  cursor: pointer;
 }

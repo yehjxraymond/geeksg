@@ -9,12 +9,6 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-// Inaccuracies:
-// CPF AGE by month
-// CPF limit by wage ceiling
-// CPF top up maximum cap
-// Accrued interest is missing for months past in current year
-
 const CPF_CONTRIBUTION_CEILING = 102000;
 
 export const zeroAccount = () => ({
@@ -500,7 +494,7 @@ export const CpfTable = ({ computedResult }) => {
             className="p-3"
             style={{ backgroundColor: "rgba(130, 202, 157, 0.3)" }}
           >
-            <h4>{brsAge ? brsAge.age : "NIL"}</h4>
+            <h4>{brsAge ? brsAge.age : "Not Achieved Before 55"}</h4>
           </div>
         </div>
         <div className="col-md-4">
@@ -519,7 +513,7 @@ export const CpfTable = ({ computedResult }) => {
             className="p-3"
             style={{ backgroundColor: "rgba(130, 202, 157, 0.5)" }}
           >
-            <h4>{frsAge ? frsAge.age : "NIL"}</h4>
+            <h4>{frsAge ? frsAge.age : "Not Achieved Before 55"}</h4>
           </div>
         </div>
         <div className="col-md-4">
@@ -538,7 +532,7 @@ export const CpfTable = ({ computedResult }) => {
             className="p-3"
             style={{ backgroundColor: "rgba(130, 202, 157, 0.9)" }}
           >
-            <h4>{ersAge ? ersAge.age : "NIL"}</h4>
+            <h4>{ersAge ? ersAge.age : "Not Achieved Before 55"}</h4>
           </div>
         </div>
       </div>
@@ -561,7 +555,8 @@ export const CpfTable = ({ computedResult }) => {
                 Interest{" "}
                 <InfoTooltip>
                   Number shown has already been credited into the individual
-                  accounts
+                  accounts. Value is shown to showcase the effect of compounding
+                  interest rates on the balances.
                 </InfoTooltip>
               </th>
               <th className="py-2">
@@ -605,20 +600,73 @@ export const CpfTable = ({ computedResult }) => {
   );
 };
 
+export const Disclaimer = ({ show, toggle }) => {
+  return (
+    <>
+      <h6 className="mt-4">
+        Calculator Disclaimers{" "}
+        <div className="d-inline text-light" onClick={toggle}>
+          ({show ? "hide" : "show"})
+        </div>
+      </h6>
+      {show && (
+        <div>
+          <p>
+            This CPF calculator is not endorsed by CPF or any other entities and
+            is created only for educational and financial planning purposes.
+          </p>
+          <p>
+            The product is not intended as financial advice or as an offer or
+            recommendation of securities or other financial products.
+          </p>
+          <p>
+            While attempts has been made to reflect the forecast correctly
+            according to the parameters the calculator may fail to forecast the
+            actual amount accurately for multiple reasons.
+          </p>
+          <p>In addition, there are few assumptions made:</p>
+          <ul>
+            <li>CPF SA top up and transfers are made only in January.</li>
+            <li>Bonus for the year is credited only in December.</li>
+            <li>CPF FRS will inflate at a constant rate of 3% per year.</li>
+          </ul>
+          <p>Finally, there are few known limitations to the product:</p>
+          <ul>
+            <li>
+              Simplified calculation of age by using birth year instead of full
+              birth date
+            </li>
+            <li>Missing accrued interest for months prior to current month</li>
+          </ul>
+          <p>If you noticed any inaccuracies or errors, please <a href="/contact">contact me</a>.</p>
+        </div>
+      )}
+    </>
+  );
+};
+
 export const CpfCalculator = () => {
-  const [birthYear, setBirthYear] = useState("1994");
-  const [stopWorkAge, setStopWorkAge] = useState("50");
-  const [salary, setSalary] = useState("3500");
-  const [oa, setOa] = useState("38000");
-  const [ma, setMa] = useState("10000");
-  const [sa, setSa] = useState("10000");
-  const [salaryInflationPerYear, setSalaryInflationPerYear] = useState("0");
-  const [bonusByMonths, setBonusByMonths] = useState("2");
+  const [birthYear, setBirthYear] = useState("1990");
+  const [stopWorkAge, setStopWorkAge] = useState("55");
+  const [salary, setSalary] = useState("3000");
+  const [oa, setOa] = useState("23000");
+  const [sa, setSa] = useState("6000");
+  const [ma, setMa] = useState("8000");
+  const [salaryInflationPerYear, setSalaryInflationPerYear] = useState("2.5");
+  const [bonusByMonths, setBonusByMonths] = useState("1");
+  const [showAdvanceSettings, setShowAdvanceSettings] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const [topUp, setTopUp] = useState("0");
   const [transfer, setTransfer] = useState("0");
 
   const [computedResult, setComputedResult] = useState();
+
+  const toggleAdvancesSettings = () =>
+    setShowAdvanceSettings(!showAdvanceSettings);
+  const toggleShowDisclaimer = () => {
+    setShowDisclaimer(!showDisclaimer);
+  };
 
   const calculate = () => {
     const result = computeCpf({
@@ -642,114 +690,309 @@ export const CpfCalculator = () => {
   };
 
   return (
-    <div>
-      <div>
-        <div>Year Born</div>
-        <div>
-          <input
-            onChange={e => setBirthYear(e.target.value)}
-            value={birthYear}
-          ></input>
+    <div className="my-4">
+      <h4>Basic Information</h4>
+      <div className="row text-center">
+        <div className="col-md-4 my-2">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+          >
+            <h5>
+              Year of Birth <InfoTooltip>For calculating age</InfoTooltip>
+            </h5>
+          </div>
+          <div
+            style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+            className="py-3"
+          >
+            <input
+              className="no-outline-focus text-center"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.2em"
+              }}
+              onChange={e => setBirthYear(e.target.value)}
+              value={birthYear}
+            ></input>
+          </div>
+        </div>
+        <div className="col-md-4 my-2">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+          >
+            <h5>
+              Current Salary{" "}
+              <InfoTooltip>Gross wage without bonuses.</InfoTooltip>
+            </h5>
+          </div>
+          <div
+            style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+            className="py-3"
+          >
+            <input
+              className="no-outline-focus text-center"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.2em"
+              }}
+              onChange={e => setSalary(e.target.value)}
+              value={salary}
+            ></input>
+          </div>
+        </div>
+        <div className="col-md-4 my-2">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+          >
+            <h5>
+              Intended Retirement Age{" "}
+              <InfoTooltip>
+                At this age, you will be having no salary contribution.
+              </InfoTooltip>
+            </h5>
+          </div>
+          <div
+            style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+            className="py-3"
+          >
+            <input
+              className="no-outline-focus text-center"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.2em"
+              }}
+              onChange={e => setStopWorkAge(e.target.value)}
+              value={stopWorkAge}
+            ></input>
+          </div>
+        </div>
+      </div>
+      <div className="row text-center">
+        <div className="col-md-4 my-2">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(136, 132, 216, 0.9)" }}
+          >
+            <h5>Current OA Balance</h5>
+          </div>
+          <div
+            style={{ backgroundColor: "rgba(136, 132, 216, 0.7)" }}
+            className="py-3"
+          >
+            <input
+              className="no-outline-focus text-center"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.2em"
+              }}
+              onChange={e => setOa(e.target.value)}
+              value={oa}
+            ></input>
+          </div>
+        </div>
+        <div className="col-md-4 my-2">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.9)" }}
+          >
+            <h5>Current SA Balance</h5>
+          </div>
+          <div
+            style={{ backgroundColor: "rgba(130, 202, 157, 0.7)" }}
+            className="py-3"
+          >
+            <input
+              className="no-outline-focus text-center"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.2em"
+              }}
+              onChange={e => setSa(e.target.value)}
+              value={sa}
+            ></input>
+          </div>
+        </div>
+        <div className="col-md-4 my-2">
+          <div
+            className="p-2"
+            style={{ backgroundColor: "rgba(255, 198, 88, 0.9)" }}
+          >
+            <h5>Current MA Balance</h5>
+          </div>
+          <div
+            style={{ backgroundColor: "rgba(255, 198, 88, 0.7)" }}
+            className="py-3"
+          >
+            <input
+              className="no-outline-focus text-center"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "1.2em"
+              }}
+              onChange={e => setMa(e.target.value)}
+              value={ma}
+            ></input>
+          </div>
         </div>
       </div>
 
-      <div>
-        <div>Salary</div>
-        <div>
-          <input
-            onChange={e => setSalary(e.target.value)}
-            value={salary}
-          ></input>
+      <h4 className="mt-4">
+        Additional Information{" "}
+        <div
+          onClick={toggleAdvancesSettings}
+          className="d-inline text-light pointer"
+        >
+          ({showAdvanceSettings ? "hide" : "show"})
         </div>
-      </div>
+      </h4>
 
-      <div>
-        <div>CPF OA</div>
-        <div>
-          <input onChange={e => setOa(e.target.value)} value={oa}></input>
+      {showAdvanceSettings && (
+        <div className="row text-center">
+          <div className="col-md-4 my-2">
+            <div
+              className="p-2"
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+            >
+              <h5>
+                Bonus (months){" "}
+                <InfoTooltip>
+                  Bonus will be credited in December. Generally includes
+                  performance, 13th month and corporate bonus.
+                </InfoTooltip>
+              </h5>
+            </div>
+            <div
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+              className="py-3"
+            >
+              <input
+                className="no-outline-focus text-center"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1.2em"
+                }}
+                onChange={e => setBonusByMonths(e.target.value)}
+                value={bonusByMonths}
+              ></input>
+            </div>
+          </div>
+          <div className="col-md-4 my-2">
+            <div
+              className="p-2"
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+            >
+              <h5>
+                Annual Salary Increment (%){" "}
+                <InfoTooltip>
+                  Estimated salary increment. Salary will be incremented in
+                  January each year.
+                </InfoTooltip>
+              </h5>
+            </div>
+            <div
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+              className="py-3"
+            >
+              <input
+                className="no-outline-focus text-center"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1.2em"
+                }}
+                onChange={e => setSalaryInflationPerYear(e.target.value)}
+                value={salaryInflationPerYear}
+              ></input>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div>
-        <div>CPF SA</div>
-        <div>
-          <input onChange={e => setSa(e.target.value)} value={sa}></input>
+      {showAdvanceSettings && (
+        <div className="row text-center">
+          <div className="col-md-4 my-2">
+            <div
+              className="p-2"
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+            >
+              <h5>
+                SA Cash Top Up{" "}
+                <InfoTooltip>
+                  CPF top up to SA account is assumed to be performed in January
+                  each year
+                </InfoTooltip>
+              </h5>
+            </div>
+            <div
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+              className="py-3"
+            >
+              <input
+                className="no-outline-focus text-center"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1.2em"
+                }}
+                onChange={e => setTopUp(e.target.value)}
+                value={topUp}
+              ></input>
+            </div>
+          </div>
+          <div className="col-md-4 my-2">
+            <div
+              className="p-2"
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.5)" }}
+            >
+              <h5>
+                OA to SA Transfer{" "}
+                <InfoTooltip>
+                  Transfer from CPF OA to SA account is assumed to be performed
+                  in January each year
+                </InfoTooltip>
+              </h5>
+            </div>
+            <div
+              style={{ backgroundColor: "rgba(52, 73, 94, 0.3)" }}
+              className="py-3"
+            >
+              <input
+                className="no-outline-focus text-center"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1.2em"
+                }}
+                onChange={e => setTransfer(e.target.value)}
+                value={transfer}
+              ></input>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div>
-        <div>CPF MA</div>
-        <div>
-          <input onChange={e => setMa(e.target.value)} value={ma}></input>
-        </div>
-      </div>
-
-      <div>
-        <div>Age to stop working</div>
-        <div>
-          <input
-            onChange={e => setStopWorkAge(e.target.value)}
-            value={stopWorkAge}
-          ></input>
-        </div>
-      </div>
-
-      <div>
-        <div>CPF SA Top Up in Jan</div>
-        <div>
-          <input onChange={e => setTopUp(e.target.value)} value={topUp}></input>
-        </div>
-      </div>
-
-      <div>
-        <div>CPF Transfer from OA to SA in Jan</div>
-        <div>
-          <input
-            onChange={e => setTransfer(e.target.value)}
-            value={transfer}
-          ></input>
-        </div>
-      </div>
-
-      <div>
-        <div>
-          Bonus in Months{" "}
-          <InfoTooltip>
-            Bonus will be credited in December. Generally includes performance,
-            13th month and corporate bonus.
-          </InfoTooltip>
-        </div>
-        <div>
-          <input
-            onChange={e => setBonusByMonths(e.target.value)}
-            value={bonusByMonths}
-          ></input>
-        </div>
-      </div>
-
-      <div>
-        <div>
-          Salary increment (% per year){" "}
-          <InfoTooltip>
-            Estimated salary increment. Salary will be incremented in January
-            each year.
-          </InfoTooltip>
-        </div>
-        <div>
-          <input
-            onChange={e => setSalaryInflationPerYear(e.target.value)}
-            value={salaryInflationPerYear}
-          ></input>
-        </div>
-      </div>
-
-      <div>
-        <button onClick={calculate}>Calculate</button>
+      <div className="mt-4">
+        <button className="btn-block btn-dark p-3" onClick={calculate}>
+          Calculate
+        </button>
       </div>
 
       <CpfSummary computedResult={computedResult} />
       <CpfForecastChart computedResult={computedResult} />
       <CpfTable computedResult={computedResult} />
+      {computedResult && (
+        <Disclaimer show={showDisclaimer} toggle={toggleShowDisclaimer} />
+      )}
     </div>
   );
 };

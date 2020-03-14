@@ -1,0 +1,26 @@
+import Blog from "../../components/layouts/Blog";
+import {CpfCalculator} from "../../components/interactive/cpf"
+
+export const meta = {
+  date: new Date("14 October 2016"),
+  title: "CPF Forecast",
+  slug: "cpf-forecast",
+  summary: ""
+};
+
+CPF Forecast
+===
+
+## Introduction
+
+The CPF Forecast Calculator is used to forecast the contributions and balances of the multiple CPF accounts based on current account information and various assumptions. 
+
+The tool was created with the intention to showcase how choices you make now can affect your retirement. These choices can be found in "Additional Information" section of the calculator.
+
+## CPF Forecast Calculator
+
+<CpfCalculator />
+
+If you find this tool useful please feel free to share it, or even your results, or what you committed to, with your friends. You may use the hashtag **#cpfforecast**.
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;

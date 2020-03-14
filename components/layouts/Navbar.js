@@ -57,6 +57,36 @@ const Navbar = () => (
             </a>
           </div>
         </li>
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Tools
+          </a>
+          <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a className="dropdown-item" href="/tools/cpf-forecast">
+              CPF Forecast Calculator
+            </a>
+            <a
+              className="dropdown-item"
+              href="/blog/bet-sizing-with-kelly-risk-ruins"
+            >
+              Compounding Interest Game
+            </a>
+            <a
+              className="dropdown-item"
+              href="/blog/bet-sizing-with-kelly-kelly-criterion"
+            >
+              Kelly Criterion Simulator
+            </a>
+          </div>
+        </li>
         <li className="nav-item">
           <a className="nav-link" href="/contact">
             Contact
