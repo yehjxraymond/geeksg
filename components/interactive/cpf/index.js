@@ -12,6 +12,7 @@ import {
 // Inaccuracies:
 // CPF AGE by month
 // CPF limit by wage ceiling
+// Accrued interest is missing for months past in current year
 
 const CPF_CONTRIBUTION_CEILING = 102000;
 
@@ -166,6 +167,7 @@ export const nextMonth = ({
   let cpf = current;
   let currentAccruedInterest = accruedInterest;
   const currentAge = year - birthYear;
+  const currentFrs = getFrs(year);
 
   // Credit all bonus in December.
   // If this is a variable, we have to consider the limit to be exercised throughout the year.
@@ -177,10 +179,10 @@ export const nextMonth = ({
     currentAccruedInterest = zeroAccount();
   }
 
-  if (month === 0 && cpf.sa < getFrs(year)) {
+  if (month === 0 && cpf.sa < currentFrs) {
     // Credit cpf SA top up in Jan
     if (topUp) {
-      let availableTopUpBudget = getFrs(year) - cpf.sa;
+      let availableTopUpBudget = currentFrs - cpf.sa;
       const actualAmount = Math.min(availableTopUpBudget, topUp);
       cpf.sa += actualAmount;
       availableTopUpBudget -= actualAmount;
@@ -188,7 +190,7 @@ export const nextMonth = ({
 
     // Transfer cpf OA to SA in Jan
     if (transfer) {
-      const availableTopUpBudget = getFrs(year) - cpf.sa;
+      const availableTopUpBudget = currentFrs - cpf.sa;
       const actualAmount = Math.min(availableTopUpBudget, cpf.oa, transfer);
       cpf.sa += actualAmount;
       cpf.oa -= actualAmount;
@@ -226,8 +228,10 @@ export const nextMonth = ({
 
   return {
     cpf,
+    age: currentAge,
     accruedInterest: currentAccruedInterest,
-    salary: nextSalary
+    salary: nextSalary,
+    currentFrs
   };
 };
 
@@ -254,7 +258,9 @@ export const computeCpf = ({
     month: currentMonth,
     age: ageThisYear,
     accruedInterest: zeroAccount(),
-    creditedInterest: zeroAccount()
+    creditedInterest: zeroAccount(),
+    currentFrs: getFrs(currentYear),
+    salary
   });
 
   while (ageThisYear <= 55) {
@@ -280,11 +286,13 @@ export const computeCpf = ({
 
     forecast.push({
       ...nextState.cpf,
+      currentFrs: nextState.currentFrs,
+      salary: nextState.salary,
+      age: nextState.age,
       accruedInterest: nextState.accruedInterest,
       creditedInterest: currentMonth == 0 ? accruedInterest : zeroAccount(),
       year: currentYear,
-      month: currentMonth,
-      age: ageThisYear
+      month: currentMonth
     });
 
     accruedInterest = nextState.accruedInterest;
@@ -294,7 +302,17 @@ export const computeCpf = ({
 };
 
 const formatNumber = num =>
-  num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  isNaN(num) ? "NA" : num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+const InfoTooltip = ({ children }) => (
+  <i
+    data-toggle="tooltip"
+    data-placement="top"
+    data-html="true"
+    title={children}
+    className="fas fa-info-circle"
+  ></i>
+);
 
 const CpfForecastChart = ({ computedResult }) => {
   if (!computedResult) return null;
@@ -431,9 +449,78 @@ const CpfSummary = ({ computedResult }) => {
   );
 };
 
+export const CpfTable = ({ computedResult }) => {
+  if (!computedResult) return null;
+  return (
+    <div className="d-none d-md-block">
+      <div className="row my-4">
+        <div className="col text-center">
+          <h3>Balance By Year Ends:</h3>
+          <small>*Background is green when OA + SA exceeds FRS</small>
+        </div>
+      </div>
+      <table className="text-center">
+        <thead>
+          <tr style={{ backgroundColor: "rgba(136, 132, 216, 0.5)" }}>
+            <th className="py-2">Age</th>
+            <th className="py-2">Salary</th>
+            <th className="py-2">OA</th>
+            <th className="py-2">SA</th>
+            <th className="py-2">MA</th>
+            <th className="py-2">Total</th>
+            <th className="py-2">
+              Interest{" "}
+              <InfoTooltip>
+                Number shown has already been credited into the individual
+                accounts
+              </InfoTooltip>
+            </th>
+            <th className="py-2">
+              FRS{" "}
+              <InfoTooltip>
+                Estimated based on 3% increment per year
+              </InfoTooltip>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {computedResult.map((cpf, index) => (
+            <tr
+              key={index}
+              style={{
+                backgroundColor:
+                  cpf.oa + cpf.sa >= cpf.currentFrs
+                    ? "rgba(130, 202, 157, 0.5)"
+                    : "rgba(255, 198, 88, 0.5)"
+              }}
+            >
+              <td>{cpf.age}</td>
+              <td>{formatNumber(cpf.salary)}</td>
+              <td>{formatNumber(cpf.oa)}</td>
+              <td>{formatNumber(cpf.sa)}</td>
+              <td>{formatNumber(cpf.ma)}</td>
+              <td>{formatNumber(cpf.total)}</td>
+              <td>
+                {computedResult[index + 1]
+                  ? formatNumber(
+                      computedResult[index + 1].creditedInterest.oa +
+                        computedResult[index + 1].creditedInterest.sa +
+                        computedResult[index + 1].creditedInterest.ma
+                    )
+                  : "-NIL-"}
+              </td>
+              <td>{formatNumber(cpf.currentFrs)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
 export const CpfCalculator = () => {
   const [birthYear, setBirthYear] = useState("1990");
-  const [stopWorkAge, setStopWorkAge] = useState("40");
+  const [stopWorkAge, setStopWorkAge] = useState("50");
   const [salary, setSalary] = useState("3000");
   const [oa, setOa] = useState("0");
   const [ma, setMa] = useState("0");
@@ -464,6 +551,7 @@ export const CpfCalculator = () => {
     })
       .filter(item => item.month == 0)
       .map(cpf => ({ ...cpf, total: cpf.oa + cpf.ma + cpf.ra + cpf.sa }));
+    console.log(result);
     setComputedResult(result);
   };
 
@@ -538,7 +626,13 @@ export const CpfCalculator = () => {
       </div>
 
       <div>
-        <div>Number of bonus in Months (credited in Dec)</div>
+        <div>
+          Bonus in Months{" "}
+          <InfoTooltip>
+            Bonus will be credited in December. Generally includes performance,
+            13th month and corporate bonus.
+          </InfoTooltip>
+        </div>
         <div>
           <input
             onChange={e => setBonusByMonths(e.target.value)}
@@ -548,7 +642,13 @@ export const CpfCalculator = () => {
       </div>
 
       <div>
-        <div>Average salary increment in % (increment in Dec)</div>
+        <div>
+          Salary increment (% per year){" "}
+          <InfoTooltip>
+            Estimated salary increment. Salary will be incremented in January
+            each year.
+          </InfoTooltip>
+        </div>
         <div>
           <input
             onChange={e => setSalaryInflationPerYear(e.target.value)}
@@ -561,8 +661,9 @@ export const CpfCalculator = () => {
         <button onClick={calculate}>Calculate</button>
       </div>
 
-      <CpfForecastChart computedResult={computedResult} />
       <CpfSummary computedResult={computedResult} />
+      <CpfForecastChart computedResult={computedResult} />
+      <CpfTable computedResult={computedResult} />
     </div>
   );
 };
