@@ -1,4 +1,10 @@
-import { computeCpf, calculateAccruedInterest, getFrs } from "./index";
+import {
+  computeCpf,
+  calculateAccruedInterest,
+  nextMonth,
+  getFrs,
+  zeroAccount
+} from "./index";
 
 describe("getFrs", () => {
   it("should be correct for years defined", () => {
@@ -8,6 +14,44 @@ describe("getFrs", () => {
   it("should be correct for estimates", () => {
     expect(getFrs(2023)).toBe(197760);
     expect(getFrs(2024)).toBe(203692.8);
+  });
+});
+
+describe("nextMonth", () => {
+  describe("salary inflation", () => {
+    it("increases salary in Jan", () => {
+      const { salary } = nextMonth({
+        current: zeroAccount(),
+        birthYear: 1990,
+        year: 1990,
+        month: 11,
+        salary: 1000,
+        accruedInterest: zeroAccount(),
+        stopWorkAge: 40,
+        topUp: 0,
+        transfer: 0,
+        bonusByMonths: 0,
+        salaryInflationPerYear: 3
+      });
+      expect(salary).toBe(1030);
+    });
+
+    it("does not increases salary in other months", () => {
+      const { salary } = nextMonth({
+        current: zeroAccount(),
+        birthYear: 1990,
+        year: 1990,
+        month: 0,
+        salary: 1000,
+        accruedInterest: zeroAccount(),
+        stopWorkAge: 40,
+        topUp: 0,
+        transfer: 0,
+        bonusByMonths: 0,
+        salaryInflationPerYear: 3
+      });
+      expect(salary).toBe(1000);
+    });
   });
 });
 

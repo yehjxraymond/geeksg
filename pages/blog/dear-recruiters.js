@@ -89,9 +89,9 @@ const Content = () => {
         {withPerspective("you", "us")} &apos;build an
         AI/Blockchain/Chatbot&apos;
         {withPerspective(", we are probably misaligned", "")}.{" "}
-        {withPerspective("I'm", "We're")} interested in solving problems,
-        not just building products. {withPerspective("I", "We")} believe that
-        the best solution to a problem is more than just a tech product, it is
+        {withPerspective("I'm", "We're")} interested in solving problems, not
+        just building products. {withPerspective("I", "We")} believe that the
+        best solution to a problem is more than just a tech product, it is
         usually a cocktail of{" "}
         <a href="https://www.groupmap.com/map-templates/pest-analysis/">
           political, environmental, societal and technological

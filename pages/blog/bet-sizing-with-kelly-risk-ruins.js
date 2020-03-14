@@ -18,8 +18,8 @@ const Wheel = ({ bet, addValue, payout, label, img }) => {
   const spin = () => {
     let rand = Math.random();
     let resultingOdds;
-    for (let p of payout) {
-      rand = rand - p.weights;
+    for (const p of payout) {
+      rand -= p.weights;
       if (rand <= 0) {
         resultingOdds = p.odds;
         break;

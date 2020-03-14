@@ -11,9 +11,11 @@ import {
 
 // Inaccuracies:
 // CPF AGE by month
-// Cannot transfer OA into SA after FRS is hit on SA
+// CPF limit by wage ceiling
 
-const zeroAccount = () => ({
+const CPF_CONTRIBUTION_CEILING = 102000;
+
+export const zeroAccount = () => ({
   sa: 0,
   ma: 0,
   ra: 0,
@@ -157,11 +159,17 @@ export const nextMonth = ({
   accruedInterest,
   stopWorkAge,
   topUp,
-  transfer
+  transfer,
+  bonusByMonths,
+  salaryInflationPerYear
 }) => {
   let cpf = current;
   let currentAccruedInterest = accruedInterest;
   const currentAge = year - birthYear;
+
+  // Credit all bonus in December.
+  // If this is a variable, we have to consider the limit to be exercised throughout the year.
+  const bonusCreditMonth = 11;
 
   // Currently december, credit interest in the following month and zero accrued interest
   if (month === 11) {
@@ -180,7 +188,7 @@ export const nextMonth = ({
 
     // Transfer cpf OA to SA in Jan
     if (transfer) {
-      let availableTopUpBudget = getFrs(year) - cpf.sa;
+      const availableTopUpBudget = getFrs(year) - cpf.sa;
       const actualAmount = Math.min(availableTopUpBudget, cpf.oa, transfer);
       cpf.sa += actualAmount;
       cpf.oa -= actualAmount;
@@ -192,6 +200,19 @@ export const nextMonth = ({
     const currentSalaryContribution = salaryContribution(salary, currentAge);
     cpf = sumAccount(cpf, currentSalaryContribution);
   }
+
+  // Credit additional wages in december
+  if (month == bonusCreditMonth) {
+    const bonus = bonusByMonths * salary;
+    const bonusCeiling = Math.max(CPF_CONTRIBUTION_CEILING - 12 * salary, 0);
+    const contributionByBonus = Math.min(bonus, bonusCeiling);
+    const bonusContribution = salaryContribution(
+      contributionByBonus,
+      currentAge
+    );
+    cpf = sumAccount(cpf, bonusContribution);
+  }
+
   // Add accrued interest
   const additionalInterest = calculateAccruedInterest(cpf, currentAge);
   currentAccruedInterest = sumAccount(
@@ -199,9 +220,14 @@ export const nextMonth = ({
     additionalInterest
   );
 
+  // Salary inflation
+  const nextSalary =
+    month === 11 ? (salaryInflationPerYear / 100 + 1) * salary : salary;
+
   return {
     cpf,
-    accruedInterest: currentAccruedInterest
+    accruedInterest: currentAccruedInterest,
+    salary: nextSalary
   };
 };
 
@@ -211,6 +237,8 @@ export const computeCpf = ({
   topUp = 0,
   transfer = 0,
   stopWorkAge = 0,
+  bonusByMonths = 0,
+  salaryInflationPerYear = 0,
   birthYear
 }) => {
   const forecast = [];
@@ -218,6 +246,7 @@ export const computeCpf = ({
   let currentMonth = new Date().getMonth(); // Starts with 0
   let ageThisYear = currentYear - birthYear;
   let accruedInterest = zeroAccount();
+  let currentSalary = salary;
 
   forecast.push({
     ...current,
@@ -237,11 +266,13 @@ export const computeCpf = ({
       birthYear,
       year: currentYear,
       month: currentMonth,
-      salary,
+      salary: currentSalary,
       accruedInterest,
       topUp,
       transfer,
-      stopWorkAge
+      stopWorkAge,
+      bonusByMonths,
+      salaryInflationPerYear
     });
 
     currentMonth = (currentMonth + 1) % 12;
@@ -257,6 +288,7 @@ export const computeCpf = ({
     });
 
     accruedInterest = nextState.accruedInterest;
+    currentSalary = nextState.salary;
   }
   return forecast;
 };
@@ -406,7 +438,8 @@ export const CpfCalculator = () => {
   const [oa, setOa] = useState("0");
   const [ma, setMa] = useState("0");
   const [sa, setSa] = useState("0");
-  const [ra, setRa] = useState("0");
+  const [salaryInflationPerYear, setSalaryInflationPerYear] = useState("0");
+  const [bonusByMonths, setBonusByMonths] = useState("0");
 
   const [topUp, setTopUp] = useState("0");
   const [transfer, setTransfer] = useState("0");
@@ -419,13 +452,15 @@ export const CpfCalculator = () => {
         oa: Number(oa),
         ma: Number(ma),
         sa: Number(sa),
-        ra: Number(ra)
+        ra: 0
       },
       salary: Number(salary),
       stopWorkAge: Number(stopWorkAge),
       birthYear: Number(birthYear),
       topUp: Number(topUp),
-      transfer: Number(transfer)
+      transfer: Number(transfer),
+      bonusByMonths: Number(bonusByMonths),
+      salaryInflationPerYear: Number(salaryInflationPerYear)
     })
       .filter(item => item.month == 0)
       .map(cpf => ({ ...cpf, total: cpf.oa + cpf.ma + cpf.ra + cpf.sa }));
@@ -498,6 +533,26 @@ export const CpfCalculator = () => {
           <input
             onChange={e => setTransfer(e.target.value)}
             value={transfer}
+          ></input>
+        </div>
+      </div>
+
+      <div>
+        <div>Number of bonus in Months (credited in Dec)</div>
+        <div>
+          <input
+            onChange={e => setBonusByMonths(e.target.value)}
+            value={bonusByMonths}
+          ></input>
+        </div>
+      </div>
+
+      <div>
+        <div>Average salary increment in % (increment in Dec)</div>
+        <div>
+          <input
+            onChange={e => setSalaryInflationPerYear(e.target.value)}
+            value={salaryInflationPerYear}
           ></input>
         </div>
       </div>
