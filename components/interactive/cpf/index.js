@@ -713,7 +713,8 @@ export const CpfCalculator = () => {
               className="no-outline-focus text-center"
               style={{
                 background: "transparent",
-                border: "none",
+                borderWidth: "0 0 2px 0",
+                borderColor: "black",
                 fontSize: "1.2em"
               }}
               onChange={e => setBirthYear(e.target.value)}
@@ -739,7 +740,8 @@ export const CpfCalculator = () => {
               className="no-outline-focus text-center"
               style={{
                 background: "transparent",
-                border: "none",
+                borderWidth: "0 0 2px 0",
+                borderColor: "black",
                 fontSize: "1.2em"
               }}
               onChange={e => setSalary(e.target.value)}
@@ -767,7 +769,8 @@ export const CpfCalculator = () => {
               className="no-outline-focus text-center"
               style={{
                 background: "transparent",
-                border: "none",
+                borderWidth: "0 0 2px 0",
+                borderColor: "black",
                 fontSize: "1.2em"
               }}
               onChange={e => setStopWorkAge(e.target.value)}
@@ -792,7 +795,8 @@ export const CpfCalculator = () => {
               className="no-outline-focus text-center"
               style={{
                 background: "transparent",
-                border: "none",
+                borderWidth: "0 0 2px 0",
+                borderColor: "black",
                 fontSize: "1.2em"
               }}
               onChange={e => setOa(e.target.value)}
@@ -815,7 +819,8 @@ export const CpfCalculator = () => {
               className="no-outline-focus text-center"
               style={{
                 background: "transparent",
-                border: "none",
+                borderWidth: "0 0 2px 0",
+                borderColor: "black",
                 fontSize: "1.2em"
               }}
               onChange={e => setSa(e.target.value)}
@@ -838,7 +843,8 @@ export const CpfCalculator = () => {
               className="no-outline-focus text-center"
               style={{
                 background: "transparent",
-                border: "none",
+                borderWidth: "0 0 2px 0",
+                borderColor: "black",
                 fontSize: "1.2em"
               }}
               onChange={e => setMa(e.target.value)}
