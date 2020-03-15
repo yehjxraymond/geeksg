@@ -85,6 +85,20 @@ const Navbar = () => (
             >
               Portfolio Allocation Game
             </a>
+            <a
+              className="dropdown-item"
+              href="https://qv.geek.sg/"
+              target="_blank"
+            >
+              Quadratic Voting App
+            </a>
+            <a
+              className="dropdown-item"
+              href="https://pegacert.com/"
+              target="_blank"
+            >
+              Online Exams Simulator
+            </a>
           </div>
         </li>
         <li className="nav-item">

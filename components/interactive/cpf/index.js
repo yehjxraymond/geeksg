@@ -303,15 +303,29 @@ export const computeCpf = ({
 const formatNumber = num =>
   isNaN(num) ? "NA" : num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-const InfoTooltip = ({ children }) => (
-  <i
-    data-toggle="tooltip"
-    data-placement="top"
-    data-html="true"
-    title={children}
-    className="fas fa-info-circle"
-  ></i>
-);
+const InfoTooltip = ({ children }) => {
+  const [show, setShow] = useState(false);
+  const toggle = () => {
+    setShow(!show);
+  };
+  return (
+    <div className="d-inline">
+      <i
+        data-toggle="tooltip"
+        data-placement="top"
+        data-html="true"
+        title={children}
+        className="fas fa-info-circle"
+        onClick={toggle}
+      />
+      {show && (
+        <div>
+          <small style={{ opacity: 0.8 }}> {children}</small>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const CpfForecastChart = ({ computedResult }) => {
   if (!computedResult) return null;
