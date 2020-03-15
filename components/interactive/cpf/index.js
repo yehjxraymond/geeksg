@@ -605,7 +605,7 @@ export const Disclaimer = ({ show, toggle }) => {
     <>
       <h6 className="mt-4">
         Calculator Disclaimers{" "}
-        <div className="d-inline text-light" onClick={toggle}>
+        <div className="d-inline text-light pointer" onClick={toggle}>
           ({show ? "hide" : "show"})
         </div>
       </h6>
