@@ -1025,7 +1025,7 @@ export const CpfCalculator = () => {
             target="_blank"
             href={`https://docs.google.com/forms/d/e/1FAIpQLSdTmZw7nvZ0P62fWfeAYzPNTEAaTWp-MqWjorq366z2ob0Z1w/viewform?usp=pp_url&entry.2046795091=${birthYear}&entry.8961092=${salary}&entry.1628574712=${stopWorkAge}&entry.1364818236=${oa}&entry.291718066=${sa}&entry.209991329=${ma}&entry.1407674642=${bonusByMonths}&entry.2123969228=${salaryInflationPerYear}`}
           >
-            <div class="btn btn-dark">Go to survey</div>
+            <div className="btn btn-dark">Go to survey</div>
           </a>
         </div>
       )}
