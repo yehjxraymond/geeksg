@@ -6,6 +6,10 @@ const links = [
     link: "https://geek.sg/tools/cpf-forecast"
   },
   {
+    text: "Quadratic Voting App",
+    link: "https://qv.geek.sg/"
+  },
+  {
     text: "Bet Sizing with Kelly Criterion",
     link: "https:///geek.sg/blog/bet-sizing-with-kelly-kelly-criterion"
   },
