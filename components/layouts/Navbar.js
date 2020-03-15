@@ -83,7 +83,7 @@ const Navbar = () => (
               className="dropdown-item"
               href="/blog/bet-sizing-with-kelly-kelly-criterion"
             >
-              Kelly Criterion Simulator
+              Portfolio Allocation Game
             </a>
           </div>
         </li>

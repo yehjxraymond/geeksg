@@ -2,25 +2,26 @@ import Blog from "../../components/layouts/Blog";
 import {CpfCalculator} from "../../components/interactive/cpf"
 
 export const meta = {
-  date: new Date("14 October 2016"),
-  title: "CPF Forecast",
-  slug: "cpf-forecast",
-  summary: ""
+  date: new Date("15 March 2020"),
+  title: "CPF Forecast Calculator",
+  summary: "The CPF Forecast Calculator is used to estimate the contributions and balances of the multiple CPF accounts based on current account information and various assumptions to help you plan for retirement. The calculator predicts your CPF balances up to age 55."
 };
 
-CPF Forecast
+CPF Forecast Calculator
 ===
 
 ## Introduction
 
-The CPF Forecast Calculator is used to forecast the contributions and balances of the multiple CPF accounts based on current account information and various assumptions. 
+The CPF Forecast Calculator is used to estimate the contributions and balances of the multiple CPF accounts based on current account information and various assumptions to help you plan for retirement. The calculator predicts your CPF balances up to age 55.
 
-The tool was created with the intention to showcase how choices you make now can affect your retirement. These choices can be found in "Additional Information" section of the calculator.
+The tool was created with the intention to showcase how choices you make now can affect your retirement. These choices can be found in "Additional Information" section of the calculator. 
+
+You may start by entering your "Basic Information" in the boxes below before clicking on "Calculate".
 
 ## CPF Forecast Calculator
 
 <CpfCalculator />
 
-If you find this tool useful please feel free to share it, or even your results, or what you committed to, with your friends. You may use the hashtag **#cpfforecast**.
+If you find this tool useful please feel free to share the tool, your results, or what you've committed to, with your friends. You may use the hashtag **#cpfforecast**.
 
 export default ({children}) => <Blog meta={meta}>{children}</Blog>;

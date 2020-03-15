@@ -484,7 +484,7 @@ export const CpfTable = ({ computedResult }) => {
             style={{ backgroundColor: "rgba(130, 202, 157, 0.4)" }}
           >
             <h5>
-              Achieved BRS{" "}
+              Age Achieving BRS{" "}
               <InfoTooltip>
                 Based on estimated 0.5 * FRS inflated at 3% per year.
               </InfoTooltip>
@@ -503,7 +503,7 @@ export const CpfTable = ({ computedResult }) => {
             style={{ backgroundColor: "rgba(130, 202, 157, 0.6)" }}
           >
             <h5>
-              Achieved FRS{" "}
+              Age Achieving FRS{" "}
               <InfoTooltip>
                 Based on estimated FRS inflated at 3% per year.
               </InfoTooltip>
@@ -522,7 +522,7 @@ export const CpfTable = ({ computedResult }) => {
             style={{ backgroundColor: "rgba(130, 202, 157, 1)" }}
           >
             <h5>
-              Achieved ERS{" "}
+              Age Achieving ERS{" "}
               <InfoTooltip>
                 Based on estimated 1.5 * FRS inflated at 3% per year.
               </InfoTooltip>
@@ -638,7 +638,10 @@ export const Disclaimer = ({ show, toggle }) => {
             </li>
             <li>Missing accrued interest for months prior to current month</li>
           </ul>
-          <p>If you noticed any inaccuracies or errors, please <a href="/contact">contact me</a>.</p>
+          <p>
+            If you noticed any inaccuracies or errors, please{" "}
+            <a href="/contact">contact me</a>.
+          </p>
         </div>
       )}
     </>
@@ -990,9 +993,42 @@ export const CpfCalculator = () => {
       <CpfSummary computedResult={computedResult} />
       <CpfForecastChart computedResult={computedResult} />
       <CpfTable computedResult={computedResult} />
+
+      {computedResult && (
+        <div className="my-3">
+          <h4>Opt-in Financial Status Insights</h4>
+          <p>
+            Would you like to know more about how well you perform amongst your
+            peers financially?
+          </p>
+          <p>
+            Fill in the survey below to partake in an anonymous salary and
+            financial status survey to be the first to receive a summarized
+            report once sufficient data has been received.
+          </p>
+          <p>
+            The goal of the survey is to provide you with anonymous information
+            of peers in your industry to allow you to make better decisions with
+            regards to your employment (and salary negotiation).
+          </p>
+          <p>
+            The button below links to a pre-filled google form which you may
+            amend the data before submitting.
+          </p>
+          <a
+            target="_blank"
+            href={`https://docs.google.com/forms/d/e/1FAIpQLSdTmZw7nvZ0P62fWfeAYzPNTEAaTWp-MqWjorq366z2ob0Z1w/viewform?usp=pp_url&entry.2046795091=${birthYear}&entry.8961092=${salary}&entry.1628574712=${stopWorkAge}&entry.1364818236=${oa}&entry.291718066=${sa}&entry.209991329=${ma}&entry.1407674642=${bonusByMonths}&entry.2123969228=${salaryInflationPerYear}`}
+          >
+            <div class="btn btn-dark">Go to survey</div>
+          </a>
+        </div>
+      )}
+
       {computedResult && (
         <Disclaimer show={showDisclaimer} toggle={toggleShowDisclaimer} />
       )}
+
+      <hr />
     </div>
   );
 };
