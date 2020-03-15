@@ -712,7 +712,7 @@ export const CpfCalculator = () => {
             <input
               className="no-outline-focus text-center"
               style={{
-                background: "transparent",
+                background: "rgba(255, 255, 255, 0.2)",
                 borderWidth: "0 0 2px 0",
                 borderColor: "black",
                 fontSize: "1.2em"
@@ -739,7 +739,7 @@ export const CpfCalculator = () => {
             <input
               className="no-outline-focus text-center"
               style={{
-                background: "transparent",
+                background: "rgba(255, 255, 255, 0.2)",
                 borderWidth: "0 0 2px 0",
                 borderColor: "black",
                 fontSize: "1.2em"
@@ -768,7 +768,7 @@ export const CpfCalculator = () => {
             <input
               className="no-outline-focus text-center"
               style={{
-                background: "transparent",
+                background: "rgba(255, 255, 255, 0.2)",
                 borderWidth: "0 0 2px 0",
                 borderColor: "black",
                 fontSize: "1.2em"
@@ -794,7 +794,7 @@ export const CpfCalculator = () => {
             <input
               className="no-outline-focus text-center"
               style={{
-                background: "transparent",
+                background: "rgba(255, 255, 255, 0.2)",
                 borderWidth: "0 0 2px 0",
                 borderColor: "black",
                 fontSize: "1.2em"
@@ -818,7 +818,7 @@ export const CpfCalculator = () => {
             <input
               className="no-outline-focus text-center"
               style={{
-                background: "transparent",
+                background: "rgba(255, 255, 255, 0.2)",
                 borderWidth: "0 0 2px 0",
                 borderColor: "black",
                 fontSize: "1.2em"
@@ -842,7 +842,7 @@ export const CpfCalculator = () => {
             <input
               className="no-outline-focus text-center"
               style={{
-                background: "transparent",
+                background: "rgba(255, 255, 255, 0.2)",
                 borderWidth: "0 0 2px 0",
                 borderColor: "black",
                 fontSize: "1.2em"
@@ -886,7 +886,7 @@ export const CpfCalculator = () => {
               <input
                 className="no-outline-focus text-center"
                 style={{
-                  background: "transparent",
+                  background: "rgba(255, 255, 255, 0.2)",
                   border: "none",
                   fontSize: "1.2em"
                 }}
@@ -915,7 +915,7 @@ export const CpfCalculator = () => {
               <input
                 className="no-outline-focus text-center"
                 style={{
-                  background: "transparent",
+                  background: "rgba(255, 255, 255, 0.2)",
                   border: "none",
                   fontSize: "1.2em"
                 }}
@@ -949,7 +949,7 @@ export const CpfCalculator = () => {
               <input
                 className="no-outline-focus text-center"
                 style={{
-                  background: "transparent",
+                  background: "rgba(255, 255, 255, 0.2)",
                   border: "none",
                   fontSize: "1.2em"
                 }}
@@ -978,7 +978,7 @@ export const CpfCalculator = () => {
               <input
                 className="no-outline-focus text-center"
                 style={{
-                  background: "transparent",
+                  background: "rgba(255, 255, 255, 0.2)",
                   border: "none",
                   fontSize: "1.2em"
                 }}
