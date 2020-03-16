@@ -68,7 +68,6 @@ export const overflowFromBhs = (cpf, year) => {
   };
 };
 
-
 export const uncappedSalaryContribution = (eligibleSalary, age) => {
   switch (true) {
     case age <= 35:
@@ -606,8 +605,8 @@ export const CpfTable = ({ computedResult }) => {
               <th className="py-2">
                 Interest{" "}
                 <InfoTooltip>
-                  Number shown has already been credited into the individual
-                  accounts. Value is shown to showcase the effect of compounding
+                  Interest is credited in Jan for the balance for the previous
+                  year. Value is shown to showcase the effect of compounding
                   interest rates on the balances.
                 </InfoTooltip>
               </th>
@@ -640,13 +639,11 @@ export const CpfTable = ({ computedResult }) => {
                 <td>{formatNumber(cpf.ma)}</td>
                 <td>{formatNumber(cpf.total)}</td>
                 <td>
-                  {computedResult[index + 1]
-                    ? formatNumber(
-                        computedResult[index + 1].creditedInterest.oa +
-                          computedResult[index + 1].creditedInterest.sa +
-                          computedResult[index + 1].creditedInterest.ma
-                      )
-                    : "-NIL-"}
+                  {formatNumber(
+                    computedResult[index].creditedInterest.oa +
+                      computedResult[index].creditedInterest.sa +
+                      computedResult[index].creditedInterest.ma
+                  )}
                 </td>
                 <td>{formatNumber(cpf.currentFrs)}</td>
                 <td>{formatNumber(cpf.currentBhs)}</td>
