@@ -18,6 +18,23 @@ export const zeroAccount = () => ({
   oa: 0
 });
 
+export const getBhs = year => {
+  switch (true) {
+    case year <= 2016:
+      return 49800;
+    case year === 2017:
+      return 52000;
+    case year === 2018:
+      return 54500;
+    case year === 2019:
+      return 57200;
+    case year === 2020:
+      return 60000;
+    default:
+      return Math.pow(1.0495, year - 2020) * 60000;
+  }
+};
+
 export const getFrs = year => {
   switch (year) {
     case 2017:
@@ -36,6 +53,21 @@ export const getFrs = year => {
       return Math.pow(1.03, year - 2022) * 192000;
   }
 };
+
+export const overflowFromBhs = (cpf, year) => {
+  const bhs = getBhs(year);
+  if (cpf.ma <= bhs) {
+    return cpf;
+  }
+  const excess = cpf.ma - bhs;
+  return {
+    oa: cpf.oa,
+    ra: cpf.ra,
+    sa: cpf.sa + excess,
+    ma: cpf.ma - excess
+  };
+};
+
 
 export const uncappedSalaryContribution = (eligibleSalary, age) => {
   switch (true) {
@@ -221,6 +253,9 @@ export const nextMonth = ({
     additionalInterest
   );
 
+  // Finally overflow MA excess of BHS to SA
+  cpf = overflowFromBhs(cpf, year);
+
   // Salary inflation
   const nextSalary =
     month === 11 ? (salaryInflationPerYear / 100 + 1) * salary : salary;
@@ -230,7 +265,8 @@ export const nextMonth = ({
     age: currentAge,
     accruedInterest: currentAccruedInterest,
     salary: nextSalary,
-    currentFrs
+    currentFrs,
+    currentBhs: getBhs(year)
   };
 };
 
@@ -259,6 +295,7 @@ export const computeCpf = ({
     accruedInterest: zeroAccount(),
     creditedInterest: zeroAccount(),
     currentFrs: getFrs(currentYear),
+    currentBhs: getBhs(currentYear),
     salary
   });
 
@@ -285,6 +322,7 @@ export const computeCpf = ({
 
     forecast.push({
       ...nextState.cpf,
+      currentBhs: nextState.currentBhs,
       currentFrs: nextState.currentFrs,
       salary: nextState.salary,
       age: nextState.age,
@@ -579,6 +617,12 @@ export const CpfTable = ({ computedResult }) => {
                   Estimated based on 3% increment per year
                 </InfoTooltip>
               </th>
+              <th className="py-2">
+                BHS{" "}
+                <InfoTooltip>
+                  Estimated based on 4.95% increment per year
+                </InfoTooltip>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -605,6 +649,7 @@ export const CpfTable = ({ computedResult }) => {
                     : "-NIL-"}
                 </td>
                 <td>{formatNumber(cpf.currentFrs)}</td>
+                <td>{formatNumber(cpf.currentBhs)}</td>
               </tr>
             ))}
           </tbody>
@@ -643,6 +688,7 @@ export const Disclaimer = ({ show, toggle }) => {
             <li>CPF SA top up and transfers are made only in January.</li>
             <li>Bonus for the year is credited only in December.</li>
             <li>CPF FRS will inflate at a constant rate of 3% per year.</li>
+            <li>CPF BHS will inflate at a constant rate of 4.95% per year.</li>
           </ul>
           <p>Finally, there are few known limitations to the product:</p>
           <ul>

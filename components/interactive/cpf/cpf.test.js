@@ -2,9 +2,51 @@ import {
   computeCpf,
   calculateAccruedInterest,
   nextMonth,
+  getBhs,
   getFrs,
-  zeroAccount
+  zeroAccount,
+  overflowFromBhs
 } from "./index";
+
+describe("overflowFromBhs", () => {
+  it("should return input if MA is less than BHS", () => {
+    const cpf = {
+      oa: 10000,
+      sa: 10000,
+      ma: 10000
+    };
+    expect(overflowFromBhs(cpf, 2020)).toEqual(cpf);
+  });
+
+  it("should return input if MA is less than BHS", () => {
+    const cpf = {
+      oa: 10000,
+      sa: 10000,
+      ma: 65000
+    };
+    expect(overflowFromBhs(cpf, 2020)).toEqual({
+      oa: 10000,
+      sa: 15000,
+      ma: 60000
+    });
+  });
+});
+
+describe("getBhs", () => {
+  it("should be correct for years defined", () => {
+    expect(getBhs(2020)).toBe(60000);
+    expect(getBhs(2019)).toBe(57200);
+    expect(getBhs(2018)).toBe(54500);
+    expect(getBhs(2017)).toBe(52000);
+    expect(getBhs(2016)).toBe(49800);
+    expect(getBhs(2015)).toBe(49800);
+  });
+
+  it("should inflate at 4.95% each year for years not defined", () => {
+    expect(getBhs(2021)).toBe(60000 * 1.0495);
+    expect(getBhs(2022)).toBe(60000 * 1.0495 * 1.0495);
+  });
+});
 
 describe("getFrs", () => {
   it("should be correct for years defined", () => {
