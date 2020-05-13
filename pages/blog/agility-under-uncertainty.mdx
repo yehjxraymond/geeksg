@@ -1,0 +1,161 @@
+import Blog from "../../components/layouts/Blog";
+import Reference from "../../components/snippets/Reference";
+import Image from "../../components/snippets/Image";
+
+export const meta = {
+  date: new Date("11 November 2019"),
+  title: "Quadratic voting for group consensus",
+  slug: "quadratic-voting-group-consensus",
+  summary:
+    "In a series of unfortunate events, you and your friends are left stranded in the middle of the Atlantic ocean. Together, you have managed to salvage some items from the wreck. As a group, your task is to agree on the importance of these items. Your decisions will determine if you get to walk away alive. The problem now is how do you decide on the importance? Quadratic voting can help!",
+};
+
+# Agility Under Uncertainty
+
+On 29th January 2020 (Wednesday), I received a call from Steven at 10:30 pm, asking for assistance on a product for distributing supplies to the whole of Singapore. The requirements were vague - "We need to distribute disposable surgical mask to our citizen. We need a system to track it. And we need it ready by Monday". I asked for more information but that was what I got. I've never received a call from him past office hours and understood the urgency and severity of the problem. Assembling a (crazy) team at midnight that day with RJ and Sebastian, we went on to build a product now known as SupplyAlly. An app used to maintain a central record of transactions across different distribution initiatives.
+
+In this post, I will share different choices the engineering team has made throughout the early phase of the product development to navigate uncertainty, to the extent of building uncertainty within the product. For those curious about how life is like building a product for the government, you get a rare peek into how one team does it.
+
+<!-- ## Some Stats
+
+Before going into the "how", bear with me as I touch on "what" makes SupplyAlly different.
+
+SupplyAlly is an app which supports many distribution efforts, some notable mentions are the mask distribution by PA and the laptop distribution by Engineering Good. It's capable of supporting different users from different initiatives by switching it's backend completely to another.  -->
+
+## Designing for Uncertainty
+
+In the book Simultaneous Management, Alexander Laufer groups uncertainties into two categories: means uncertainty and end uncertainty. Means uncertainty refers to our uncertainty about exactly how we’ll design and develop a product; end uncertainty refers to uncertainty about exactly what a product will do.
+
+For SupplyAlly, there was high degree of end uncertainty to begin with. We weren't certain about the different aspects of the end product, for instance:
+
+1. what are the policies (product, quantity & reset period if any) for these distribution exercises
+1. who are eligible to collect
+1. do we know in advance the identity of these people distributing
+1. how many distribution exercises are there
+
+### Agile Policy Making with Invariance
+
+Uncertainties like that tend to paralyse the entire product development. Instead, the team chose to bake most of these uncertainties into the product by making them configurable. This essentially decouples the product development from the policy making. However, this means that the product team has to present a set of invariances to policy makers.
+
+Some of the decisions made very early was:
+
+1. The policy is configurable and expressed as the set of products, quota reset period & quantity distributed.
+1. The app will identify an entity with an identifier. This identifier can take the form of an NRIC or other types of identifiers which uniquely differentiates one entity from another.
+1. Credentials will be generated for all app operators since we do not assume that the identity of the operators are known.
+1. The app can connect to different endpoints that have different policies in place. Each distribution exercise warrants a different set of environments and endpoints.
+
+With these information, we form a contract where policy makers may navigate around these contraints and be certain that our application will deliver for them regardless of what they eventually propose.
+
+### Communicate Certainties
+
+> Speed is how fast something moves. Velocity is speed with direction.
+
+Moving fast is a double edge sword. When a team moves fast in different directions, the net velocity is near-zero. The difference between that and a team that get things done fast is the team's ability to communicate and synchronize on the goals, directions and approach.
+
+On the midnight of 29th January, after a brief breakout, the team aligned immediately on a few designs:
+
+- wireframe of the mobile app
+- API of the backend
+
+We communicated these clearly to one another though writing clear API Readmes and Architecture Decision Records (ADRs).
+
+The team also agreed on who will work on what, so that we do not trip over one another:
+
+- RJ will handle the backend API
+- Seb will continue on the hi-fi app design and handle the frontend UI
+- I will scaffold the frontend logic and mock the backend API
+
+Within a few hours we have a working mobile app which can be used to communicate our idea. The application doesn't make real transactions and it looks and feels wonky. That was enough to build our confidence that we will be able to deliver. With that minor victory, we reward ourselves by heading to bed.
+
+### Prepare for Changes with Right Tools & Infrastructure
+
+Here are some interesting facts about SupplyAlly's developer experience:
+
+- From the developers' machines, it takes less than 20 minutes for changes on either the mobile app or backend to be deployed and made available to the end user.
+- Between deployments, the backend may delay api calls by up to 2 seconds, without dropping it<sup>i</sup>.
+- Users who downloaded our application don't need to download the new version of the application from App Store or Play Store to have the upgraded application<sup>ii</sup>.
+- Our application can handle 4500 transactions per second without deteoriating<sup>iii</sup>.
+- Every pull request on the frontend or backend will deploy a preview application or environment.
+- A developer can test a preview mobile app against a preview backend deployment.
+
+With these in place, developers can confidently test and deploy incremental upgrades and changes to the application. Sandbox environments can be created easily without fear of destroring production environment.
+
+The secret to achieving these feats is simply choosing the right tools & infrastructure (and not reinventing the wheels)!
+
+#### Serverless Infrastructure
+
+Choosing a serverless architecture means the team delegates non-functional requirements, such as security and scalability, to the platform provider and really focus on building the right product. Some of the cloud infrastructure which we use (or abuse) are:
+
+- Lambda for function execution
+- Dynamodb for data persistence
+- SES for SMS OTP sending
+- Xray for ray tracing
+- Cloudwatch for logging
+- WAF... for Web Application Firewall (duh!)
+- GuardDuty for threat detection
+
+#### Deploying, Managing and Monitoring Serverless Applications
+
+<Image
+  width="100"
+  src="/static/blog/2020/5/13/server-deployment-pipeline.png"
+  alt="server deployment pipeline"
+  caption="We really have many environments"
+/>
+
+Deploying serverless application to a single endpoint is easy. Deploying to multiple production environments with different configuration and getting previews environments for every pull request is hard. Thankfully, we discovered Seed.run which simplifies the entire process, providing deployment, management and monitoring service out of the box.
+
+<Image
+  width="50"
+  src="/static/blog/2020/5/13/sebastianlol.png"
+  alt="sebatianlol.rationally.gdshive.io"
+  caption="Sebastian's creative environment name being eternalised in cert stream"
+/>
+
+This means every developer can have their own live environments deployed without affecting one another and can get another developer to test against it.
+
+<Image
+  width="100"
+  src="/static/blog/2020/5/13/metrics.png"
+  alt="Sexy metrics out of the box"
+  caption="Sexy metrics out of the box"
+/>
+
+The chery on top? We get sexy metrics show us how the application is performing live.
+
+#### Mobile App Framework
+
+With App Store deployment in days and Play Store deployment in hours, we need a way to deliver mobile updates to end user without allowing the application review process from being our bottleneck. For that, we chose to deliver application updates over-the-air (OTA) using [expo.io](https://expo.io/).
+
+<Image
+  width="100"
+  src="/static/blog/2020/5/13/app-deployment-pipeline.png"
+  alt="mobile app deployment script"
+  caption="4 mins from masters to phone"
+/>
+
+With OTA update, user with our application gets the latest version of the app on next relaunch. Saving them a visit to the app store or play store. It also allows the developers to sign and publish new binaries of the application less frequently.
+
+In addition, a simple script allows us to deploy preview versions of the mobile app for every pull request created using expo [release channels](https://docs.expo.io/distribution/release-channels/).
+
+In the early phase of the development, before the first app release, we are also able to allow different stakeholder to play with the application by using the expo mobile application.
+
+### Agile Team Composition
+
+TBD
+
+---
+
+<sup>
+  i
+</sup> We know this because RJ did a live backend deployment while the mask distribution is ongoing.
+<br />
+<sup>
+  ii
+</sup> They simply refresh the application. Seb has upgraded this to even allow running applications to upgrade themselves.
+<br />
+<sup>
+  iii
+</sup> We do not know the upper bound since we can process the whole nation in an hour at that throughput
+
+export default ({ children }) => <Blog meta={meta}>{children}</Blog>;
