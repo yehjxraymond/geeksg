@@ -1,3 +1,4 @@
+export { meta as AGILITY_UNDER_UNCERTAINTY } from "../pages/blog/agility-under-uncertainty.mdx";
 export { meta as BET_SIZING_KELLY_CRITERION } from "../pages/blog/bet-sizing-with-kelly-kelly-criterion.js";
 export { meta as NEW_YEAR_RESOLUTION_2020_OKR } from "../pages/blog/new-year-resultion-2020-okr.mdx";
 export { meta as BET_SIZING_RISK_RUINS } from "../pages/blog/bet-sizing-with-kelly-risk-ruins.js";
