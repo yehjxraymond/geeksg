@@ -1,0 +1,15 @@
+import Blog from "../../components/layouts/Blog";
+import { HdbResaleCalculator } from "../../components/interactive/HdbResale";
+
+export const meta = {
+  date: new Date("25 May 2020"),
+  title: "HDB Resale Valuation Calculator",
+  summary:
+    "The HDB resale valuation calculator is a tool to estimate a given HDB property valuation using past transaction data.",
+};
+
+# HDB Resale Price Calculator
+
+<HdbResaleCalculator />
+
+export default ({ children }) => <Blog meta={meta}>{children}</Blog>;
