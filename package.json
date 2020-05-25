@@ -19,7 +19,7 @@
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "ml-regression-multivariate-linear": "^2.0.3",
-    "next": "^9.1.5",
+    "next": "^9.4.2",
     "path-match": "^1.2.4",
     "prop-types": "^15.6.2",
     "react": "^16.12.0",
