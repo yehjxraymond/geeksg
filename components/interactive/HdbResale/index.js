@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import MLR from "ml-regression-multivariate-linear";
 import axios from "axios";
 import { groupBy, minBy, maxBy, meanBy } from "lodash";
-import sample from "./sample.json";
 
 const estimateLevel = (range) => {
   const [first, second] = range.split(" to ");
@@ -555,7 +554,7 @@ export const CalculatorContent = ({ resaleData }) => {
 export const HdbResaleCalculator = () => {
   const [postalCode, setPostalCode] = useState("");
   const [pendingData, setPendingData] = useState(false);
-  const [resaleData, setResaleData] = useState(sample);
+  const [resaleData, setResaleData] = useState();
 
   const fetchData = async () => {
     if (pendingData) return;
