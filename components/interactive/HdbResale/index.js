@@ -1,11 +1,40 @@
 import React, { useState } from "react";
 import MLR from "ml-regression-multivariate-linear";
 import axios from "axios";
+import { groupBy, minBy, maxBy, meanBy } from "lodash";
 import sample from "./sample.json";
 
 const estimateLevel = (range) => {
   const [first, second] = range.split(" to ");
   return (Number(first) + Number(second)) / 2;
+};
+
+const psmToPsf = (num) => num / 10.764;
+
+const formatPrice = (num) => `$${Math.floor(num).toLocaleString()}`;
+
+const InfoTooltip = ({ children }) => {
+  const [show, setShow] = useState(false);
+  const toggle = () => {
+    setShow(!show);
+  };
+  return (
+    <div className="d-inline">
+      <i
+        data-toggle="tooltip"
+        data-placement="top"
+        data-html="true"
+        title={children}
+        className="fas fa-info-circle"
+        onClick={toggle}
+      />
+      {show && (
+        <div>
+          <small style={{ opacity: 0.8 }}> {children}</small>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const PastTransaction = ({ resaleData }) => {
@@ -269,7 +298,10 @@ const TwoVariateRegression = ({ resaleData }) => {
           />
         </div>
       )}
-      <button class="btn-block btn-dark p-3 pointer" onClick={onButtonClick}>
+      <button
+        className="btn-block btn-dark p-3 pointer"
+        onClick={onButtonClick}
+      >
         {estimate ? "Try Again" : "Calculate"}
       </button>
       <div className="mt-2 pointer" onClick={toggleInfo}>
@@ -371,7 +403,10 @@ const ThreeVariateRegression = ({ resaleData }) => {
           />
         </div>
       )}
-      <button class="btn-block btn-dark p-3 pointer" onClick={onButtonClick}>
+      <button
+        className="btn-block btn-dark p-3 pointer"
+        onClick={onButtonClick}
+      >
         {estimate ? "Try Again" : "Calculate"}
       </button>
       <div className="mt-2 pointer" onClick={toggleInfo}>
@@ -398,12 +433,105 @@ const ThreeVariateRegression = ({ resaleData }) => {
   );
 };
 
-export const LinearRegressionModel = ({ resaleData }) => {
+const Summary = ({ resaleData }) => {
+  if (!resaleData.lastTransactions[0]) return null;
+  const now = new Date();
+  const remainingLease =
+    99 -
+    (now.getFullYear() - resaleData.lastTransactions[0].leaseCommencementDate);
+  const averageNearbyPsm =
+    resaleData.nearbyTransactions
+      .map((txn) => txn.price / txn.floorArea)
+      .reduce((prev, curr) => prev + curr) /
+    resaleData.nearbyTransactions.length;
+  const averagePsm =
+    resaleData.lastTransactions
+      .map((txn) => txn.price / txn.floorArea)
+      .reduce((prev, curr) => prev + curr) / resaleData.lastTransactions.length;
+  const groupedLastTransactions = groupBy(
+    resaleData.lastTransactions,
+    "flatType"
+  );
+  const groupedRentalRates = groupBy(resaleData.rentalRates, "flatType");
+  const flatTypes = Object.keys(groupedLastTransactions);
+  return (
+    <div className="mt-2">
+      <h2>Summary</h2>
+      <div className="row">
+        <ValueField title="Remaining Lease" value={remainingLease} />
+        <ValueField
+          title="Average PSF"
+          value={`$${Math.floor(psmToPsf(averagePsm)).toLocaleString()}`}
+        />
+        <ValueField
+          title="Average PSF (nearby)"
+          value={`$${Math.floor(psmToPsf(averageNearbyPsm)).toLocaleString()}`}
+        />
+      </div>
+      <table className="text-center">
+        <thead>
+          <tr className="bg-dark text-white">
+            <th className="py-2">Flat Type</th>
+            <th className="py-2">Floor Area (sqm)</th>
+            <th className="py-2">Avg. Price</th>
+            <th className="py-2">Avg. Rental</th>
+            <th className="py-2">Avg. Rental Yield</th>
+            <th className="py-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {flatTypes.map((type, key) => {
+            const lastTransactions = groupedLastTransactions[type];
+            const rentalRates = groupedRentalRates[type];
+            const minFloorArea = minBy(lastTransactions, "floorArea").floorArea;
+            const maxFloorArea = maxBy(lastTransactions, "floorArea").floorArea;
+            const avgPrice = meanBy(lastTransactions, "price");
+            const avgRental = meanBy(rentalRates, "rent");
+            const avgYield = (avgRental * 12 * 100) / avgPrice;
+            return (
+              <tr key={key}>
+                <td>{type}</td>
+                <td>
+                  {minFloorArea === maxFloorArea
+                    ? maxFloorArea
+                    : `${minFloorArea} - ${maxFloorArea}`}
+                </td>
+                <td>{formatPrice(avgPrice)}</td>
+                <td>{formatPrice(avgRental)}</td>
+                <td>{avgYield.toFixed(2)}%</td>
+                <td>
+                  <InfoTooltip>
+                    Based on {lastTransactions.length} transactions &amp;{" "}
+                    {rentalRates.length} rental data{" "}
+                  </InfoTooltip>
+                </td>
+              </tr>
+            );
+          })}
+          {(!flatTypes || flatTypes.length === 0) && (
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export const Disclaimer = () => {
   return (
     <div>
-      <TwoVariateRegression resaleData={resaleData} />
-      <hr />
-      <ThreeVariateRegression resaleData={resaleData} />
+      <h5>Disclaimer</h5>
+      <small>
+        The calculator serves as a guide for general reference. If you require a
+        certified appraisal for any property sale or mortgage, please order a
+        full inspection and valuation report.
+      </small>
     </div>
   );
 };
@@ -411,10 +539,15 @@ export const LinearRegressionModel = ({ resaleData }) => {
 export const CalculatorContent = ({ resaleData }) => {
   return (
     <div>
-      <LinearRegressionModel resaleData={resaleData} />
+      <Summary resaleData={resaleData} />
+      <TwoVariateRegression resaleData={resaleData} />
+      <ThreeVariateRegression resaleData={resaleData} />
+      <hr />
       <PastTransaction resaleData={resaleData} />
       <NearbyPastTransactions resaleData={resaleData} />
       <PastRentalRate resaleData={resaleData} />
+      <hr />
+      <Disclaimer />
     </div>
   );
 };
@@ -426,6 +559,7 @@ export const HdbResaleCalculator = () => {
 
   const fetchData = async () => {
     if (pendingData) return;
+    setResaleData();
     setPendingData(true);
     const { data } = await axios.get(
       `https://resale.geek.sg/info/${postalCode}`
@@ -450,7 +584,7 @@ export const HdbResaleCalculator = () => {
             col={12}
           />
         </div>
-        <button class="btn-block btn-dark p-3 pointer" onClick={fetchData}>
+        <button className="btn-block btn-dark p-3 pointer" onClick={fetchData}>
           Fetch Data
         </button>
       </form>
