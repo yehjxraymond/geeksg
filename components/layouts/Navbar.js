@@ -70,6 +70,9 @@ const Navbar = () => (
             Tools
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a className="dropdown-item" href="/tools/hdb-resale-calculator">
+              HDB Resale Calculator
+            </a>
             <a className="dropdown-item" href="/tools/cpf-forecast">
               CPF Forecast Calculator
             </a>

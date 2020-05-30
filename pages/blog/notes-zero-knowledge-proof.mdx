@@ -1,0 +1,127 @@
+import Blog from "../../components/layouts/Blog";
+import Image from "../../components/snippets/Image";
+
+export const meta = {
+  date: new Date("26 May 2020"),
+  title: "Notes: Zero Knowledge Proofs",
+  slug: "notes-zerok-knowledge-proof",
+  summary: "Notes: Zero Knowledge Proofs",
+};
+
+# Zero Knowledge Proofs
+
+## Questions
+
+What is a witness?
+
+https://crypto.stackexchange.com/questions/43462/what-is-a-witness-in-zero-knowledge-proof
+
+## Area of Study
+
+Zero Knowledge Range Proof
+Zero Knowledge Set Membership
+Cryptographic Accumulators
+
+## Applications
+
+Ring signature construction with ZKSM
+
+## Questions
+
+Pederson Commitment
+Homomorphic threshold encryption
+
+# Further Readings
+
+Foundations of cryptography - Goldreich’s book
+
+---
+
+## Libraries
+
+[Zero Knowledge Proofs](https://github.com/ing-bank/zkrp)
+
+## Sample Applications
+
+[Semaphore](https://semaphore.appliedzkp.org/)
+
+## Adjacent tools
+
+[Big number converter](https://www.mobilefish.com/services/big_number/big_number.php)
+
+## Bibliography
+
+[High-Level languages for zkSNARKs, Fully-Homomorphic-Encryption and Multi-Party-Computation](https://harryr.github.io/zklangs/)
+[Overview and Applications of Zero Knowledge Proof ](http://ijcsn.org/IJCSN-2019/8-5/Overview-and-Applications-of-Zero-Knowledge-Proof-ZKP.pdf)
+[A Survey on Zero Knowledge Range Proofs and Applications](https://www.ingwb.com/media/3013866/a-survey-on-zero-knowledge-range-proofs-and-applications.pdf)
+[Selective Disclosure in Solidity for Ethereum](https://medium.com/robhitchens/selective-disclosure-with-proof-f6a1ac7be978)
+[Zero Knowledge Set Membership](https://www.ingwb.com/media/2667856/zero-knowledge-set-membership.pdf)
+[Revisiting Cryptographic Accumulators, Additional Properties and Relations to other Primitives](https://eprint.iacr.org/2015/087.pdf)
+[Cryptographic Accumulators: Part1](https://medium.com/@panghalamit/cryptographic-accumulators-part1-3f23172d3fec)
+[Performances of Cryptographic Accumulators](https://hal.archives-ouvertes.fr/hal-00999432/document)
+[Cryptographic Accumulators](https://medium.com/@aurelcode/cryptographic-accumulators-da3aa4561d77)
+[A Survey on Zero Knowledge Range Proofs and Applications](https://arxiv.org/pdf/1907.06381.pdf)
+[Quadratic Arithmetic Programs: from Zero to Hero](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649)
+[circom and snarkJS](https://iden3.readthedocs.io/en/latest/_downloads/a765838f66c398a1a753401feb3310f9/circom_and_snarkJS.pdf)
+
+
+Zokrates vs Circom
+
+Learning curve
+    zokrates is easier for functional programmer, circom is more like verilog programming
+
+Efficiency
+    circom is painfully slow with sha256, zokrates seemed to be faster at setup
+    circom allows for you to use few bits 
+
+Tutorial & material
+    zokrates sucks. circom sucks even more.
+
+
+Smart contract generation/interaction
+    why is zokrate emitting events!?
+    circom's smart contract call is `view` no need to spend gas
+    circom generates the call data
+
+Non blockchain support
+    circom has js lib
+
+Testing
+    circom has test
+
+Verdict
+    Circom
+
+
+What is ZKP
+    "I'm going to proof to you that I know something, without telling you what is something"
+    Find Wally
+    Applications
+    Types of ZKP
+    Introduction to ZK-SNARKS
+    Common properties of ZKP
+        Hiding
+        Binding
+    Common function of ZKP
+        Commitment
+        Reveal
+        Nullifier set
+    ZK-WHAT?
+        ZKRP
+        ZKSM
+
+    Building with ZKP
+        Zokrates
+        Circom
+
+    "I know a number bigger than that number"
+    "I know a number that hashes to that number"
+    "I know a number that hashes to that number and that number is bigger than that number"
+
+    Q&A
+        Simple math behind zkp?
+        What are a,b,c?
+        What is a witness?
+    Reference
+
+export default ({ children }) => <Blog meta={meta}>{children}</Blog>;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MLR from "ml-regression-multivariate-linear";
 import axios from "axios";
+import sample from "./sample.json";
 
 const estimateLevel = (range) => {
   const [first, second] = range.split(" to ");
@@ -159,6 +160,56 @@ export const PastRentalRate = ({ resaleData }) => {
   );
 };
 
+const InputField = ({
+  title,
+  tooltip,
+  rgb = "136, 132, 216",
+  value,
+  onChange,
+}) => {
+  return (
+    <div className="col-md-6 my-2 text-center">
+      <div className="p-2" style={{ backgroundColor: `rgba(${rgb}, 0.5)` }}>
+        <h5>
+          {title} {tooltip && <InfoTooltip>{tooltip}</InfoTooltip>}
+        </h5>
+      </div>
+      <div style={{ backgroundColor: `rgba(${rgb}, 0.3)` }} className="py-3">
+        <input
+          className="no-outline-focus text-center"
+          style={{
+            background: "rgba(255, 255, 255, 0.2)",
+            borderWidth: "0 0 2px 0",
+            borderColor: "black",
+            fontSize: "1.2em",
+          }}
+          onChange={(e) => onChange(e.target.value)}
+          value={value}
+        ></input>
+      </div>
+    </div>
+  );
+};
+
+const ValueField = ({ title, value }) => {
+  return (
+    <div className="col text-center">
+      <div
+        className="p-2"
+        style={{ backgroundColor: "rgba(130, 202, 157, 0.9)" }}
+      >
+        <h5>{title}</h5>
+      </div>
+      <div
+        className="p-3"
+        style={{ backgroundColor: "rgba(130, 202, 157, 0.7)" }}
+      >
+        <h4>{value}</h4>
+      </div>
+    </div>
+  );
+};
+
 const TwoVariateRegression = ({ resaleData }) => {
   const leaseCommencementDate =
     resaleData.lastTransactions[0].leaseCommencementDate;
@@ -178,26 +229,63 @@ const TwoVariateRegression = ({ resaleData }) => {
   const [area, setArea] = useState(sampleFloorArea.toString());
   const [level, setLevel] = useState("1");
   const [estimate, setEstimate] = useState();
+  const [showInfo, setShowInfo] = useState(false);
+
+  const toggleInfo = () => setShowInfo(!showInfo);
 
   const onEstimate = () => {
     const est = model.predict([Number(area), Number(level)])[0];
     setEstimate(est);
   };
 
+  const onButtonClick = () => {
+    if (estimate) {
+      setEstimate();
+    } else {
+      onEstimate();
+    }
+  };
+
   return (
     <div>
-      <div>Based on flats with same lease commencement year</div>
-      <div>Every extra sqm: ${Math.floor(floorAreaCof).toLocaleString()}</div>
-      <div>Every extra level: ${Math.floor(levelCof).toLocaleString()}</div>
-      <div>Level:</div>
-      <input value={level} onChange={(e) => setLevel(e.target.value)}></input>
-      <div>Area (sqm):</div>
-      <input value={area} onChange={(e) => setArea(e.target.value)}></input>
-      <div>
-        <button onClick={onEstimate}>Estimate</button>
-      </div>
+      <h2>Estimate based on similar flats</h2>
+      <p>
+        This calculator provides an estimate based on information of nearby
+        flats with the same lease commencement date.
+      </p>
+      <p>Simply enter the unit's level and unit size to get an estimate.</p>
+      {!estimate && (
+        <div className="row">
+          <InputField title="Level" value={level} onChange={setLevel} />
+          <InputField title="Area (sqm)" value={area} onChange={setArea} />
+        </div>
+      )}
       {estimate && (
-        <div>Estimated Value: ${Math.floor(estimate).toLocaleString()}</div>
+        <div className="row mt-2 mb-2">
+          <ValueField
+            title="Estimate"
+            value={`$${Math.floor(estimate).toLocaleString()}`}
+          />
+        </div>
+      )}
+      <button class="btn-block btn-dark p-3 pointer" onClick={onButtonClick}>
+        {estimate ? "Try Again" : "Calculate"}
+      </button>
+      <div className="mt-2 pointer" onClick={toggleInfo}>
+        <h6>{showInfo ? "Hide" : "Show"} More info</h6>
+      </div>
+      {showInfo && (
+        <div>
+          Based on the 2-variable linear regression model:
+          <div>
+            Every extra sqm cost extra{" "}
+            <strong>${Math.floor(floorAreaCof).toLocaleString()}</strong>
+          </div>
+          <div>
+            Every extra level cost extra{" "}
+            <strong>${Math.floor(levelCof).toLocaleString()}</strong>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -265,7 +353,6 @@ const ThreeVariateRegression = ({ resaleData }) => {
 export const LinearRegressionModel = ({ resaleData }) => {
   return (
     <div>
-      <h2>Two-Variable Regression Model</h2>
       <TwoVariateRegression resaleData={resaleData} />
       <hr />
       <h2>Three-Variable Regression Model</h2>
@@ -288,7 +375,7 @@ export const CalculatorContent = ({ resaleData }) => {
 export const HdbResaleCalculator = () => {
   const [postalCode, setPostalCode] = useState("");
   const [pendingData, setPendingData] = useState(false);
-  const [resaleData, setResaleData] = useState();
+  const [resaleData, setResaleData] = useState(sample);
 
   const fetchData = async () => {
     if (pendingData) return;
