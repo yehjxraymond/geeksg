@@ -166,9 +166,10 @@ const InputField = ({
   rgb = "136, 132, 216",
   value,
   onChange,
+  col = "6",
 }) => {
   return (
-    <div className="col-md-6 my-2 text-center">
+    <div className={`col-md-${col} my-2 text-center`}>
       <div className="p-2" style={{ backgroundColor: `rgba(${rgb}, 0.5)` }}>
         <h5>
           {title} {tooltip && <InfoTooltip>{tooltip}</InfoTooltip>}
@@ -313,6 +314,9 @@ const ThreeVariateRegression = ({ resaleData }) => {
     sampleLeaseCommencementDate.toString()
   );
   const [estimate, setEstimate] = useState();
+  const [showInfo, setShowInfo] = useState(false);
+
+  const toggleInfo = () => setShowInfo(!showInfo);
 
   const onEstimate = () => {
     const est = model.predict([
@@ -323,28 +327,72 @@ const ThreeVariateRegression = ({ resaleData }) => {
     setEstimate(est);
   };
 
+  const onButtonClick = () => {
+    if (estimate) {
+      setEstimate();
+    } else {
+      onEstimate();
+    }
+  };
   return (
     <div>
-      <div>Based on flats around the area</div>
-      <div>Every extra sqm: ${Math.floor(floorAreaCof).toLocaleString()}</div>
-      <div>Every extra level: ${Math.floor(levelCof).toLocaleString()}</div>
-      <div>
-        Every extra year of lease: ${Math.floor(leaseCof).toLocaleString()}
-      </div>
-      <div>Level:</div>
-      <input value={level} onChange={(e) => setLevel(e.target.value)}></input>
-      <div>Area (sqm):</div>
-      <input value={area} onChange={(e) => setArea(e.target.value)}></input>
-      <div>Lease Commencement Date:</div>
-      <input
-        value={leaseCommencement}
-        onChange={(e) => setLeaseCommencement(e.target.value)}
-      ></input>
-      <div>
-        <button onClick={onEstimate}>Estimate</button>
-      </div>
+      <h2>Estimate based on all nearby flats</h2>
+
+      <p>
+        This calculator provides an estimate based on information of all nearby
+        flats. This assumes a linear depreciation of the units around the area.
+      </p>
+      <p>
+        Simply enter the unit's level, unit size &amp; lease commencement date
+        to get an estimate.
+      </p>
+      {!estimate && (
+        <div className="row">
+          <InputField title="Level" value={level} onChange={setLevel} col="4" />
+          <InputField
+            title="Area (sqm)"
+            value={area}
+            onChange={setArea}
+            col="4"
+          />
+          <InputField
+            title="Lease Commencement"
+            value={leaseCommencement}
+            onChange={setLeaseCommencement}
+            col="4"
+          />
+        </div>
+      )}
       {estimate && (
-        <div>Estimated Value: ${Math.floor(estimate).toLocaleString()}</div>
+        <div className="row mt-2 mb-2">
+          <ValueField
+            title="Estimate"
+            value={`$${Math.floor(estimate).toLocaleString()}`}
+          />
+        </div>
+      )}
+      <button class="btn-block btn-dark p-3 pointer" onClick={onButtonClick}>
+        {estimate ? "Try Again" : "Calculate"}
+      </button>
+      <div className="mt-2 pointer" onClick={toggleInfo}>
+        <h6>{showInfo ? "Hide" : "Show"} More info</h6>
+      </div>
+      {showInfo && (
+        <div>
+          Based on the 3-variable linear regression model:
+          <div>
+            Every extra sqm cost extra{" "}
+            <strong>${Math.floor(floorAreaCof).toLocaleString()}</strong>
+          </div>
+          <div>
+            Every extra level cost extra{" "}
+            <strong>${Math.floor(levelCof).toLocaleString()}</strong>
+          </div>
+          <div>
+            Every year of lease cost extra{" "}
+            <strong>${Math.floor(leaseCof).toLocaleString()}</strong>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -355,7 +403,6 @@ export const LinearRegressionModel = ({ resaleData }) => {
     <div>
       <TwoVariateRegression resaleData={resaleData} />
       <hr />
-      <h2>Three-Variable Regression Model</h2>
       <ThreeVariateRegression resaleData={resaleData} />
     </div>
   );
@@ -395,11 +442,17 @@ export const HdbResaleCalculator = () => {
           fetchData();
         }}
       >
-        <input
-          value={postalCode}
-          onChange={(e) => setPostalCode(e.target.value)}
-        ></input>
-        <button onClick={fetchData}>Fetch Data</button>
+        <div className="row">
+          <InputField
+            title="Postal Code"
+            value={postalCode}
+            onChange={setPostalCode}
+            col={12}
+          />
+        </div>
+        <button class="btn-block btn-dark p-3 pointer" onClick={fetchData}>
+          Fetch Data
+        </button>
       </form>
       {resaleData && <CalculatorContent resaleData={resaleData} />}
     </div>
