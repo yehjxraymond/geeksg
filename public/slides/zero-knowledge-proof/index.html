@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Introduction to Zero Knowledge Proof</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/reveal/css/reset.css" />
+    <link rel="stylesheet" href="/reveal/css/reveal.css" />
+    <link rel="stylesheet" href="/reveal/css/theme/black.css" id="theme" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="/reveal/lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "/reveal/css/print/pdf.css"
+        : "/reveal/css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h4>Introduction To</h4>
+          <h2>Zero Knowledge Proofs</h2>
+          <small>aka ZKP</small>
+          <p>
+            <small>by <a href="https://geek.sg">Raymond Yeh</a></small>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h1>What are</h1>
+            <h2>Zero Knowledge Proofs</h2>
+          </section>
+
+          <section>
+            <h3>
+              I'm going to proof to you that I know something, without telling
+              you what is it!
+            </h3>
+          </section>
+
+          <section>
+            <h1>Let's play a game...</h1>
+            <img src="./img/wheres-waldo-social-distancing.jpg" />
+          </section>
+
+          <section>
+            <h1>Now seriously...</h1>
+            <img src="./img/wheres-waldo.jpg" />
+          </section>
+
+          <section>
+            <h3>Proof to me a solution exists</h3>
+          </section>
+
+          <section>
+            <h3>I cut a huge stencil...</h3>
+            <img src="./img/waldo-stencil.png" />
+          </section>
+
+          <section>
+            <h3>...and place it over the puzzle</h3>
+            <img src="./img/heres-waldo.png" />
+          </section>
+
+          <section>
+            <h3>
+              You are convinced that I know the solution, without knowing the
+              solution itself.
+            </h3>
+            <div
+              style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em;"
+            >
+              <a
+                href="https://medium.com/swlh/a-zero-knowledge-proof-for-wheres-wally-930c21e55399"
+                >Adapted from: A zero knowledge proof for Where’s Wally</a
+              >
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Applications of ZKP</h1>
+          </section>
+
+          <section>
+            <h2>Age Restrictions</h2>
+            <p>
+              Proof that you are over the an age limit without revealing your
+              actual age.
+            </p>
+            <div
+              style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em; text-align: right;"
+            >
+              <a href="https://github.com/yehjxraymond/circom-experiment"
+                >Circom Experiment</a
+              >
+              <br />
+              <a href="https://github.com/yehjxraymond/zokrates-experiment"
+                >Zokrates Experiment</a
+              >
+            </div>
+          </section>
+
+          <section>
+            <h2>Anonymous Verifiable Voting</h2>
+            <p>
+              Proof that one has the rights to cast a vote, the vote has been
+              included, and the vote tally is correct. All without revealing
+              identity of voters.
+            </p>
+            <div
+              style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em; text-align: right;"
+            >
+              <a
+                href="http://www0.cs.ucl.ac.uk/staff/J.Groth/ACNS05VoteProofFull.pdf"
+                >Non-interactive Zero-Knowledge Arguments for Voting</a
+              >
+              <br />
+              <a href="https://fc19.ifca.ai/voting/papers/PR19.pdf"
+                >End-to-End Verifiable Quadratic Voting with Everlasting
+                Privacy</a
+              >
+              <br />
+              <a href="https://eprint.iacr.org/2016/400.pdf"
+                >Towards Secure Quadratic Voting</a
+              >
+            </div>
+          </section>
+
+          <section>
+            <h2>KYC (Whitelist)</h2>
+            <p>
+              Proof that an entity belongs to a set of valid values, while
+              preserving the entity's privacy
+            </p>
+          </section>
+
+          <section>
+            <h2>KYC (Blacklist)</h2>
+            <p>
+              Proof that an entity does not belong to a set of blacklisted
+              entities.
+            </p>
+          </section>
+
+          <section>
+            <h2>Board Membership</h2>
+            <p>
+              Construction of ring signatures where one can verify that the
+              message comes from the group without revealing who the person is.
+            </p>
+          </section>
+
+          <section>
+            <h2>Accountancy</h2>
+            <p>
+              Proof that the computation of the balance sheet is correct without
+              showing all items on the sheets.
+            </p>
+          </section>
+
+          <section>
+            <h2>Common Reporting Standards (CRS)</h2>
+            <p>
+              Proof that a financial document passes validation such as
+              enumeration or integer ranges.
+            </p>
+          </section>
+
+          <section>
+            <h2>Solvency</h2>
+            <p>
+              Proof that a financial institute has sufficient reserves to settle
+              at least x% of accounts.
+            </p>
+          </section>
+
+          <section>
+            <h2>And More...</h2>
+            <small>
+              <a href="https://arxiv.org/pdf/1907.06381.pdf"
+                >https://arxiv.org/pdf/1907.06381.pdf</a
+              >
+            </small>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Lay of the Land</h1>
+            <small
+              >Where Do We Come From? What Are We? Where Are We Going?</small
+            >
+          </section>
+
+          <section>
+            <h3>State of ZKP</h3>
+            <img src="./img/zkp-state.png" style="margin: 0px;" />
+            <small
+              ><a href="https://harryr.github.io/zklangs/"
+                >High-Level languages for zkSNARKs, Fully-Homomorphic-Encryption
+                and Multi-Party-Computation</a
+              ></small
+            >
+          </section>
+
+          <section>
+            <h1>ZK-SNARKS</h1>
+            <small
+              >Zero-Knowledge Succinct Non-Interactive Argument of
+              Knowledge</small
+            >
+            <div
+              style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em; text-align: right;"
+            >
+              <a href="https://z.cash/technology/zksnarks/"
+                >What are ZK-SNARKS by ZCash</a
+              >
+            </div>
+          </section>
+
+          <section>
+            <h2>Succinct</h2>
+            <ul>
+              <li>Proofs verified within a few milliseconds</li>
+              <li>Proof length of only a few hundred bytes</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Non-Interactive</h2>
+            Proof consists of a single message sent from prover to verifier
+          </section>
+
+          <section>
+            <h2>Construction</h2>
+            <img src="./img/zkp-compilation.png" />
+            <div
+              style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em; text-align: right;"
+            >
+              <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649"
+                >Quadratic Arithmetic Programs: from Zero to Hero by Vitalik</a
+              >
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Writing ZKP Application</h1>
+          </section>
+
+          <section>
+            <h2>Choose your language</h2>
+            <img src="./img/red-blue-pill.jpg" />
+            <p>
+              <small
+                ><a href="https://toggl.com/programming-princess/"
+                  >https://toggl.com/programming-princess/</a
+                ></small
+              >
+            </p>
+          </section>
+
+          <section>
+            <h2>Blue Pill - Zokrates</h2>
+            <ul>
+              <li>High level ZKP library</li>
+              <li>Lower learning curve</li>
+              <li>Tutorial sucks less</li>
+              <li>Deployed on Ethereum</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Red Pill - Zircom</h2>
+            <ul>
+              <li>Low level ZKP library</li>
+              <li>High learning curve</li>
+              <li>Tutorial sucks</li>
+              <li>ZKP ≠ blockchain</li>
+              <li>Test in JS</li>
+              <li>JS library for web app</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h1>End</h1>
+          <ul>
+            <li>https://github.com/yehjxraymond/circom-experiment</li>
+            <li>https://github.com/yehjxraymond/zokrates-experiment</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="/reveal/js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        transition: "slide", // none/fade/slide/convex/concave/zoom
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          {
+            src: "/reveal/plugin/markdown/marked.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            },
+          },
+          {
+            src: "/reveal/plugin/markdown/markdown.js",
+            condition: function() {
+              return !!document.querySelector("[data-markdown]");
+            },
+          },
+          { src: "/reveal/plugin/highlight/highlight.js", async: true },
+          { src: "/reveal/plugin/search/search.js", async: true },
+          { src: "/reveal/plugin/zoom-js/zoom.js", async: true },
+          { src: "/reveal/plugin/notes/notes.js", async: true },
+        ],
+      });
+    </script>
+  </body>
+</html>

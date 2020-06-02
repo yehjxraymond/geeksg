@@ -28,7 +28,7 @@ const Blog = ({ children, meta }) => (
         </>
       ) : null}
       {meta && meta.staticImg ? (
-        <meta property="og:image" content={`https://geek.sg/static/${meta.staticImg}`} />
+        <meta property="og:image" content={`https://geek.sg/${meta.staticImg}`} />
       ) : null}
       <meta property="og:type" content="website" />
     </Head>

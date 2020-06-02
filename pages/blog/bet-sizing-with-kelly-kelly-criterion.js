@@ -348,7 +348,7 @@ const Game = () => {
       <div className="row m-4">
         <div className="text-center">
           <img
-            src="/static/blog/2019/12/bet-sizing/wheel2.png"
+            src="/blog/2019/12/bet-sizing/wheel2.png"
             className="w-50"
           />
         </div>
@@ -466,7 +466,7 @@ const Content = () => (
     <p>Play the game below to test out your strategy:</p>
     <Image
       width="100"
-      src="/static/blog/2020/1/5/overview.png"
+      src="/blog/2020/1/5/overview.png"
       alt="Bet sizing with Kelly"
       hidden={true}
     />
@@ -526,14 +526,14 @@ const Content = () => (
     <p>The formula is simple:</p>
     <div className="text-center">
       <img
-        src="/static/blog/2020/1/5/kelly-simplified.svg"
+        src="/blog/2020/1/5/kelly-simplified.svg"
         style={{ maxWidth: "100%" }}
       />
     </div>
     <p>or</p>
     <div className="text-center">
       <img
-        src="/static/blog/2020/1/5/kelly-criterion-formula.svg"
+        src="/blog/2020/1/5/kelly-criterion-formula.svg"
         style={{ maxWidth: "100%" }}
       />
     </div>
@@ -557,7 +557,7 @@ const Content = () => (
       geometric mean of the odds (given that we landed on a non-zero):
     </p>
     <div className="text-center">
-      <img src="/static/blog/2020/1/5/geometric-mean.gif" />
+      <img src="/blog/2020/1/5/geometric-mean.gif" />
     </div>
     <p>
       which roughly equals to 1.888. Since b is the net odds, <strong>b</strong>{" "}

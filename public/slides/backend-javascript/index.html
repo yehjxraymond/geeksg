@@ -5,16 +5,16 @@
     <title>Developing Backend Application with Javascript</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="/static/reveal/css/reset.css" />
-    <link rel="stylesheet" href="/static/reveal/css/reveal.css" />
+    <link rel="stylesheet" href="/reveal/css/reset.css" />
+    <link rel="stylesheet" href="/reveal/css/reveal.css" />
     <link
       rel="stylesheet"
-      href="/static/reveal/css/theme/black.css"
+      href="/reveal/css/theme/black.css"
       id="theme"
     />
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="/static/reveal/lib/css/monokai.css" />
+    <link rel="stylesheet" href="/reveal/lib/css/monokai.css" />
 
     <!-- Printing and PDF exports -->
     <script>
@@ -22,8 +22,8 @@
       link.rel = "stylesheet";
       link.type = "text/css";
       link.href = window.location.search.match(/print-pdf/gi)
-        ? "/static/reveal/css/print/pdf.css"
-        : "/static/reveal/css/print/paper.css";
+        ? "/reveal/css/print/pdf.css"
+        : "/reveal/css/print/paper.css";
       document.getElementsByTagName("head")[0].appendChild(link);
     </script>
   </head>
@@ -474,7 +474,7 @@ module.exports = function(Rock) {
       </div>
     </div>
 
-    <script src="/static/reveal/js/reveal.js"></script>
+    <script src="/reveal/js/reveal.js"></script>
 
     <script>
       // More info https://github.com/hakimel/reveal.js#configuration
@@ -489,21 +489,21 @@ module.exports = function(Rock) {
         // More info https://github.com/hakimel/reveal.js#dependencies
         dependencies: [
           {
-            src: "/static/reveal/plugin/markdown/marked.js",
+            src: "/reveal/plugin/markdown/marked.js",
             condition: function() {
               return !!document.querySelector("[data-markdown]");
             }
           },
           {
-            src: "/static/reveal/plugin/markdown/markdown.js",
+            src: "/reveal/plugin/markdown/markdown.js",
             condition: function() {
               return !!document.querySelector("[data-markdown]");
             }
           },
-          { src: "/static/reveal/plugin/highlight/highlight.js", async: true },
-          { src: "/static/reveal/plugin/search/search.js", async: true },
-          { src: "/static/reveal/plugin/zoom-js/zoom.js", async: true },
-          { src: "/static/reveal/plugin/notes/notes.js", async: true }
+          { src: "/reveal/plugin/highlight/highlight.js", async: true },
+          { src: "/reveal/plugin/search/search.js", async: true },
+          { src: "/reveal/plugin/zoom-js/zoom.js", async: true },
+          { src: "/reveal/plugin/notes/notes.js", async: true }
         ]
       });
     </script>

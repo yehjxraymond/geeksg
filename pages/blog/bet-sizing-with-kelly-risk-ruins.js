@@ -148,7 +148,7 @@ const Content = () => {
       <h2>The Game</h2>
       <Image
         width="100"
-        src="/static/blog/2019/12/bet-sizing/bet-sizing-with-kelly-risk-ruins.png"
+        src="/blog/2019/12/bet-sizing/bet-sizing-with-kelly-risk-ruins.png"
         alt="Bet sizing with Kelly"
         hidden={true}
       />
@@ -233,21 +233,21 @@ const Content = () => {
           addValue={addValue}
           payout={payout1}
           label="Wheel 1"
-          img="/static/blog/2019/12/bet-sizing/wheel1.png"
+          img="/blog/2019/12/bet-sizing/wheel1.png"
         />
         <Wheel
           bet={bet}
           addValue={addValue}
           payout={payout2}
           label="Wheel 2"
-          img="/static/blog/2019/12/bet-sizing/wheel2.png"
+          img="/blog/2019/12/bet-sizing/wheel2.png"
         />
         <Wheel
           bet={bet}
           addValue={addValue}
           payout={payout3}
           label="Wheel 3"
-          img="/static/blog/2019/12/bet-sizing/wheel3.png"
+          img="/blog/2019/12/bet-sizing/wheel3.png"
         />
       </div>
 
@@ -305,7 +305,7 @@ const Content = () => {
       </p>
       <p>For example for wheel 1, the geometric mean is: </p>
       <p className="text-center">
-        <img src="/static/blog/2019/12/bet-sizing/root.gif"></img>
+        <img src="/blog/2019/12/bet-sizing/root.gif"></img>
       </p>
       <p>
         Wait, that's a different formula than what we were taught in school?
@@ -403,7 +403,7 @@ const Content = () => {
 
       <Image
         width="75"
-        src="/static/blog/2019/12/bet-sizing/leverage.png"
+        src="/blog/2019/12/bet-sizing/leverage.png"
         alt="Bet sizing with Kelly"
         caption="Bet sizing with Kelly"
       />

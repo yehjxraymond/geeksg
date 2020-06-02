@@ -11,7 +11,7 @@ const generateSitemap = paths => {
     cacheTime: 60000
   });
   Object.keys(paths).forEach(path => sm.add({ url: path }));
-  fs.writeFileSync("./static/sitemap.xml", sm.toString());
+  fs.writeFileSync("./sitemap.xml", sm.toString());
 };
 
 module.exports = withMDX(

@@ -36,7 +36,7 @@ const Index = () => {
         <img
           className="rounded-circle"
           style={{ margin: "auto" }}
-          src="/static/images/raymond-yeh.jpg"
+          src="/images/raymond-yeh.jpg"
         ></img>
       </div>
       <div

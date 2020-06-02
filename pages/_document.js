@@ -14,13 +14,13 @@ export default class MyDocument extends Document {
           <link
             rel="icon"
             type="image/png"
-            href="/static/images/favicon/32x32.png"
+            href="/images/favicon/32x32.png"
             sizes="32x32"
           />
           <link
             rel="icon"
             type="image/png"
-            href="/static/images/favicon/16x16.png"
+            href="/images/favicon/16x16.png"
             sizes="16x16"
           />
           <link
@@ -40,7 +40,7 @@ export default class MyDocument extends Document {
             crossOrigin="anonymous"
           />
 
-          <link rel="stylesheet" href="/static/styles.css" />
+          <link rel="stylesheet" href="/styles.css" />
           <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
