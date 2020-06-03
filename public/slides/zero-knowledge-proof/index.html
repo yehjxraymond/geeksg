@@ -251,7 +251,8 @@
             <div
               style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em; text-align: right;"
             >
-              <a href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649"
+              <a
+                href="https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649"
                 >Quadratic Arithmetic Programs: from Zero to Hero by Vitalik</a
               >
             </div>
@@ -296,6 +297,229 @@
               <li>JS library for web app</li>
             </ul>
           </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>What Are We Building?</h1>
+          </section>
+
+          <section>
+            <h4>
+              Construct a government-issued document that allow the citizen to
+              prove that he is above a certain age without revealing the age.
+            </h4>
+          </section>
+
+          <section>
+            <h2>
+              Approach
+            </h2>
+          </section>
+
+          <section>
+            <h4>
+              I know of a number, x, that is greater than 21.
+            </h4>
+            <small>
+              But I won't tell you what x is.
+            </small>
+          </section>
+
+          <section>
+            <h4>Simple Comparison Circuit</h4>
+            <img src="./img/circuit-simple-comparison.png" />
+          </section>
+
+          <section>
+            <h4>
+              I know of a number, x, such that y-x >= z. Where y is the current
+              year and z is the age restriction.
+            </h4>
+            <small>
+              But I won't tell you what x is. You may see y and z though.
+            </small>
+          </section>
+
+          <section>
+            <h4>Generic Comparison Circuit</h4>
+            <img src="./img/circuit-generic-comparison.png" />
+          </section>
+
+          <section>
+            <h4>
+              I know of a number, x, such that f(x) = a. Where a has been
+              attested by the government to be a valid evidence about my age.
+            </h4>
+            <small>
+              But I won't tell you what x is. You can verify a though.
+            </small>
+          </section>
+
+          <section>
+            <h4>With Public Commitment</h4>
+            <img src="./img/circuit-commitment.png" />
+          </section>
+
+          <section>
+            <h4>Final Circuit</h4>
+            <small>(with rainbow table attack protection)</small>
+            <img src="./img/circuit-commitment-secured.png" />
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Zokrates</h1>
+          </section>
+
+          <section>
+            <h2>Zokrates</h2>
+            <div>
+              <img src="./img/zokrates.png" style="width: 50%" />
+            </div>
+            <small>
+              <a href="https://github.com/Zokrates/ZoKrates">
+                https://github.com/Zokrates/ZoKrates
+              </a>
+            </small>
+          </section>
+          <section>
+            <h2>Installation</h2>
+            <pre>
+              <code class="text" data-trim>
+                curl -LSfs get.zokrat.es | sh
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Age Check Circuit</h2>
+            <img src="./img/circuit-generic-comparison.png" />
+          </section>
+          <section>
+            <h2>Age Check Circuit</h2>
+            <small>ageCheck.zok</small>
+            <pre>
+              <code data-trim>
+def main(private field birthYear, field comparisonYear, field minimumDifference) -> (field):
+    field result = if comparisonYear - birthYear >= minimumDifference then 1 else 0 fi
+    return result
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Running the circuit</h2>
+            <pre>
+              <code class="text" data-trim>
+                zokrates compile -i ageCheck.zok
+                zokrates setup
+                zokrates compute-witness -a 1990 2020 21
+                zokrates generate-proof
+                zokrates export-verifier
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h4>Deploy Verification Contract</h4>
+            <img src="./img/remix-zokrates.png" style="width: 80%" />
+          </section>
+
+          <section>
+            <h4>Verify Proof</h4>
+            <img src="./img/remix-zokrates-verify.png" />
+          </section>
+
+          <section>
+            <h4>Pay Attention to the Inputs</h4>
+            <img src="./img/remix-zokrates-input-simple.png" />
+          </section>
+
+          <section>
+            <h2>Birth Year Check Circuit</h2>
+            <img src="./img/circuit-hash.png" />
+          </section>
+
+          <section>
+            <h2>Birth Year Check Circuit</h2>
+            <small>birthYearCheck.zok</small>
+            <pre>
+              <code data-trim>
+                import "hashes/sha256/512bitPacked" as sha256packed
+
+                def main(private field birthYear, private field rand1, private field rand2, field hash1, field hash2) -> (field):
+                    h = sha256packed([0, birthYear, rand1, rand2])
+                    h[0] == hash1
+                    h[1] == hash2
+                    return 1
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Running the circuit</h2>
+            <pre>
+              <code class="text" data-trim>
+                zokrates compile -i birthYearCheck.zok
+                zokrates setup
+                zokrates compute-witness -a 1990 123 123 233770742581153321658241226707865859106 161843013006795803511295431198461913882
+                zokrates generate-proof
+                zokrates export-verifier
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Complete Circuit</h2>
+            <img src="./img/circuit-commitment-secured.png" />
+          </section>
+
+          <section>
+            <h2>Complete Circuit</h2>
+            <small>complete.zok</small>
+            <pre>
+              <code data-trim>
+                import "hashes/sha256/512bitPacked" as sha256packed
+
+                def birthYearCheck(private field birthYear, private field rand1, private field rand2, field hash1, field hash2) -> (field):
+                    h = sha256packed([0, birthYear, rand1, rand2])
+                    h[0] == hash1
+                    h[1] == hash2
+                    return 1
+
+                def ageCheck(private field birthYear, field comparisonYear, field minimumDifference) -> (field):
+                    field result = if comparisonYear - birthYear >= minimumDifference then 1 else 0 fi
+                    return result
+
+                def main(private field birthYear, private field rand1, private field rand2, field hash1, field hash2, field comparisonYear, field minimumDifference) -> (field):
+                    birthYearTest = birthYearCheck(birthYear, rand1, rand2, hash1, hash2)
+                    birthYearTest == 1
+                    ageTest = ageCheck(birthYear, comparisonYear, minimumDifference)
+                    ageTest == 1
+                    return 1
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Running the circuit</h2>
+            <pre>
+              <code class="text" data-trim>
+                zokrates compile -i complete.zok
+                zokrates setup
+                zokrates compute-witness -a 1990 123 123 233770742581153321658241226707865859106 161843013006795803511295431198461913882 2020 21
+                zokrates generate-proof
+                zokrates export-verifier
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Verify Proof</h2>
+            <img src="./img/remix-zokrates-input-complete.png" />
+            <small>(note the inputs and proof length)</small>
+          </section>
+
         </section>
 
         <section>
