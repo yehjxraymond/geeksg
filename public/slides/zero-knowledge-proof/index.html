@@ -401,9 +401,9 @@
             <small>ageCheck.zok</small>
             <pre>
               <code data-trim>
-def main(private field birthYear, field comparisonYear, field minimumDifference) -> (field):
-    field result = if comparisonYear - birthYear >= minimumDifference then 1 else 0 fi
-    return result
+                def main(private field birthYear, field comparisonYear, field minimumDifference) -> (field):
+                    field result = if comparisonYear - birthYear >= minimumDifference then 1 else 0 fi
+                    return result
               </code>
             </pre>
           </section>
@@ -519,15 +519,293 @@ def main(private field birthYear, field comparisonYear, field minimumDifference)
             <img src="./img/remix-zokrates-input-complete.png" />
             <small>(note the inputs and proof length)</small>
           </section>
-
         </section>
 
         <section>
-          <h1>End</h1>
-          <ul>
-            <li>https://github.com/yehjxraymond/circom-experiment</li>
-            <li>https://github.com/yehjxraymond/zokrates-experiment</li>
-          </ul>
+          <section>
+            <h1>Circom</h1>
+          </section>
+
+          <section>
+            <h2>Circom</h2>
+            <div>
+              <img src="./img/circom.png" />
+            </div>
+            <div>
+              <small>
+                <a href="https://github.com/iden3/circom">
+                  https://github.com/iden3/circom
+                </a>
+              </small>
+            </div>
+            <div>
+              <small>
+                <a href="https://github.com/iden3/snarkjs">
+                  https://github.com/iden3/snarkjs
+                </a>
+              </small>
+            </div>
+          </section>
+          <section>
+            <h2>Installation</h2>
+            <pre>
+              <code class="text" data-trim>
+                  npm install -g circom
+                  npm install -g snarkjs
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Age Check Circuit</h2>
+            <img src="./img/circuit-generic-comparison.png" />
+          </section>
+
+          <section>
+            <h2>Age Check Circuit</h2>
+            <small>ageCheck.circom</small>
+            <pre>
+              <code data-trim>
+                template AgeCheck() {
+                  signal private input birthYear;
+                  signal input comparisonYear;
+                  signal input minimumDifference;
+                  signal output results;
+              
+                  results &lt;-- (comparisonYear - birthYear - minimumDifference)>=0 ? 1 : 0;
+                }     
+                component main = AgeCheck();    
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Circuit Inputs</h2>
+            <small>input.json</small>
+            <pre>
+              <code class="json" data-trim>
+                {
+                  "birthYear": 1990,
+                  "comparisonYear": 2020,
+                  "minimumDifference": 21
+                }      
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Running the circuit</h2>
+            <pre>
+              <code class="text" data-trim>
+                circom ageCheck.circom --r1cs --wasm --sym
+                snarkjs info -r ageCheck.r1cs
+                snarkjs setup -r ageCheck.r1cs
+                snarkjs calculatewitness --wasm ageCheck.wasm --input input.json --witness witness.json
+                snarkjs proof --witness witness.json --proof proof.json
+                snarkjs verify --proof proof.json
+                snarkjs generateverifier
+                snarkjs generatecall
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h4>Verify Proof</h4>
+            <img src="./img/remix-circom-input-simple.png" />
+          </section>
+
+          <section>
+            <h2>Birth Year Circuit</h2>
+            <img src="./img/circuit-hash.png" />
+          </section>
+
+          <section>
+            <h2>Pedersen Hash Component</h2>
+            <small>pedersenHash.circom</small>
+            <pre>
+              <code data-trim>
+                include "../node_modules/circomlib/circuits/pedersen.circom";
+                include "../node_modules/circomlib/circuits/bitify.circom";
+
+                template PedersenHash() {
+                    signal private input message[2];
+                    signal output out[2];
+                    
+                    component pedersen = Pedersen(256);
+                    component inputBits[2] = Num2Bits(128);
+
+                    inputBits[0].in &lt;== message[0];
+                    inputBits[1].in &lt;== message[1];
+
+                    for(var i=0; i<128; i++){
+                        pedersen.in[i] &lt;== inputBits[0].out[i];
+                        pedersen.in[i+128] &lt;== inputBits[1].out[i];
+                    }
+
+                    out[0] &lt;== pedersen.out[0];
+                    out[1] &lt;== pedersen.out[1];
+                }
+                component main = PedersenHash();
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Circuit Inputs</h2>
+            <small>input.json</small>
+            <pre>
+              <code class="json" data-trim>
+                {
+                  "message": [
+                    1990,
+                    1990
+                  ]
+                }      
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Complete Circuit</h2>
+            <img src="./img/circuit-commitment-secured.png" />
+          </section>
+
+          <section>
+            <h2>Complete Circuit</h2>
+            <small>complete.circom</small>
+            <pre>
+              <code class="text" data-trim>
+                include "../node_modules/circomlib/circuits/pedersen.circom";
+                include "../node_modules/circomlib/circuits/bitify.circom";
+
+                template AgeCheck() {
+                  signal private input birthYear;
+                  signal input comparisonYear;
+                  signal input minimumDifference;
+                  signal output results;
+              
+                  results &lt;-- (comparisonYear - birthYear - minimumDifference)>=0 ? 1 : 0;
+                }              
+
+                template PedersenHash() {
+                    signal private input message[2];
+                    signal output out[2];
+                    
+                    component pedersen = Pedersen(256);
+                    component inputBits[2] = Num2Bits(128);
+
+                    inputBits[0].in &lt;== message[0];
+                    inputBits[1].in &lt;== message[1];
+
+                    for(var i=0; i<128; i++){
+                        pedersen.in[i] &lt;== inputBits[0].out[i];
+                        pedersen.in[i+128] &lt;== inputBits[1].out[i];
+                    }
+
+                    out[0] &lt;== pedersen.out[0];
+                    out[1] &lt;== pedersen.out[1];
+                }
+                
+                template Complete() {
+                  signal private input birthYear;
+                  signal private input rand;
+                  signal input hash[2];
+                  signal input comparisonYear;
+                  signal input minimumDifference;
+                  signal output results;
+              
+                  signal computedHash[2];
+                  signal comparisons[2];
+              
+                  component pedersen = PedersenHash();
+                  component ageCheck = AgeCheck();
+              
+                  pedersen.message[0] &lt;== birthYear;
+                  pedersen.message[1] &lt;== rand;
+                  computedHash[0] &lt;== pedersen.out[0];
+                  computedHash[1] &lt;== pedersen.out[1];
+              
+                  comparisons[0] &lt;--  computedHash[0]==hash[0];
+                  comparisons[1] &lt;--  computedHash[1]==hash[1];
+                  
+                  ageCheck.birthYear &lt;== birthYear;
+                  ageCheck.comparisonYear &lt;== comparisonYear;
+                  ageCheck.minimumDifference &lt;== minimumDifference;
+              
+                  results &lt;-- comparisons[0] * comparisons[0] * ageCheck.results;
+              }
+              
+              component main = Complete();
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Circuit Inputs</h2>
+            <small>input.json</small>
+            <pre>
+              <code class="json" data-trim>
+                {
+                  "birthYear": 1990,
+                  "rand": 1990,
+                  "hash": [
+                    "20687928115026053699926515049138692070100647654038300385721779911896219193902",
+                    "11072087695851230221153980887306278529192602579917930578016623940159289561376"
+                  ],
+                  "comparisonYear": 2020,
+                  "minimumDifference": 21
+                }
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Running the circuit</h2>
+            <pre>
+              <code class="text" data-trim>
+                circom complete.circom --r1cs --wasm --sym
+                snarkjs info -r complete.r1cs
+                snarkjs setup -r complete.r1cs
+                snarkjs calculatewitness --wasm complete.wasm --input input.json --witness witness.json
+                snarkjs proof --witness witness.json --proof proof.json
+                snarkjs verify --proof proof.json
+                snarkjs generateverifier
+                snarkjs generatecall
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Testing</h2>
+            <img src="./img/circom-test.png" style="width: 60%" />
+          </section>
+
+          <section>
+            <h2>Verify on Web App</h2>
+            <img src="./img/circom-web-verify.png" />
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Ending Notes</h1>
+            <ul>
+              <li class="fragment">ZKP = Proof of knowledge</li>
+              <li class="fragment">Constraints are your building block</li>
+              <li class="fragment">ZKP ≠ Blockchain</li>
+              <li class="fragment">ZKP ≠ Panacea</li>
+              <li class="fragment">You may not have one ZKP in blue</li>
+            </ul>
+          </section>
+          <section>
+            <img src="./img/color-blockchain.png" />
+          </section>
+          <section>
+            <h1>End</h1>
+            <ul>
+              <li>https://github.com/yehjxraymond/circom-experiment</li>
+              <li>https://github.com/yehjxraymond/zokrates-experiment</li>
+            </ul>
+          </section>
         </section>
       </div>
     </div>
