@@ -481,27 +481,32 @@ const Summary = ({ resaleData }) => {
         <tbody>
           {flatTypes.map((type, key) => {
             const lastTransactions = groupedLastTransactions[type];
+            const hasTransactions = !!lastTransactions;
+            if (!hasTransactions) return null;
             const rentalRates = groupedRentalRates[type];
+            const hasRentalData = lastTransactions && rentalRates;
             const minFloorArea = minBy(lastTransactions, "floorArea").floorArea;
             const maxFloorArea = maxBy(lastTransactions, "floorArea").floorArea;
             const avgPrice = meanBy(lastTransactions, "price");
             const avgRental = meanBy(rentalRates, "rent");
             const avgYield = (avgRental * 12 * 100) / avgPrice;
+
+            const floorAreaRange =
+              minFloorArea === maxFloorArea
+                ? maxFloorArea
+                : `${minFloorArea} - ${maxFloorArea}`;
+            const price = lastTransactions ? formatPrice(avgPrice) : "NA";
             return (
               <tr key={key}>
                 <td>{type}</td>
-                <td>
-                  {minFloorArea === maxFloorArea
-                    ? maxFloorArea
-                    : `${minFloorArea} - ${maxFloorArea}`}
-                </td>
-                <td>{formatPrice(avgPrice)}</td>
-                <td>{formatPrice(avgRental)}</td>
-                <td>{avgYield.toFixed(2)}%</td>
+                <td>{floorAreaRange}</td>
+                <td>{price}</td>
+                <td>{hasRentalData ? formatPrice(avgRental) : "NA"}</td>
+                <td>{hasRentalData ? `${avgYield.toFixed(2)}%` : "NA"}</td>
                 <td>
                   <InfoTooltip>
                     Based on {lastTransactions.length} transactions &amp;{" "}
-                    {rentalRates.length} rental data{" "}
+                    {hasRentalData ? rentalRates.length : 0} rental data{" "}
                   </InfoTooltip>
                 </td>
               </tr>
@@ -557,6 +562,8 @@ export const HdbResaleCalculator = () => {
   const [resaleData, setResaleData] = useState();
 
   const fetchData = async () => {
+    if (postalCode.length != 6 || isNaN(Number(postalCode)))
+      return alert("Postal code is invalid");
     if (pendingData) return;
     setResaleData();
     setPendingData(true);
