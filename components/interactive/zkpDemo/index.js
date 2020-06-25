@@ -72,43 +72,43 @@ export const ZkpDemo = () => {
     <>
       <div></div>
       <h2>Public Inputs</h2>
-      <div class="bg-white p-2 m-2">
+      <div className="bg-white p-2 m-2">
         <label>Hash (part 1)</label>
         <input
-          class="w-100"
+          className="w-100"
           value={hash1}
           onChange={(e) => setHash1(e.target.value)}
         />
       </div>
-      <div class="bg-white p-2 m-2">
+      <div className="bg-white p-2 m-2">
         <label>Hash (part 2)</label>
         <input
-          class="w-100"
+          className="w-100"
           value={hash2}
           onChange={(e) => setHash2(e.target.value)}
         />
       </div>
-      <div class="bg-white p-2 m-2">
+      <div className="bg-white p-2 m-2">
         <label>Current Year</label>
         <input
-          class="w-100"
+          className="w-100"
           value={currentYear}
           onChange={(e) => setCurrentYear(e.target.value)}
         />
       </div>
-      <div class="bg-white p-2 m-2">
+      <div className="bg-white p-2 m-2">
         <label>Current Year</label>
         <input
-          class="w-100"
+          className="w-100"
           value={legalAge}
           onChange={(e) => setLegalAge(e.target.value)}
         />
       </div>
 
       <h2>Proof</h2>
-      <div class="bg-white p-2 m-2">
+      <div className="bg-white p-2 m-2">
         <textarea
-          class="w-100"
+          className="w-100"
           rows="15"
           value={proof}
           onChange={(e) => setProof(e.target.value)}
@@ -129,7 +129,7 @@ export const ZkpDemo = () => {
       {showVerificationKey && (
         <div>
           <textarea
-            class="w-100"
+            className="w-100"
             rows="15"
             value={verificationKeyString}
             onChange={(e) => setVerificationKeyString(e.target.value)}
