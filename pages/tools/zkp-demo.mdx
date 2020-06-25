@@ -1,0 +1,15 @@
+import Blog from "../../components/layouts/Blog";
+import {ZkpDemo} from "../../components/interactive/zkpDemo"
+
+export const meta = {
+  date: new Date("25 June 2020"),
+  title: "ZKP Demo",
+  summary: "There's nothing interesting here. Really."
+};
+
+ZKP Demo
+===
+
+<ZkpDemo />
+
+export default ({children}) => <Blog meta={meta}>{children}</Blog>;
