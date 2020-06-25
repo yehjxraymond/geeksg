@@ -17,6 +17,8 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-mdx": "^1.2.0",
     "axios": "^0.19.2",
+    "deep-map": "^2.0.0",
+    "es6-weak-map": "^2.0.3",
     "lodash": "^4.17.15",
     "ml-regression-multivariate-linear": "^2.0.3",
     "next": "^9.4.2",
@@ -27,6 +29,7 @@
     "recharts": "^2.0.0-beta.1",
     "simple-statistics": "^7.0.7",
     "sitemap": "^2.1.0",
+    "snarkjs": "^0.1.31",
     "victory": "^34.0.0"
   },
   "license": "ISC",

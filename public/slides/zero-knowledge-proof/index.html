@@ -261,6 +261,66 @@
 
         <section>
           <section>
+            <h1>Demo</h1>
+            <small>Sample Identity Application</small>
+          </section>
+
+          <section>
+            <h3>Circuit Overview</h3>
+            <img src="./img/circuit-overview.png" />
+          </section>
+
+          <section>
+            <h3>Circuit Design</h3>
+            <img src="./img/circuit-commitment-secured.png" />
+          </section>
+
+          <section>
+            <h3>See It In Action!</h3>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Ending Notes (Overview)</h1>
+            <ul>
+              <li class="fragment">ZKP = Proof of knowledge</li>
+              <li class="fragment">Constraints are your building block</li>
+              <li class="fragment">ZKP ≠ Blockchain</li>
+              <li class="fragment">ZKP ≠ Panacea</li>
+              <li class="fragment">You may not have one ZKP in blue</li>
+            </ul>
+          </section>
+          <section>
+            <img src="./img/color-blockchain.png" />
+            <div
+              style="position: fixed; bottom: 0px; right:0px; font-size: 0.5em; text-align: right;"
+            >
+              <a
+                href="https://www.itjungle.com/2019/11/04/blockchain-fine-wine-and-the-ibm-i/"
+                >Blockchain, Fine Wine, And The IBM i
+              </a>
+            </div>
+          </section>
+          <section>
+            <h1>Break Time</h1>
+            <small>Installation for Workshop</small>
+            <pre>
+              <code class="text" data-trim>
+                curl -LSfs get.zokrat.es | sh
+              </code>
+            </pre>
+            <pre>
+              <code class="text" data-trim>
+                  npm install -g circom
+                  npm install -g snarkjs
+              </code>
+            </pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
             <h1>Writing ZKP Application</h1>
           </section>
 
@@ -656,16 +716,34 @@
           </section>
 
           <section>
-            <h2>Circuit Inputs</h2>
-            <small>input.json</small>
+            <h2>Birth Year Check Component</h2>
+            <small>birthYearCheck.circom</small>
             <pre>
-              <code class="json" data-trim>
-                {
-                  "message": [
-                    1990,
-                    1990
-                  ]
-                }      
+              <code data-trim>
+                include "./pedersenHash.circom";
+
+                template BirthYearCheck() {
+                    signal private input birthYear;
+                    signal private input rand;
+                    signal input hash[2];
+                    signal output results;
+
+                    signal computedHash[2];
+                    signal comparisons[2];
+
+                    component pedersen = PedersenHash();
+
+                    pedersen.message[0] <== birthYear;
+                    pedersen.message[1] <== rand;
+                    computedHash[0] <== pedersen.out[0];
+                    computedHash[1] <== pedersen.out[1];
+
+                    comparisons[0] <--  computedHash[0]==hash[0];
+                    comparisons[1] <--  computedHash[1]==hash[1];
+
+                    results <-- comparisons[0] * comparisons[0];
+                }
+
               </code>
             </pre>
           </section>
@@ -680,67 +758,33 @@
             <small>complete.circom</small>
             <pre>
               <code class="text" data-trim>
-                include "../node_modules/circomlib/circuits/pedersen.circom";
-                include "../node_modules/circomlib/circuits/bitify.circom";
+                include "./ageCheck.circom";
+                include "./birthYearCheck.circom";
 
-                template AgeCheck() {
-                  signal private input birthYear;
-                  signal input comparisonYear;
-                  signal input minimumDifference;
-                  signal output results;
-              
-                  results &lt;-- (comparisonYear - birthYear - minimumDifference)>=0 ? 1 : 0;
-                }              
-
-                template PedersenHash() {
-                    signal private input message[2];
-                    signal output out[2];
-                    
-                    component pedersen = Pedersen(256);
-                    component inputBits[2] = Num2Bits(128);
-
-                    inputBits[0].in &lt;== message[0];
-                    inputBits[1].in &lt;== message[1];
-
-                    for(var i=0; i<128; i++){
-                        pedersen.in[i] &lt;== inputBits[0].out[i];
-                        pedersen.in[i+128] &lt;== inputBits[1].out[i];
-                    }
-
-                    out[0] &lt;== pedersen.out[0];
-                    out[1] &lt;== pedersen.out[1];
-                }
-                
                 template Complete() {
-                  signal private input birthYear;
-                  signal private input rand;
-                  signal input hash[2];
-                  signal input comparisonYear;
-                  signal input minimumDifference;
-                  signal output results;
-              
-                  signal computedHash[2];
-                  signal comparisons[2];
-              
-                  component pedersen = PedersenHash();
-                  component ageCheck = AgeCheck();
-              
-                  pedersen.message[0] &lt;== birthYear;
-                  pedersen.message[1] &lt;== rand;
-                  computedHash[0] &lt;== pedersen.out[0];
-                  computedHash[1] &lt;== pedersen.out[1];
-              
-                  comparisons[0] &lt;--  computedHash[0]==hash[0];
-                  comparisons[1] &lt;--  computedHash[1]==hash[1];
-                  
-                  ageCheck.birthYear &lt;== birthYear;
-                  ageCheck.comparisonYear &lt;== comparisonYear;
-                  ageCheck.minimumDifference &lt;== minimumDifference;
-              
-                  results &lt;-- comparisons[0] * comparisons[0] * ageCheck.results;
-              }
-              
-              component main = Complete();
+                    signal private input birthYear;
+                    signal private input rand;
+                    signal input hash[2];
+                    signal input comparisonYear;
+                    signal input minimumDifference;
+                    signal output results;
+
+                    component ageCheck = AgeCheck();
+                    component birthYearCheck = BirthYearCheck();
+                    
+                    ageCheck.birthYear <== birthYear;
+                    ageCheck.comparisonYear <== comparisonYear;
+                    ageCheck.minimumDifference <== minimumDifference;
+
+                    birthYearCheck.hash[0] <== hash[0];
+                    birthYearCheck.hash[1] <== hash[1];
+                    birthYearCheck.rand <== rand;
+                    birthYearCheck.birthYear <== birthYear;
+
+                    results <-- birthYearCheck.results * ageCheck.results;
+                }
+
+                component main = Complete();
               </code>
             </pre>
           </section>
