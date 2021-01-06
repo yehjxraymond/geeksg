@@ -16,7 +16,7 @@
     "@mdx-js/mdx": "^0.16.6",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-mdx": "^1.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "deep-map": "^2.0.0",
     "es6-weak-map": "^2.0.3",
     "lodash": "^4.17.15",
