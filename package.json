@@ -19,7 +19,7 @@
     "axios": "^0.19.2",
     "deep-map": "^2.0.0",
     "es6-weak-map": "^2.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "ml-regression-multivariate-linear": "^2.0.3",
     "next": "^9.4.2",
     "path-match": "^1.2.4",
